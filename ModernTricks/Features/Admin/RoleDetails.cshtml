@@ -1,0 +1,81 @@
+﻿@model ModernTricks.Models.ROLES
+@{
+    ViewBag.Title = "Role: " + Html.DisplayFor(model => model.RoleDescription);
+   
+}
+<script type="text/javascript">
+    $(function () {
+        $(":input[type='button']").button();
+    })
+</script>
+
+    <div class="container">
+        <fieldset>
+            <legend>
+                <h3>
+                   جزئیات هر رول
+                </h3>
+            </legend>
+            <div>
+                <table class="table table-bordered">
+                    <tr>
+                        <td style='width: 120px;font-weight: bold' class='userTable'>
+                          نام رول
+                        </td>
+                        <td class='userTable'>
+                            @Html.DisplayFor(model => model.RoleName, new { style = "width:350px" })
+                            @Html.ValidationMessageFor(model => model.RoleName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style='font-weight: bold' class='userTable'>
+                          جزئیات رول
+                        </td>
+                        <td class='userTable'>
+                            @Html.DisplayFor(model => model.RoleDescription, new { style = "width:90%" })
+                            @Html.ValidationMessageFor(model => model.RoleDescription)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style='width: 100px; font-weight: bold' class='userTable'>
+                            @Html.LabelFor(model => model.IsSysAdmin, "System Role")
+                        </td>
+                        <td class='userTable'>
+                            @Html.DisplayFor(model => model.IsSysAdmin)
+                            @Html.ValidationMessageFor(model => model.IsSysAdmin)
+                        </td>
+                    </tr>
+                </table>
+                <br />
+                <input type="button" class="btn btn-default" value="ویرایش رول" onclick="location.href='@Url.Action("RoleEdit", "Admin", new { id = Model.Role_Id })'" />
+        </fieldset>
+        <div>
+            <fieldset>  
+                    <h3>
+                       کلیه دسترسی هایی که این رول دارد
+                    </h3>
+                <div id="PermissionsTable">
+                    @Html.Partial("_ListPermissions", Model)
+                </div>
+            </fieldset>
+            <br />
+            <fieldset>
+                <legend>
+                    <h3>
+                        Reports Associated with this Role
+                    </h3>
+                </legend>
+
+                <div id="ReportsTable">
+                    @Html.Partial("_ListReportsTable4Role", Model.REPORTS.ToList())
+                    <br />
+                </div>               
+            </fieldset>
+        </div>
+    </div>
+
+<br />
+<div>
+    @Html.ActionLink("هدایت به صفحه رول ها", "RoleIndex", "Admin",new {@class="btn btn-primary"})
+</div>

@@ -1,0 +1,103 @@
+﻿@model List<dynamic>
+@{
+  Layout = null;
+}
+<div id="printableArea" style="text-align: left;">
+  <img src="@Url.Content("~/Content/Images/customizedlogo.png")" align="left" style="vertical-align:top; margin-top: 0px; margin-bottom: 0px" /><br /><br /><br /><br />
+  <font size="6">
+    <strong>
+      @ViewBag.ReportName
+    </strong>
+  </font><br />
+  (@Model.Count() matching records)
+
+  <script type="text/javascript">
+    function calculateColumnTotal(index) {
+      var total = 0;
+      $('table tr').each(function () {
+        var cellvalue = $('td', this).eq(index).text();
+        var value = Number(cellvalue.replace(/[^0-9\.]+/g, ""));
+        if (!isNaN(value)) {
+          total += value;
+        }
+      });
+      return total.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+    }
+
+    $(document).ready(function () {
+      $(":input[type='button']").button();
+      $(":input[type='submit']").button();
+      $("#ResultsTable tr:even").css("background-color", "#EBF0FF");
+      $("#ResultsTable tr:odd").css("background-color", "#ffffff");
+      $('#msgContainer').hide();
+      $('#ResultsTable').dataTable();
+
+      //Register call back function to receive event notifications when DataTables 'on draw' event fires!
+      var table = $('#ResultsTable').DataTable();
+      table.on('draw', function () {
+        $("#SalesTotal").html("<h2>Total Sales £" + calculateColumnTotal(6) + "</h2>");        
+      });
+    });
+  </script>
+
+  <div>
+    <table id="ResultsTable" name="ResultsTable" style="width: 100%">
+      <thead>
+        @foreach (DynamicDataRow item in Model)
+        {
+          foreach (DynamicDataObject col in item.Columns)
+          {
+          <th>
+            @col.Name
+          </th>
+          }
+          break;
+        }
+        </thead>
+        @foreach (DynamicDataRow item in Model)
+        {
+          <tr>
+            @foreach (DynamicDataObject col in item.Columns)
+            {
+              <td>
+                @if (col.DataType == "money")
+                {
+                  @Convert.ToDecimal(col.Value).ToString("#,##0.00");
+                }
+                else
+                {
+                  @col.Value
+                }
+              </td>
+            }
+          </tr>
+        }
+      </table>
+    </div>
+
+    <div id="SalesTotal">
+      <!--When the form first loads, we must call the GetSalesTotal() function passing our data model
+          to calculate our 'Total Sales'.  This is because the DataTables 'on draw' event has not fired yet
+          and will only fire when we start filtering our table.  Therefore, we must calculate 'Total Sales' from our model-->
+      <h2>Total Sales £ @GetSalesTotal(Model).ToString("#,##0.00")</h2>
+    </div>
+  </div>
+
+  @functions {
+    public decimal GetSalesTotal(List<dynamic> _obj)
+    {
+      decimal _retVal = 0;
+      try
+      {
+        foreach (DynamicDataRow item in _obj)
+        {
+          _retVal += Convert.ToDecimal(item.GetColumnValue(6));
+        }
+      }
+      catch (Exception)
+      {
+        throw;
+      }
+      return _retVal;
+    }
+  }

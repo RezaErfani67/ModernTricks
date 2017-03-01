@@ -1,0 +1,53 @@
+﻿@model ModernTricks.Models.USERS
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(":input[type='submit']").button();
+    })
+</script>
+<div class="container">
+    @using (Html.BeginForm("UserCreate", "Admin", FormMethod.Post))
+    {
+        @Html.ValidationSummary(true)
+        <fieldset>            
+            <legend><strong>ایجاد کاربر جدید</strong></legend>
+            <br />
+            <table class="table">
+                <tr>
+                    <td style='width: 10%; font-weight: bold' class='userTable'>
+                        @Html.LabelFor(model => model.Username, "Username")
+                    </td>
+                    <td class='userTable'>
+                        @Html.TextBoxFor(model => model.Username, new { style = "width:250px" })
+                        @Html.ValidationMessageFor(model => model.Username)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style='width: 10%; font-weight: bold' class='userTable'>
+                        @Html.LabelFor(model => model.Firstname, "Firstname")
+                    </td>
+                    <td class='userTable'>
+                        @Html.TextBoxFor(model => model.Firstname, new { style = "width:250px" })
+                        @Html.ValidationMessageFor(model => model.Firstname)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style='width: 10%; font-weight: bold' class='userTable'>
+                        @Html.LabelFor(model => model.Lastname, "Lastname")
+                    </td>
+                    <td class='userTable'>
+                        @Html.TextBoxFor(model => model.Lastname, new { style = "width:250px" })
+                        @Html.ValidationMessageFor(model => model.Lastname)
+                    </td>
+                </tr>
+                
+            </table>
+            <br />
+            <input type="submit" value="Create" />
+        </fieldset>
+    }
+</div>
+<div>
+    @Html.ActionLink("Go to Users", "Index", "Admin")
+</div>

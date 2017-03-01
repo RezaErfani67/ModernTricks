@@ -1,0 +1,49 @@
+﻿@model IEnumerable<ModernTricks.Models.Products>
+
+@{
+    ViewBag.Title = "فهرست " + Server.HtmlDecode(Html.DisplyModelPluralName(model => model).ToString());
+}
+<table class="table">
+    <tr>
+      
+        <th>
+            نام کالا
+        </th>
+        <th>
+           گروه
+        </th>
+        <th>
+            قیمت
+        </th>
+        <th>
+            ویرایش
+        </th>
+        <th>
+            حذف
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product_Groups.GroupTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+         
+            <td>
+               @Html.ActionLink("ویرایش", "Edit", new { id = @item.ProductID }, new { @class = "k-button k-button-icontext k-grid-Edit" })
+                       
+            </td>
+            <td>
+                @Html.ActionLink("حذف", "Delete", new { id = @item.ProductID }, new { @class = "k-button k-button-icontext k-grid-Delete" })
+            </td>
+        </tr>
+    }
+
+</table>

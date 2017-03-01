@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <title>حیله های مدرن</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="~/Scripts/jquery-2.2.3.js"></script>
+  
+    <link href="~/Content/bootstrap-rtl.min.css" rel="stylesheet" />
+    <link href="~/Content/CorlateTheme/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/CorlateTheme/css/ModernTricks.css" rel="stylesheet" />
+    <link href="~/Content/CorlateTheme/css/prettyPhoto.css" rel="stylesheet" />
+    <link href="~/Content/CorlateTheme/css/responsive.css" rel="stylesheet" />
+    <link href="~/Content/CorlateTheme/css/animate.min.css" rel="stylesheet" />
+
+   
+    <meta name="description" content="حیله های مدرن شیطان" />
+</head>
+
+<body>
+    <header id="header">
+        <div class="top-bar">
+            <div class="container">
+                <div class="row">
+                    @Html.Action("StateLogin", "Account", new { area = "" })
+                    <div class="col-sm-6 col-xs-4">
+                        <div class="top-number"><p><i class="fa fa-phone-square"></i>info@moderntricks.com</p></div>
+                    </div>
+                    <div class="col-sm-6 col-xs-8">
+                        <div class="social">
+                            <ul class="social-share">
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                                <li><a href="#"><i class="fa fa-skype"></i></a></li>
+                            </ul>
+                            <div class="search">
+                                <form role="form">
+                                    <input type="text" placeholder="Search" autocomplete="off" class="search-form">
+                                    <i class="fa fa-search"></i>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div><!--/.container-->
+        </div><!--/.top-bar-->
+        <nav role="banner" class="navbar navbar-inverse">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="~/Home/Index" class="navbar-brand"><img alt="logo" src="~/Content/CorlateTheme/images/logo.jpg"></a>
+                </div>
+
+                <div class="collapse navbar-collapse navbar-right">
+                    <ul class="nav navbar-nav">
+                        <li><a href="~/Home/Index">صفحه اصلی</a></li>
+
+                        <li><a href="@Url.Content("~/Home/Gallery")">گالری</a></li>
+                        @{
+                            if (ViewContext.Controller.IsSysAdmin())
+                            {
+                                <li class="dropdown">
+                                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">مدیریت <i class="fa fa-angle-down"></i></a>
+                                    <ul class="dropdown-menu">
+                                        <li> <a href="/Admin">کاربران سایت</a></li>
+                                        <li><a href="/Admin/RoleIndex">رول های سایت</a></li>
+                                        <li><a href="/Admin/PermissionIndex">سطوح دسترسی</a></li>
+                                        @*<li><a href="/Admin/ReportIndex">گزارشات</a></li>*@
+                                        <li><a href="@Url.Content("~/Home/CreateNews")">درج خبر</a></li>
+                                        <li><a href="@Url.Content("~/Home/CreateGallery")"> درج عکس در گالری</a></li>
+
+                                    </ul>
+                                </li>
+
+                            }
+
+                        }
+
+
+                        <li><a href="@Url.Content("~/Home/Contact")">تماس با ما</a></li>
+                    </ul>
+                </div>
+            </div><!--/.container-->
+        </nav><!--/nav-->
+
+    </header>
+
+    @RenderBody()
+    <footer class="midnight-blue" id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    &copy; 2016 <a title="" href="info@moderntricks.com" target="_blank">تمام حقوق متعلق به موسسه تذکار می باشد..</a>
+                </div>
+                <div class="col-sm-6">
+                    <ul class="pull-right">
+                        <li><a href="#">خانه</a></li>
+                        <li><a href="#">درباره ما</a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="~/Content/CorlateTheme/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <script src="~/Content/CorlateTheme/js/jquery.prettyPhoto.js"></script>
+    <script src="~/Content/CorlateTheme/js/jquery.isotope.min.js"></script>
+    <script src="~/Content/CorlateTheme/js/ModernTricks.js"></script>
+    <script src="~/Content/CorlateTheme/js/wow.min.js"></script>
+
+
+    @RenderSection("Scripts", false)
+</body>
+</html>

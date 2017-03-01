@@ -1,0 +1,126 @@
+﻿
+@{
+
+    Layout = "~/Features/Shared/SideLayout.cshtml";
+}
+
+
+<div class="row">
+    <h4>تایید نظرات کاربران </h4>
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="panel panel-success">
+                <div class="panel-heading"></div>
+                <div class="panel-body">
+                    <table class="table table-bordered tblComments">
+                      
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+</div>
+@section scripts
+    {
+    <script src="~/Scripts/asq.src.js"></script>
+
+    <script>
+
+        function Data_UnApproveComments() {
+          
+            return ASQ(function (done) {
+                $.ajax({
+                    url: "/news/Data_UnApproveComments",
+                    data: {  },
+                    async: true
+
+                }).done(function (Result) {
+                    done(Result);
+                });
+            });
+        }
+     
+        $(document).ready(function () {
+
+           
+            ASQ()
+            .then(Data_UnApproveComments())
+            .then(function step1(done, CommentsResult) {
+
+                var htmComments = "";
+
+              
+                htmComments += "<tr>";
+                htmComments += "<th></th>";
+                //htmComments += "<th>شناسه خبر</th>";
+                htmComments += "<th>عنوان خبر</th>";
+                //htmComments += "<th>شناسه نظر</th>";
+                htmComments += "<th>نام نظردهنده</th>";
+                htmComments += "<th>ایمیل نظردهنده</th>";
+                htmComments += "<th>متن نظر</th>";
+                htmComments += "</tr>";
+                for (var item in CommentsResult)
+                {
+                    htmComments += "<tr commentID='"+CommentsResult[item].commentID+"'>";
+                    htmComments += "<td><input type=button class='btn btn-success btnApproveComment'  value='تایید' style=margin-left:10px;/>";
+                    htmComments += "<input type=button class='btn btn-danger btnRejectComment'  value='رد'/></td>";
+                    //htmComments += "<td >" + CommentsResult[item].newsID + "</td>";
+                    htmComments += "<td >" + CommentsResult[item].newsTitle + "</td>";
+                    //htmComments += "<td >" + CommentsResult[item].commentID + "</td>";
+                    htmComments += "<td >" + CommentsResult[item].commentName + "</td>";
+                    htmComments += "<td >" + CommentsResult[item].commentEmail + "</td>";
+                    htmComments += "<td >" + CommentsResult[item].commentText + "</td>";
+                   
+                    htmComments += "</tr>";
+                }
+                 
+                $(".tblComments").html(htmComments);
+             
+            })
+
+        });
+
+
+        $(document).on('click',".btnApproveComment", function () {
+
+            var id = $(this).closest('tr').attr('commentID');
+            var $this=$(this)
+            $.ajax({
+                url: "/news/ApproveComments",
+                data: { id:id }
+
+            }).done(function (result) {
+                notify(result.state, result.msg);
+                $this.closest('tr').fadeOut('slow');
+            }).error(function (result) {
+                notify('error', result.responseJSON.msg);
+
+            });
+            
+        });
+        $(document).on('click', ".btnRejectComment", function () {
+
+            var id = $(this).closest('tr').attr('commentID');
+            var $this = $(this)
+            $.ajax({
+                url: "/news/RejectComments",
+                data: { id: id }
+
+            }).done(function (result) {
+                notify(result.state, result.msg);
+                $this.closest('tr').fadeOut('slow');
+            }).error(function (result) {
+                notify('error', result.responseJSON.msg);
+
+            });
+
+        });
+    </script>
+    
+
+}
+
+
+

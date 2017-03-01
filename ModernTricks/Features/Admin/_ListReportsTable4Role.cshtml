@@ -1,0 +1,86 @@
+﻿@model List<ModernTricks.Models.REPORTS>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Unbind the original image 'href' set by the controller...
+        //$('.deleteReport').attr('href', 'javascript://');
+        $('.deleteReport').click(function () {
+            $dialog.data('reportId', $(this).attr('reportId')).dialog("open");
+        });
+
+        var $dialog = $('<div/>')
+		.html("This Report will be removed from the selected Role.<br/><br/>Do you wish to continue?")
+		.dialog({
+		    autoOpen: false,
+		    resizable: false,
+		    height: 200,
+		    modal: true,
+		    title: 'Remove Report',
+		    buttons: [
+                        {
+                            text: "Continue",
+                            id: "continuebtn",
+                            click: function () {
+                                var _reportId = $(this).data('reportId');
+                                var _roleId = $('#Role_Id').val();
+
+                                var _parameters = { roleId: _roleId, reportId: _reportId };
+                                $.ajax({
+                                    url: "/Admin/DeleteReportFromRoleReturnPartialView",
+                                    type: "GET",
+                                    data: _parameters,
+                                    success: function (data, textStatus, jqXHR) {
+                                        $('#Report4RoleTable').html(data);
+                                    }
+                                });
+                                $(this).dialog('close');
+                            }
+                        },
+                        {
+                            text: "Cancel",
+                            id: "cancelbtn",
+                            click: function () {
+                                $(this).dialog("close");
+                            }
+                        }]
+		});
+    });
+</script>
+@{if (Model.Count == 0)
+{
+    <h2><font color="red">No Associated Reports...</font></h2>
+    <br />
+}
+else
+{
+    <table id="Report4RoleTable" class="table">
+        <thead>
+        <th style="width: 30%">
+            Report
+        </th>
+        <th style="width: 60%">
+            Description
+        </th>
+        <th>
+            Action
+        </th>
+        </thead>
+        @foreach (var report in Model.OrderBy(u => u.ReportName))
+        {
+            <tr>
+                <td>
+                    @report.ReportName
+                </td>
+                <td>
+                    @report.ReportDescription
+                </td>
+                <td>
+                    <center>
+                        <img class="deleteReport" src="@Url.Content("~/Content/images/bin.png")" alt="Delete" reportid="@report.Report_Id" />
+                    </center>
+                </td>
+            </tr>
+        }
+    </table>
+    <br />
+}}
+

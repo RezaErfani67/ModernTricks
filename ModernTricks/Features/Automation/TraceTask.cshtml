@@ -1,0 +1,73 @@
+﻿
+@{
+
+    Layout = "~/Features/Shared/SideLayout.cshtml";
+}
+<input type="hidden" class="parentTableHtml" value="@ViewData["parentTableHtml"]" />
+
+<div class="main"></div>
+@section Scripts
+{
+
+    <script src="~/Scripts/asq.src.js"></script>
+
+    <script>
+        var genericId = getParameterByName('genericId');
+
+
+        ASQ()
+            .then(function (done) {
+
+                $.ajax({
+                    url: "/Automation/TraceTask_Async",
+                    type: "Get",
+                    data: { genericId: genericId }
+
+                })
+                    .success(function (result) {
+
+                        done(result);
+                    });
+
+            })
+            .then(function (done, traceTaskResult) {
+
+                var htm = "";
+                htm += $(".parentTableHtml").val();
+
+                htm += "<div class=row>";
+                htm += "<table class=table>";
+                htm += "<tr>";
+                htm += "<th>نام مسئول</th>";
+                htm += "<th>وظیفه فعال است؟</th>";
+                htm += "<th>وظیفه انجام شده است؟</th>";
+                for (var item in traceTaskResult) {
+                    htm += "<tr>";
+
+                    htm += "<td> <img src='/Content/Forum/Users/" + traceTaskResult[item].Username + ".jpg' height=100 width=80 /></td>";
+
+
+                    if (traceTaskResult[item].IsActive == true)
+                        htm += "<td><span class='glyphicon glyphicon-ok'></span></td>";
+                    if (traceTaskResult[item].IsActive == false)
+                        htm += "<td><span class='glyphicon glyphicon-remove'></span></td>";
+
+
+                    if (traceTaskResult[item].IsDone == true)
+                        htm += "<td><span class='glyphicon glyphicon-ok'></span></td>";
+                    if (traceTaskResult[item].IsDone == false)
+                        htm += "<td><span class='glyphicon glyphicon-remove'></span></td>";
+
+
+                    htm += "</tr>";
+                }
+                htm += "</table>";
+                htm += "</div>";//end html
+                $(".main").append(htm);
+            })
+    </script>
+
+}
+
+
+

@@ -1,0 +1,25 @@
+﻿@model IEnumerable<ModernTricks.Models.REPORTS>
+@{
+    ViewBag.Title = "Reports";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(":input[type='button']").button();
+    });
+</script>
+<fieldset>
+    <legend>
+        <h3>
+            Reports
+        </h3>
+    </legend>
+    @Html.Partial("_ListReportsTable", Model)
+    <br />
+    <div>
+        <input type="button" value="Create Report" onclick="location.href='@Url.Action("ReportCreate", "Admin")'" />
+        <br />
+    </div>
+</fieldset>
+<br />
+@Html.ActionLink("Go to Roles", "RoleIndex", "Admin")
+

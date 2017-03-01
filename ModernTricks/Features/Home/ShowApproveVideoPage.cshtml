@@ -1,0 +1,183 @@
+﻿
+@{
+
+    Layout = "~/Features/Shared/SideLayout.cshtml";
+}
+
+
+<div class="row">
+    <h4>باز کردن ویدیوهای درسی برای کاربران </h4>
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="panel panel-success">
+                <div class="panel-heading"></div>
+                <div class="panel-body">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>جستجوی آدرس ایمیل</th>
+                            <th>جستجوی عنوان ویدیو</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text" class="txtSearchUser" />
+                            </td>
+                            <td>
+                                <input type="text" class="txtSearchVideo" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="panel panel-success">
+                    <div class="panel-heading"></div>
+                    <div class="panel-body UserPanel">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel panel-success">
+                    <div class="panel-heading"></div>
+                    <div class="panel-body VideoPanel">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <button class="btn btn-success btnSearch">جستجو</button>
+        <button class="btn btn-success btnApproveVideoForUser">ثبت</button>
+    </div>
+</div>
+@section scripts
+    {
+    <script src="~/Scripts/asq.src.js"></script>
+
+    <script>
+
+        function getUsers(email) {
+          
+            return ASQ(function (done) {
+                $.ajax({
+                    url: "/Home/ShowUsers",
+                    data: { email: email },
+                    async: true
+
+                }).done(function (usersResult) {
+                    done(usersResult);
+                });
+            });
+        }
+        function getVideos(title) {
+         
+            return ASQ(function (done) {
+                $.ajax({
+                    url: "/Home/ShowTeachingVideos",
+                    data: { title: title },
+                    async: true
+
+                }).done(function (usersResult) {
+                    done(usersResult);
+                });
+            });
+        }
+        $('.btnSearch').on('click', function () {
+
+            var email = $(".txtSearchUser").val();
+            var title = $(".txtSearchVideo").val();
+
+            ASQ()
+            .all(getUsers(email), getVideos(title))
+            .then(function step1(done, UsersResult, VideosResult) {
+
+                var htmUsers = "";
+                var htmVideos = "";
+
+
+                htmUsers += "<table class='tblUsers table table-bordered'>";
+                htmUsers += "<tr>";
+                htmUsers += "<th>انتخاب</th>";
+                htmUsers += "<th>نام کاربر</th>";
+                htmUsers += "<th>ایمیل کاربر</th>";
+                htmUsers += "</tr>";
+                for(var item in UsersResult)
+                {
+                  
+                    htmUsers += "<tr>";
+                    htmUsers += "<td><input type=checkbox class=form-control class=chkSelectUser /></td>";
+                    htmUsers += "<td Username='"+UsersResult[item].Username +"'>" + UsersResult[item].Username + "</td>";
+                    htmUsers += "<td>" + UsersResult[item].Email + "</td>";
+                    htmUsers += "</tr>";
+                 
+                }
+                htmUsers += "</table>";
+                htmVideos += "<table class='tblVideos table table-bordered'>";
+                htmVideos += "<tr>";
+                htmVideos += "<th>انتخاب</th>";
+              
+                htmVideos += "<th>نام ویدیو</th>";
+                htmVideos += "<th></th>";
+                htmVideos += "</tr>";
+                for (var item in VideosResult) {
+
+                
+                    htmVideos += "<tr>";
+                    htmVideos += "<td><input type=checkbox class=form-control class=chkSelectVideo /></td>";
+                  
+                    htmVideos += "<td VideoID='" + VideosResult[item].VideoID + "'>" + VideosResult[item].Title + "</td>";
+                    htmVideos += "<td> <video width='320' height='240' controls><source src=/Content/Video/Teaching/" + VideosResult[item].VideoName + " type='video/mp4'></video> </td>";
+                    htmVideos += "</tr>";
+                   
+                }
+                htmVideos += "</table>";
+                $(".UserPanel").html(htmUsers);
+                $(".VideoPanel").html(htmVideos);
+                
+
+            })
+
+        });
+
+
+        $(".btnApproveVideoForUser").on('click', function () {
+
+            $(".tblVideos").find('input[type="checkbox"]:checked').each(function () {
+
+                VideoID = $(this).closest('tr').find('td[VideoID]').attr('VideoID');
+                
+             
+                $(".tblUsers").find('input[type="checkbox"]:checked').each(function () {
+
+                    username = $(this).closest('tr').find('td[Username]').attr('Username');
+                
+                    $.ajax({
+                        url: "/Home/ApproveVideoForUser",
+                        data: { video: VideoID, user: username }
+
+                    }).done(function (result) {
+
+                        notify(result.state, result.msg);
+                    }).error(function (result) {
+                        notify('error', result.responseJSON.msg);
+                     
+                    });;
+
+
+                });
+
+
+            });
+            
+        });
+    </script>
+    
+
+}
+
+
+

@@ -1,0 +1,2436 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ModernDB2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Automation_Generic">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Automation_Messages">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="ForwardLink" Type="nvarchar" MaxLength="400" />
+          <Property Name="UnreadBy" Type="uniqueidentifier" />
+          <Property Name="ReadBy" Type="uniqueidentifier" />
+          <Property Name="genericId" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="Automation_Tasks">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" />
+          <Property Name="Responsible" Type="uniqueidentifier" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDone" Type="bit" />
+          <Property Name="Description" Type="nvarchar" MaxLength="400" />
+          <Property Name="Filter1" Type="nvarchar" MaxLength="50" />
+          <Property Name="Filter2" Type="nvarchar" MaxLength="50" />
+          <Property Name="Filter3" Type="nvarchar" MaxLength="50" />
+          <Property Name="ApproveHtml" Type="nvarchar(max)" />
+          <Property Name="ApproveScript" Type="nvarchar(max)" />
+          <Property Name="RejectHtml" Type="nvarchar(max)" />
+          <Property Name="RejectScript" Type="nvarchar(max)" />
+          <Property Name="Script" Type="nvarchar(max)" />
+          <Property Name="Html" Type="nvarchar(max)" />
+          <Property Name="TaskOrder" Type="int" />
+          <Property Name="genericId" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="BaniChav_ReturnedProducts">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="BaniChav_TotalID" Type="uniqueidentifier" />
+          <Property Name="genericId" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="BaniChav_Total">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="BranchCode" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CustomerCode" Type="varchar" MaxLength="50" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="100" />
+          <Property Name="TeamOfSale" Type="nvarchar" MaxLength="50" />
+          <Property Name="DelivererID" Type="uniqueidentifier" />
+          <Property Name="DelivererCode" Type="varchar" MaxLength="50" />
+          <Property Name="SuperVisorOfSupplyID" Type="uniqueidentifier" />
+          <Property Name="SuperVisorOfSupplyCode" Type="varchar" MaxLength="50" />
+          <Property Name="SuperVisorOfSaleID" Type="uniqueidentifier" />
+          <Property Name="SuperVisorOfSaleCode" Type="varchar" MaxLength="50" />
+          <Property Name="VisitorID" Type="uniqueidentifier" />
+          <Property Name="VisitorCode" Type="varchar" MaxLength="50" />
+          <Property Name="Price" Type="int" />
+        </EntityType>
+        <EntityType Name="Favorites">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NewsID" Type="int" />
+          <Property Name="VideosID" Type="int" />
+          <Property Name="Username" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Features">
+          <Key>
+            <PropertyRef Name="FeatureID" />
+          </Key>
+          <Property Name="FeatureTitle" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="FeatureID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ForumComments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ForumPostID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ForumGroupID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ParentID" Type="uniqueidentifier" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="ForumGroups">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" />
+          <Property Name="AdminUserId" Type="uniqueidentifier" />
+          <Property Name="ParentID" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="ForumPosts">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ForumGroupID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Gallery">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Alt" Type="nvarchar" MaxLength="200" />
+          <Property Name="FileData" Type="varbinary(max)" />
+          <Property Name="IsUsedInSlider" Type="bit" />
+        </EntityType>
+        <EntityType Name="LNK_REPORT_PARAMETER">
+          <Key>
+            <PropertyRef Name="Report_Id" />
+            <PropertyRef Name="Parameter_Id" />
+          </Key>
+          <Property Name="Report_Id" Type="int" Nullable="false" />
+          <Property Name="Parameter_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LNK_ROLE_PERMISSION">
+          <Key>
+            <PropertyRef Name="Role_Id" />
+            <PropertyRef Name="Permission_Id" />
+          </Key>
+          <Property Name="Role_Id" Type="int" Nullable="false" />
+          <Property Name="Permission_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LNK_ROLE_REPORT">
+          <Key>
+            <PropertyRef Name="Role_Id" />
+            <PropertyRef Name="Report_Id" />
+          </Key>
+          <Property Name="Role_Id" Type="int" Nullable="false" />
+          <Property Name="Report_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LNK_USER_ROLE">
+          <Key>
+            <PropertyRef Name="Role_Id" />
+            <PropertyRef Name="User_Id" />
+          </Key>
+          <Property Name="Role_Id" Type="int" Nullable="false" />
+          <Property Name="User_Id" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LNK_User_Video">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="VideoID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="News">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ShortDescription" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Image" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="See" Type="smallint" />
+        </EntityType>
+        <EntityType Name="News_Comments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NewsID" Type="int" Nullable="false" />
+          <Property Name="ParentID" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="150" />
+          <Property Name="Text" Type="nvarchar(max)" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="IsApprove" Type="bit" />
+        </EntityType>
+        <EntityType Name="OrderDetails">
+          <Key>
+            <PropertyRef Name="DetailID" />
+          </Key>
+          <Property Name="DetailID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProductCount" Type="int" Nullable="false" />
+          <Property Name="ProductPrice" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OrderID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="UserID" Type="uniqueidentifier" />
+          <Property Name="OrderDate" Type="datetime" Nullable="false" />
+          <Property Name="IsFinaly" Type="bit" Nullable="false" />
+          <Property Name="OrderID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PARAMETERS">
+          <Key>
+            <PropertyRef Name="Parameter_Id" />
+          </Key>
+          <Property Name="Parameter_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParameterName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="ParameterType" Type="nvarchar" MaxLength="50" />
+          <Property Name="DisplayLabel" Type="nvarchar" MaxLength="50" />
+          <Property Name="Required" Type="bit" />
+        </EntityType>
+        <EntityType Name="PERMISSIONS">
+          <Key>
+            <PropertyRef Name="Permission_Id" />
+          </Key>
+          <Property Name="Permission_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PermissionDescription" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product_Comments">
+          <Key>
+            <PropertyRef Name="CommentID" />
+          </Key>
+          <Property Name="CommentID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="150" />
+          <Property Name="Text" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="ProductID" Type="uniqueidentifier" />
+          <Property Name="ParentID" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="Product_Features">
+          <Key>
+            <PropertyRef Name="PF_ID" />
+          </Key>
+          <Property Name="PF_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Value" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Price" Type="int" />
+          <Property Name="ProductID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FeatureID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product_Gallery">
+          <Key>
+            <PropertyRef Name="GalleryID" />
+          </Key>
+          <Property Name="GalleryID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ImageName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProductID" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="Product_Groups">
+          <Key>
+            <PropertyRef Name="GroupID" />
+          </Key>
+          <Property Name="GroupTitle" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="GroupID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product_Tags">
+          <Key>
+            <PropertyRef Name="TagID" />
+          </Key>
+          <Property Name="TagID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TagTitle" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ProductID" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="ShortDescription" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" />
+          <Property Name="Productimage" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Price" Type="int" Nullable="false" />
+          <Property Name="GroupID" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="REPORTS">
+          <Key>
+            <PropertyRef Name="Report_Id" />
+          </Key>
+          <Property Name="Report_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastModified" Type="datetime" Nullable="false" />
+          <Property Name="Inactive" Type="bit" Nullable="false" />
+          <Property Name="ReportName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ReportDescription" Type="nvarchar(max)" />
+          <Property Name="Template" Type="nvarchar" MaxLength="50" />
+          <Property Name="StoredProcedureName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ROLES">
+          <Key>
+            <PropertyRef Name="Role_Id" />
+          </Key>
+          <Property Name="Role_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RoleDescription" Type="nvarchar" MaxLength="250" />
+          <Property Name="IsSysAdmin" Type="bit" Nullable="false" />
+          <Property Name="LastModified" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="USERS">
+          <Key>
+            <PropertyRef Name="User_Id" />
+          </Key>
+          <Property Name="User_Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="LastModified" Type="datetime2" Precision="7" />
+          <Property Name="Inactive" Type="bit" />
+          <Property Name="Firstname" Type="nvarchar" MaxLength="50" />
+          <Property Name="Lastname" Type="nvarchar" MaxLength="50" />
+          <Property Name="Title" Type="nvarchar" MaxLength="30" />
+          <Property Name="Initial" Type="nvarchar" MaxLength="3" />
+          <Property Name="EMail" Type="nvarchar" MaxLength="40" />
+          <Property Name="Password" Type="varchar" MaxLength="150" />
+          <Property Name="ActiveCode" Type="varchar" MaxLength="50" />
+          <Property Name="Pic" Type="varchar" MaxLength="45" />
+          <Property Name="FLName" Type="nvarchar" MaxLength="101" StoreGeneratedPattern="Computed" />
+          <Property Name="LFName" Type="nvarchar" MaxLength="101" StoreGeneratedPattern="Computed" />
+          <Property Name="Post" Type="nvarchar" MaxLength="250" />
+          <Property Name="Department" Type="nvarchar" MaxLength="50" />
+          <Property Name="Code" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Videos">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="IsTeaching" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WareHouse">
+          <Key>
+            <PropertyRef Name="WareHouseID" />
+          </Key>
+          <Property Name="WareHouseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeID" Type="int" Nullable="false" />
+          <Property Name="OrderID" Type="int" />
+          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="ProductID" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="WareHouse_Types">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="int" Nullable="false" />
+          <Property Name="TypeTitle" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Automation_Messages_Automation_GenericTasks">
+          <End Role="Automation_Generic" Type="Self.Automation_Generic" Multiplicity="0..1" />
+          <End Role="Automation_Messages" Type="Self.Automation_Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Automation_Generic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Automation_Messages">
+              <PropertyRef Name="genericId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Automation_Tasks_Automation_GenericTasks">
+          <End Role="Automation_Generic" Type="Self.Automation_Generic" Multiplicity="0..1" />
+          <End Role="Automation_Tasks" Type="Self.Automation_Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Automation_Generic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Automation_Tasks">
+              <PropertyRef Name="genericId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaniChav_ReturnedProducts_Automation_GenericTasks">
+          <End Role="Automation_Generic" Type="Self.Automation_Generic" Multiplicity="0..1" />
+          <End Role="BaniChav_ReturnedProducts" Type="Self.BaniChav_ReturnedProducts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Automation_Generic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BaniChav_ReturnedProducts">
+              <PropertyRef Name="genericId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaniChav_ReturnedProducts_BaniChav_Total">
+          <End Role="BaniChav_Total" Type="Self.BaniChav_Total" Multiplicity="0..1" />
+          <End Role="BaniChav_ReturnedProducts" Type="Self.BaniChav_ReturnedProducts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaniChav_Total">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BaniChav_ReturnedProducts">
+              <PropertyRef Name="BaniChav_TotalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaniChav_Total_USERS">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="BaniChav_Total" Type="Self.BaniChav_Total" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="BaniChav_Total">
+              <PropertyRef Name="SuperVisorOfSaleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaniChav_Total_USERS1">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="BaniChav_Total" Type="Self.BaniChav_Total" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="BaniChav_Total">
+              <PropertyRef Name="SuperVisorOfSupplyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaniChav_Total_USERS2">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="BaniChav_Total" Type="Self.BaniChav_Total" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="BaniChav_Total">
+              <PropertyRef Name="VisitorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaniChav_Total_USERS3">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="BaniChav_Total" Type="Self.BaniChav_Total" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="BaniChav_Total">
+              <PropertyRef Name="DelivererID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Favorites_News">
+          <End Role="News" Type="Self.News" Multiplicity="0..1" />
+          <End Role="Favorites" Type="Self.Favorites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="News">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Favorites">
+              <PropertyRef Name="NewsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Favorites_Videos">
+          <End Role="Videos" Type="Self.Videos" Multiplicity="0..1" />
+          <End Role="Favorites" Type="Self.Favorites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Videos">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Favorites">
+              <PropertyRef Name="VideosID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ForumComments_ForumGroups">
+          <End Role="ForumGroups" Type="Self.ForumGroups" Multiplicity="1" />
+          <End Role="ForumComments" Type="Self.ForumComments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ForumGroups">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ForumComments">
+              <PropertyRef Name="ForumGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ForumComments_ForumPosts">
+          <End Role="ForumPosts" Type="Self.ForumPosts" Multiplicity="1" />
+          <End Role="ForumComments" Type="Self.ForumComments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ForumPosts">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ForumComments">
+              <PropertyRef Name="ForumPostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ForumComments_USERS">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="ForumComments" Type="Self.ForumComments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="ForumComments">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ForumGroups_USERS">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="ForumGroups" Type="Self.ForumGroups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="ForumGroups">
+              <PropertyRef Name="AdminUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ForumPosts_ForumGroups">
+          <End Role="ForumGroups" Type="Self.ForumGroups" Multiplicity="1" />
+          <End Role="ForumPosts" Type="Self.ForumPosts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ForumGroups">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ForumPosts">
+              <PropertyRef Name="ForumGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ForumPosts_USERS">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="ForumPosts" Type="Self.ForumPosts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="ForumPosts">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LNK_REPORT_PARAMETER_PARAMETERS">
+          <End Role="PARAMETERS" Type="Self.PARAMETERS" Multiplicity="1" />
+          <End Role="LNK_REPORT_PARAMETER" Type="Self.LNK_REPORT_PARAMETER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PARAMETERS">
+              <PropertyRef Name="Parameter_Id" />
+            </Principal>
+            <Dependent Role="LNK_REPORT_PARAMETER">
+              <PropertyRef Name="Parameter_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LNK_REPORT_PARAMETER_REPORTS">
+          <End Role="REPORTS" Type="Self.REPORTS" Multiplicity="1" />
+          <End Role="LNK_REPORT_PARAMETER" Type="Self.LNK_REPORT_PARAMETER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REPORTS">
+              <PropertyRef Name="Report_Id" />
+            </Principal>
+            <Dependent Role="LNK_REPORT_PARAMETER">
+              <PropertyRef Name="Report_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LNK_ROLE_PERMISSION_PERMISSIONS">
+          <End Role="PERMISSIONS" Type="Self.PERMISSIONS" Multiplicity="1" />
+          <End Role="LNK_ROLE_PERMISSION" Type="Self.LNK_ROLE_PERMISSION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERMISSIONS">
+              <PropertyRef Name="Permission_Id" />
+            </Principal>
+            <Dependent Role="LNK_ROLE_PERMISSION">
+              <PropertyRef Name="Permission_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LNK_ROLE_PERMISSION_ROLES">
+          <End Role="ROLES" Type="Self.ROLES" Multiplicity="1" />
+          <End Role="LNK_ROLE_PERMISSION" Type="Self.LNK_ROLE_PERMISSION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLES">
+              <PropertyRef Name="Role_Id" />
+            </Principal>
+            <Dependent Role="LNK_ROLE_PERMISSION">
+              <PropertyRef Name="Role_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LNK_ROLE_REPORT_REPORTS">
+          <End Role="REPORTS" Type="Self.REPORTS" Multiplicity="1" />
+          <End Role="LNK_ROLE_REPORT" Type="Self.LNK_ROLE_REPORT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REPORTS">
+              <PropertyRef Name="Report_Id" />
+            </Principal>
+            <Dependent Role="LNK_ROLE_REPORT">
+              <PropertyRef Name="Report_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LNK_ROLE_REPORT_ROLES">
+          <End Role="ROLES" Type="Self.ROLES" Multiplicity="1" />
+          <End Role="LNK_ROLE_REPORT" Type="Self.LNK_ROLE_REPORT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLES">
+              <PropertyRef Name="Role_Id" />
+            </Principal>
+            <Dependent Role="LNK_ROLE_REPORT">
+              <PropertyRef Name="Role_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LNK_USER_ROLE_ROLES">
+          <End Role="ROLES" Type="Self.ROLES" Multiplicity="1" />
+          <End Role="LNK_USER_ROLE" Type="Self.LNK_USER_ROLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLES">
+              <PropertyRef Name="Role_Id" />
+            </Principal>
+            <Dependent Role="LNK_USER_ROLE">
+              <PropertyRef Name="Role_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LNK_USER_ROLE_USERS">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="LNK_USER_ROLE" Type="Self.LNK_USER_ROLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="LNK_USER_ROLE">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LNK_User_Video_Videos">
+          <End Role="Videos" Type="Self.Videos" Multiplicity="1" />
+          <End Role="LNK_User_Video" Type="Self.LNK_User_Video" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Videos">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LNK_User_Video">
+              <PropertyRef Name="VideoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_News_Comments_News">
+          <End Role="News" Type="Self.News" Multiplicity="1" />
+          <End Role="News_Comments" Type="Self.News_Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="News">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="News_Comments">
+              <PropertyRef Name="NewsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_USERS">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Comments_Product_Comments">
+          <End Role="Product_Comments" Type="Self.Product_Comments" Multiplicity="0..1" />
+          <End Role="Product_Comments1" Type="Self.Product_Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product_Comments">
+              <PropertyRef Name="CommentID" />
+            </Principal>
+            <Dependent Role="Product_Comments1">
+              <PropertyRef Name="ParentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Comments_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="Product_Comments" Type="Self.Product_Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Product_Comments">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Features_Features">
+          <End Role="Features" Type="Self.Features" Multiplicity="1" />
+          <End Role="Product_Features" Type="Self.Product_Features" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Features">
+              <PropertyRef Name="FeatureID" />
+            </Principal>
+            <Dependent Role="Product_Features">
+              <PropertyRef Name="FeatureID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Features_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Product_Features" Type="Self.Product_Features" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Product_Features">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Gallery_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="Product_Gallery" Type="Self.Product_Gallery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Product_Gallery">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Tags_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="Product_Tags" Type="Self.Product_Tags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Product_Tags">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Product_Groups">
+          <End Role="Product_Groups" Type="Self.Product_Groups" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product_Groups">
+              <PropertyRef Name="GroupID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Task_USERS">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="Automation_Tasks" Type="Self.Automation_Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Automation_Tasks">
+              <PropertyRef Name="Responsible" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WareHouse_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="WareHouse" Type="Self.WareHouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="WareHouse">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WareHouse_WareHouse_Types1">
+          <End Role="WareHouse_Types" Type="Self.WareHouse_Types" Multiplicity="1" />
+          <End Role="WareHouse" Type="Self.WareHouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WareHouse_Types">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="WareHouse">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModernDB2ModelStoreContainer">
+          <EntitySet Name="Automation_Generic" EntityType="Self.Automation_Generic" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Automation_Messages" EntityType="Self.Automation_Messages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Automation_Tasks" EntityType="Self.Automation_Tasks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BaniChav_ReturnedProducts" EntityType="Self.BaniChav_ReturnedProducts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BaniChav_Total" EntityType="Self.BaniChav_Total" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Favorites" EntityType="Self.Favorites" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Features" EntityType="Self.Features" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ForumComments" EntityType="Self.ForumComments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ForumGroups" EntityType="Self.ForumGroups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ForumPosts" EntityType="Self.ForumPosts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Gallery" EntityType="Self.Gallery" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LNK_REPORT_PARAMETER" EntityType="Self.LNK_REPORT_PARAMETER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LNK_ROLE_PERMISSION" EntityType="Self.LNK_ROLE_PERMISSION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LNK_ROLE_REPORT" EntityType="Self.LNK_ROLE_REPORT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LNK_USER_ROLE" EntityType="Self.LNK_USER_ROLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LNK_User_Video" EntityType="Self.LNK_User_Video" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="News" EntityType="Self.News" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="News_Comments" EntityType="Self.News_Comments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PARAMETERS" EntityType="Self.PARAMETERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PERMISSIONS" EntityType="Self.PERMISSIONS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_Comments" EntityType="Self.Product_Comments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_Features" EntityType="Self.Product_Features" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_Gallery" EntityType="Self.Product_Gallery" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_Groups" EntityType="Self.Product_Groups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_Tags" EntityType="Self.Product_Tags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="REPORTS" EntityType="Self.REPORTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROLES" EntityType="Self.ROLES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Videos" EntityType="Self.Videos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WareHouse" EntityType="Self.WareHouse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WareHouse_Types" EntityType="Self.WareHouse_Types" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Automation_Messages_Automation_GenericTasks" Association="Self.FK_Automation_Messages_Automation_GenericTasks">
+            <End Role="Automation_Generic" EntitySet="Automation_Generic" />
+            <End Role="Automation_Messages" EntitySet="Automation_Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Automation_Tasks_Automation_GenericTasks" Association="Self.FK_Automation_Tasks_Automation_GenericTasks">
+            <End Role="Automation_Generic" EntitySet="Automation_Generic" />
+            <End Role="Automation_Tasks" EntitySet="Automation_Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaniChav_ReturnedProducts_Automation_GenericTasks" Association="Self.FK_BaniChav_ReturnedProducts_Automation_GenericTasks">
+            <End Role="Automation_Generic" EntitySet="Automation_Generic" />
+            <End Role="BaniChav_ReturnedProducts" EntitySet="BaniChav_ReturnedProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaniChav_ReturnedProducts_BaniChav_Total" Association="Self.FK_BaniChav_ReturnedProducts_BaniChav_Total">
+            <End Role="BaniChav_Total" EntitySet="BaniChav_Total" />
+            <End Role="BaniChav_ReturnedProducts" EntitySet="BaniChav_ReturnedProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaniChav_Total_USERS" Association="Self.FK_BaniChav_Total_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="BaniChav_Total" EntitySet="BaniChav_Total" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaniChav_Total_USERS1" Association="Self.FK_BaniChav_Total_USERS1">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="BaniChav_Total" EntitySet="BaniChav_Total" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaniChav_Total_USERS2" Association="Self.FK_BaniChav_Total_USERS2">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="BaniChav_Total" EntitySet="BaniChav_Total" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaniChav_Total_USERS3" Association="Self.FK_BaniChav_Total_USERS3">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="BaniChav_Total" EntitySet="BaniChav_Total" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Favorites_News" Association="Self.FK_Favorites_News">
+            <End Role="News" EntitySet="News" />
+            <End Role="Favorites" EntitySet="Favorites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Favorites_Videos" Association="Self.FK_Favorites_Videos">
+            <End Role="Videos" EntitySet="Videos" />
+            <End Role="Favorites" EntitySet="Favorites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ForumComments_ForumGroups" Association="Self.FK_ForumComments_ForumGroups">
+            <End Role="ForumGroups" EntitySet="ForumGroups" />
+            <End Role="ForumComments" EntitySet="ForumComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ForumComments_ForumPosts" Association="Self.FK_ForumComments_ForumPosts">
+            <End Role="ForumPosts" EntitySet="ForumPosts" />
+            <End Role="ForumComments" EntitySet="ForumComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ForumComments_USERS" Association="Self.FK_ForumComments_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="ForumComments" EntitySet="ForumComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ForumGroups_USERS" Association="Self.FK_ForumGroups_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="ForumGroups" EntitySet="ForumGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ForumPosts_ForumGroups" Association="Self.FK_ForumPosts_ForumGroups">
+            <End Role="ForumGroups" EntitySet="ForumGroups" />
+            <End Role="ForumPosts" EntitySet="ForumPosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ForumPosts_USERS" Association="Self.FK_ForumPosts_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="ForumPosts" EntitySet="ForumPosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LNK_REPORT_PARAMETER_PARAMETERS" Association="Self.FK_LNK_REPORT_PARAMETER_PARAMETERS">
+            <End Role="PARAMETERS" EntitySet="PARAMETERS" />
+            <End Role="LNK_REPORT_PARAMETER" EntitySet="LNK_REPORT_PARAMETER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LNK_REPORT_PARAMETER_REPORTS" Association="Self.FK_LNK_REPORT_PARAMETER_REPORTS">
+            <End Role="REPORTS" EntitySet="REPORTS" />
+            <End Role="LNK_REPORT_PARAMETER" EntitySet="LNK_REPORT_PARAMETER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LNK_ROLE_PERMISSION_PERMISSIONS" Association="Self.FK_LNK_ROLE_PERMISSION_PERMISSIONS">
+            <End Role="PERMISSIONS" EntitySet="PERMISSIONS" />
+            <End Role="LNK_ROLE_PERMISSION" EntitySet="LNK_ROLE_PERMISSION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LNK_ROLE_PERMISSION_ROLES" Association="Self.FK_LNK_ROLE_PERMISSION_ROLES">
+            <End Role="ROLES" EntitySet="ROLES" />
+            <End Role="LNK_ROLE_PERMISSION" EntitySet="LNK_ROLE_PERMISSION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LNK_ROLE_REPORT_REPORTS" Association="Self.FK_LNK_ROLE_REPORT_REPORTS">
+            <End Role="REPORTS" EntitySet="REPORTS" />
+            <End Role="LNK_ROLE_REPORT" EntitySet="LNK_ROLE_REPORT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LNK_ROLE_REPORT_ROLES" Association="Self.FK_LNK_ROLE_REPORT_ROLES">
+            <End Role="ROLES" EntitySet="ROLES" />
+            <End Role="LNK_ROLE_REPORT" EntitySet="LNK_ROLE_REPORT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LNK_USER_ROLE_ROLES" Association="Self.FK_LNK_USER_ROLE_ROLES">
+            <End Role="ROLES" EntitySet="ROLES" />
+            <End Role="LNK_USER_ROLE" EntitySet="LNK_USER_ROLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LNK_USER_ROLE_USERS" Association="Self.FK_LNK_USER_ROLE_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="LNK_USER_ROLE" EntitySet="LNK_USER_ROLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LNK_User_Video_Videos" Association="Self.FK_LNK_User_Video_Videos">
+            <End Role="Videos" EntitySet="Videos" />
+            <End Role="LNK_User_Video" EntitySet="LNK_User_Video" />
+          </AssociationSet>
+          <AssociationSet Name="FK_News_Comments_News" Association="Self.FK_News_Comments_News">
+            <End Role="News" EntitySet="News" />
+            <End Role="News_Comments" EntitySet="News_Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Products" Association="Self.FK_OrderDetails_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_USERS" Association="Self.FK_Orders_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Comments_Product_Comments" Association="Self.FK_Product_Comments_Product_Comments">
+            <End Role="Product_Comments" EntitySet="Product_Comments" />
+            <End Role="Product_Comments1" EntitySet="Product_Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Comments_Products" Association="Self.FK_Product_Comments_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Product_Comments" EntitySet="Product_Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Features_Features" Association="Self.FK_Product_Features_Features">
+            <End Role="Features" EntitySet="Features" />
+            <End Role="Product_Features" EntitySet="Product_Features" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Features_Products" Association="Self.FK_Product_Features_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Product_Features" EntitySet="Product_Features" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Gallery_Products" Association="Self.FK_Product_Gallery_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Product_Gallery" EntitySet="Product_Gallery" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Tags_Products" Association="Self.FK_Product_Tags_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Product_Tags" EntitySet="Product_Tags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Product_Groups" Association="Self.FK_Products_Product_Groups">
+            <End Role="Product_Groups" EntitySet="Product_Groups" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Task_USERS" Association="Self.FK_Task_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="Automation_Tasks" EntitySet="Automation_Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WareHouse_Products" Association="Self.FK_WareHouse_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="WareHouse" EntitySet="WareHouse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WareHouse_WareHouse_Types1" Association="Self.FK_WareHouse_WareHouse_Types1">
+            <End Role="WareHouse_Types" EntitySet="WareHouse_Types" />
+            <End Role="WareHouse" EntitySet="WareHouse" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ModernDB2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="MainDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Favorites" EntityType="ModernDB2Model.Favorites" />
+          <EntitySet Name="Features" EntityType="ModernDB2Model.Features" />
+          <EntitySet Name="Gallery" EntityType="ModernDB2Model.Gallery" />
+          <EntitySet Name="LNK_User_Video" EntityType="ModernDB2Model.LNK_User_Video" />
+          <EntitySet Name="News" EntityType="ModernDB2Model.News" />
+          <EntitySet Name="News_Comments" EntityType="ModernDB2Model.News_Comments" />
+          <EntitySet Name="OrderDetails" EntityType="ModernDB2Model.OrderDetails" />
+          <EntitySet Name="PARAMETERS" EntityType="ModernDB2Model.PARAMETERS" />
+          <EntitySet Name="PERMISSIONS" EntityType="ModernDB2Model.PERMISSIONS" />
+          <EntitySet Name="Product_Gallery" EntityType="ModernDB2Model.Product_Gallery" />
+          <EntitySet Name="Product_Groups" EntityType="ModernDB2Model.Product_Groups" />
+          <EntitySet Name="Product_Tags" EntityType="ModernDB2Model.Product_Tags" />
+          <EntitySet Name="Products" EntityType="ModernDB2Model.Products" />
+          <EntitySet Name="REPORTS" EntityType="ModernDB2Model.REPORTS" />
+          <EntitySet Name="Videos" EntityType="ModernDB2Model.Videos" />
+          <EntitySet Name="WareHouse" EntityType="ModernDB2Model.WareHouse" />
+          <EntitySet Name="WareHouse_Types" EntityType="ModernDB2Model.WareHouse_Types" />
+          <AssociationSet Name="FK_Favorites_News" Association="ModernDB2Model.FK_Favorites_News">
+            <End Role="News" EntitySet="News" />
+            <End Role="Favorites" EntitySet="Favorites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Favorites_Videos" Association="ModernDB2Model.FK_Favorites_Videos">
+            <End Role="Videos" EntitySet="Videos" />
+            <End Role="Favorites" EntitySet="Favorites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LNK_User_Video_Videos" Association="ModernDB2Model.FK_LNK_User_Video_Videos">
+            <End Role="Videos" EntitySet="Videos" />
+            <End Role="LNK_User_Video" EntitySet="LNK_User_Video" />
+          </AssociationSet>
+          <AssociationSet Name="FK_News_Comments_News" Association="ModernDB2Model.FK_News_Comments_News">
+            <End Role="News" EntitySet="News" />
+            <End Role="News_Comments" EntitySet="News_Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Products" Association="ModernDB2Model.FK_OrderDetails_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Gallery_Products" Association="ModernDB2Model.FK_Product_Gallery_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Product_Gallery" EntitySet="Product_Gallery" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Product_Groups" Association="ModernDB2Model.FK_Products_Product_Groups">
+            <End Role="Product_Groups" EntitySet="Product_Groups" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Tags_Products" Association="ModernDB2Model.FK_Product_Tags_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Product_Tags" EntitySet="Product_Tags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WareHouse_Products" Association="ModernDB2Model.FK_WareHouse_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="WareHouse" EntitySet="WareHouse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WareHouse_WareHouse_Types1" Association="ModernDB2Model.FK_WareHouse_WareHouse_Types1">
+            <End Role="WareHouse_Types" EntitySet="WareHouse_Types" />
+            <End Role="WareHouse" EntitySet="WareHouse" />
+          </AssociationSet>
+          <AssociationSet Name="LNK_REPORT_PARAMETER" Association="ModernDB2Model.LNK_REPORT_PARAMETER">
+            <End Role="PARAMETERS" EntitySet="PARAMETERS" />
+            <End Role="REPORTS" EntitySet="REPORTS" />
+          </AssociationSet>
+          <EntitySet Name="Product_Features" EntityType="ModernDB2Model.Product_Features" />
+          <AssociationSet Name="FK_Product_Features_Features" Association="ModernDB2Model.FK_Product_Features_Features">
+            <End Role="Features" EntitySet="Features" />
+            <End Role="Product_Features" EntitySet="Product_Features" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Features_Products" Association="ModernDB2Model.FK_Product_Features_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Product_Features" EntitySet="Product_Features" />
+          </AssociationSet>
+          <EntitySet Name="Product_Comments" EntityType="ModernDB2Model.Product_Comments" />
+          <AssociationSet Name="FK_Product_Comments_Product_Comments" Association="ModernDB2Model.FK_Product_Comments_Product_Comments">
+            <End Role="Product_Comments" EntitySet="Product_Comments" />
+            <End Role="Product_Comments1" EntitySet="Product_Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Comments_Products" Association="ModernDB2Model.FK_Product_Comments_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Product_Comments" EntitySet="Product_Comments" />
+          </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="ModernDB2Model.sysdiagrams" />
+          <EntitySet Name="ROLES" EntityType="ModernDB2Model.ROLES" />
+          <AssociationSet Name="LNK_ROLE_PERMISSION" Association="ModernDB2Model.LNK_ROLE_PERMISSION">
+            <End Role="PERMISSIONS" EntitySet="PERMISSIONS" />
+            <End Role="ROLES" EntitySet="ROLES" />
+          </AssociationSet>
+          <AssociationSet Name="LNK_ROLE_REPORT" Association="ModernDB2Model.LNK_ROLE_REPORT">
+            <End Role="REPORTS" EntitySet="REPORTS" />
+            <End Role="ROLES" EntitySet="ROLES" />
+          </AssociationSet>
+          <EntitySet Name="Orders" EntityType="ModernDB2Model.Orders" />
+          <AssociationSet Name="FK_OrderDetails_Orders" Association="ModernDB2Model.FK_OrderDetails_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <EntitySet Name="ForumComments" EntityType="ModernDB2Model.ForumComments" />
+          <EntitySet Name="ForumGroups" EntityType="ModernDB2Model.ForumGroups" />
+          <EntitySet Name="ForumPosts" EntityType="ModernDB2Model.ForumPosts" />
+          <AssociationSet Name="FK_ForumComments_ForumGroups" Association="ModernDB2Model.FK_ForumComments_ForumGroups">
+            <End Role="ForumGroups" EntitySet="ForumGroups" />
+            <End Role="ForumComments" EntitySet="ForumComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ForumComments_ForumPosts" Association="ModernDB2Model.FK_ForumComments_ForumPosts">
+            <End Role="ForumPosts" EntitySet="ForumPosts" />
+            <End Role="ForumComments" EntitySet="ForumComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ForumPosts_ForumGroups" Association="ModernDB2Model.FK_ForumPosts_ForumGroups">
+            <End Role="ForumGroups" EntitySet="ForumGroups" />
+            <End Role="ForumPosts" EntitySet="ForumPosts" />
+          </AssociationSet>
+          <EntitySet Name="USERS" EntityType="ModernDB2Model.USERS" />
+          <AssociationSet Name="FK_ForumComments_USERS" Association="ModernDB2Model.FK_ForumComments_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="ForumComments" EntitySet="ForumComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ForumGroups_USERS" Association="ModernDB2Model.FK_ForumGroups_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="ForumGroups" EntitySet="ForumGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ForumPosts_USERS" Association="ModernDB2Model.FK_ForumPosts_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="ForumPosts" EntitySet="ForumPosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_USERS" Association="ModernDB2Model.FK_Orders_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="LNK_USER_ROLE" Association="ModernDB2Model.LNK_USER_ROLE">
+            <End Role="ROLES" EntitySet="ROLES" />
+            <End Role="USERS" EntitySet="USERS" />
+          </AssociationSet>
+          <EntitySet Name="BaniChav_Total" EntityType="ModernDB2Model.BaniChav_Total" />
+          <AssociationSet Name="FK_BaniChav_Total_USERS" Association="ModernDB2Model.FK_BaniChav_Total_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="BaniChav_Total" EntitySet="BaniChav_Total" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaniChav_Total_USERS1" Association="ModernDB2Model.FK_BaniChav_Total_USERS1">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="BaniChav_Total" EntitySet="BaniChav_Total" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaniChav_Total_USERS2" Association="ModernDB2Model.FK_BaniChav_Total_USERS2">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="BaniChav_Total" EntitySet="BaniChav_Total" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaniChav_Total_USERS3" Association="ModernDB2Model.FK_BaniChav_Total_USERS3">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="BaniChav_Total" EntitySet="BaniChav_Total" />
+          </AssociationSet>
+          <EntitySet Name="Automation_Generic" EntityType="ModernDB2Model.Automation_Generic" />
+          <EntitySet Name="Automation_Tasks" EntityType="ModernDB2Model.Automation_Tasks" />
+          <EntitySet Name="BaniChav_ReturnedProducts" EntityType="ModernDB2Model.BaniChav_ReturnedProducts" />
+          <AssociationSet Name="FK_Automation_Tasks_Automation_GenericTasks" Association="ModernDB2Model.FK_Automation_Tasks_Automation_GenericTasks">
+            <End Role="Automation_Generic" EntitySet="Automation_Generic" />
+            <End Role="Automation_Tasks" EntitySet="Automation_Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaniChav_ReturnedProducts_Automation_GenericTasks" Association="ModernDB2Model.FK_BaniChav_ReturnedProducts_Automation_GenericTasks">
+            <End Role="Automation_Generic" EntitySet="Automation_Generic" />
+            <End Role="BaniChav_ReturnedProducts" EntitySet="BaniChav_ReturnedProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Task_USERS" Association="ModernDB2Model.FK_Task_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="Automation_Tasks" EntitySet="Automation_Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaniChav_ReturnedProducts_BaniChav_Total" Association="ModernDB2Model.FK_BaniChav_ReturnedProducts_BaniChav_Total">
+            <End Role="BaniChav_Total" EntitySet="BaniChav_Total" />
+            <End Role="BaniChav_ReturnedProducts" EntitySet="BaniChav_ReturnedProducts" />
+          </AssociationSet>
+          <EntitySet Name="Automation_Messages" EntityType="ModernDB2Model.Automation_Messages" />
+          <AssociationSet Name="FK_Automation_Messages_Automation_GenericTasks" Association="ModernDB2Model.FK_Automation_Messages_Automation_GenericTasks">
+            <End Role="Automation_Generic" EntitySet="Automation_Generic" />
+            <End Role="Automation_Messages" EntitySet="Automation_Messages" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Favorites">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NewsID" Type="Int32" />
+          <Property Name="VideosID" Type="Int32" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="News" Relationship="ModernDB2Model.FK_Favorites_News" FromRole="Favorites" ToRole="News" />
+          <NavigationProperty Name="Videos" Relationship="ModernDB2Model.FK_Favorites_Videos" FromRole="Favorites" ToRole="Videos" />
+        </EntityType>
+        <EntityType Name="Features">
+          <Key>
+            <PropertyRef Name="FeatureID" />
+          </Key>
+          <Property Name="FeatureTitle" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="FeatureID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Product_Features" Relationship="ModernDB2Model.FK_Product_Features_Features" FromRole="Features" ToRole="Product_Features" />
+        </EntityType>
+        <EntityType Name="Gallery">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Alt" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FileData" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="IsUsedInSlider" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="LNK_User_Video">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="VideoID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Videos" Relationship="ModernDB2Model.FK_LNK_User_Video_Videos" FromRole="LNK_User_Video" ToRole="Videos" />
+        </EntityType>
+        <EntityType Name="News">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ShortDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="See" Type="Int16" />
+          <NavigationProperty Name="Favorites" Relationship="ModernDB2Model.FK_Favorites_News" FromRole="News" ToRole="Favorites" />
+          <NavigationProperty Name="News_Comments" Relationship="ModernDB2Model.FK_News_Comments_News" FromRole="News" ToRole="News_Comments" />
+        </EntityType>
+        <EntityType Name="News_Comments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NewsID" Type="Int32" Nullable="false" />
+          <Property Name="ParentID" Type="Int32" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="IsApprove" Type="Boolean" />
+          <NavigationProperty Name="News" Relationship="ModernDB2Model.FK_News_Comments_News" FromRole="News_Comments" ToRole="News" />
+        </EntityType>
+        <EntityType Name="OrderDetails">
+          <Key>
+            <PropertyRef Name="DetailID" />
+          </Key>
+          <Property Name="DetailID" Type="Guid" Nullable="false" />
+          <Property Name="ProductCount" Type="Int32" Nullable="false" />
+          <Property Name="ProductPrice" Type="Int32" Nullable="false" />
+          <Property Name="ProductID" Type="Guid" Nullable="false" />
+          <Property Name="OrderID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="ModernDB2Model.FK_OrderDetails_Products" FromRole="OrderDetails" ToRole="Products" />
+          <NavigationProperty Name="Orders" Relationship="ModernDB2Model.FK_OrderDetails_Orders" FromRole="OrderDetails" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="PARAMETERS">
+          <Key>
+            <PropertyRef Name="Parameter_Id" />
+          </Key>
+          <Property Name="Parameter_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParameterName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ParameterType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DisplayLabel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Required" Type="Boolean" />
+          <NavigationProperty Name="REPORTS" Relationship="ModernDB2Model.LNK_REPORT_PARAMETER" FromRole="PARAMETERS" ToRole="REPORTS" />
+        </EntityType>
+        <EntityType Name="PERMISSIONS">
+          <Key>
+            <PropertyRef Name="Permission_Id" />
+          </Key>
+          <Property Name="Permission_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PermissionDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ROLES" Relationship="ModernDB2Model.LNK_ROLE_PERMISSION" FromRole="PERMISSIONS" ToRole="ROLES" />
+        </EntityType>
+        <EntityType Name="Product_Gallery">
+          <Key>
+            <PropertyRef Name="GalleryID" />
+          </Key>
+          <Property Name="GalleryID" Type="Guid" Nullable="false" />
+          <Property Name="ImageName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductID" Type="Guid" />
+          <NavigationProperty Name="Products" Relationship="ModernDB2Model.FK_Product_Gallery_Products" FromRole="Product_Gallery" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Product_Groups">
+          <Key>
+            <PropertyRef Name="GroupID" />
+          </Key>
+          <Property Name="GroupTitle" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="GroupID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="ModernDB2Model.FK_Products_Product_Groups" FromRole="Product_Groups" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Product_Tags">
+          <Key>
+            <PropertyRef Name="TagID" />
+          </Key>
+          <Property Name="TagID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TagTitle" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ProductID" Type="Guid" />
+          <NavigationProperty Name="Products" Relationship="ModernDB2Model.FK_Product_Tags_Products" FromRole="Product_Tags" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Guid" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ShortDescription" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Productimage" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <Property Name="GroupID" Type="Guid" />
+          <NavigationProperty Name="OrderDetails" Relationship="ModernDB2Model.FK_OrderDetails_Products" FromRole="Products" ToRole="OrderDetails" />
+          <NavigationProperty Name="Product_Gallery" Relationship="ModernDB2Model.FK_Product_Gallery_Products" FromRole="Products" ToRole="Product_Gallery" />
+          <NavigationProperty Name="Product_Groups" Relationship="ModernDB2Model.FK_Products_Product_Groups" FromRole="Products" ToRole="Product_Groups" />
+          <NavigationProperty Name="Product_Tags" Relationship="ModernDB2Model.FK_Product_Tags_Products" FromRole="Products" ToRole="Product_Tags" />
+          <NavigationProperty Name="WareHouse" Relationship="ModernDB2Model.FK_WareHouse_Products" FromRole="Products" ToRole="WareHouse" />
+          <NavigationProperty Name="Product_Features" Relationship="ModernDB2Model.FK_Product_Features_Products" FromRole="Products" ToRole="Product_Features" />
+          <NavigationProperty Name="Product_Comments" Relationship="ModernDB2Model.FK_Product_Comments_Products" FromRole="Products" ToRole="Product_Comments" />
+        </EntityType>
+        <EntityType Name="REPORTS">
+          <Key>
+            <PropertyRef Name="Report_Id" />
+          </Key>
+          <Property Name="Report_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Inactive" Type="Boolean" Nullable="false" />
+          <Property Name="ReportName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ReportDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Template" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StoredProcedureName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PARAMETERS" Relationship="ModernDB2Model.LNK_REPORT_PARAMETER" FromRole="REPORTS" ToRole="PARAMETERS" />
+          <NavigationProperty Name="ROLES" Relationship="ModernDB2Model.LNK_ROLE_REPORT" FromRole="REPORTS" ToRole="ROLES" />
+        </EntityType>
+        <EntityType Name="Videos">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsTeaching" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Favorites" Relationship="ModernDB2Model.FK_Favorites_Videos" FromRole="Videos" ToRole="Favorites" />
+          <NavigationProperty Name="LNK_User_Video" Relationship="ModernDB2Model.FK_LNK_User_Video_Videos" FromRole="Videos" ToRole="LNK_User_Video" />
+        </EntityType>
+        <EntityType Name="WareHouse">
+          <Key>
+            <PropertyRef Name="WareHouseID" />
+          </Key>
+          <Property Name="WareHouseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeID" Type="Int32" Nullable="false" />
+          <Property Name="OrderID" Type="Int32" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ProductID" Type="Guid" />
+          <NavigationProperty Name="Products" Relationship="ModernDB2Model.FK_WareHouse_Products" FromRole="WareHouse" ToRole="Products" />
+          <NavigationProperty Name="WareHouse_Types" Relationship="ModernDB2Model.FK_WareHouse_WareHouse_Types1" FromRole="WareHouse" ToRole="WareHouse_Types" />
+        </EntityType>
+        <EntityType Name="WareHouse_Types">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="Int32" Nullable="false" />
+          <Property Name="TypeTitle" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="WareHouse" Relationship="ModernDB2Model.FK_WareHouse_WareHouse_Types1" FromRole="WareHouse_Types" ToRole="WareHouse" />
+        </EntityType>
+        <Association Name="FK_Favorites_News">
+          <End Type="ModernDB2Model.News" Role="News" Multiplicity="0..1" />
+          <End Type="ModernDB2Model.Favorites" Role="Favorites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="News">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Favorites">
+              <PropertyRef Name="NewsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Favorites_Videos">
+          <End Type="ModernDB2Model.Videos" Role="Videos" Multiplicity="0..1" />
+          <End Type="ModernDB2Model.Favorites" Role="Favorites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Videos">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Favorites">
+              <PropertyRef Name="VideosID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LNK_User_Video_Videos">
+          <End Type="ModernDB2Model.Videos" Role="Videos" Multiplicity="1" />
+          <End Type="ModernDB2Model.LNK_User_Video" Role="LNK_User_Video" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Videos">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LNK_User_Video">
+              <PropertyRef Name="VideoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_News_Comments_News">
+          <End Type="ModernDB2Model.News" Role="News" Multiplicity="1" />
+          <End Type="ModernDB2Model.News_Comments" Role="News_Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="News">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="News_Comments">
+              <PropertyRef Name="NewsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Products">
+          <End Type="ModernDB2Model.Products" Role="Products" Multiplicity="1" />
+          <End Type="ModernDB2Model.OrderDetails" Role="OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Gallery_Products">
+          <End Type="ModernDB2Model.Products" Role="Products" Multiplicity="0..1" />
+          <End Type="ModernDB2Model.Product_Gallery" Role="Product_Gallery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Product_Gallery">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Product_Groups">
+          <End Type="ModernDB2Model.Product_Groups" Role="Product_Groups" Multiplicity="0..1" />
+          <End Type="ModernDB2Model.Products" Role="Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product_Groups">
+              <PropertyRef Name="GroupID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Tags_Products">
+          <End Type="ModernDB2Model.Products" Role="Products" Multiplicity="0..1" />
+          <End Type="ModernDB2Model.Product_Tags" Role="Product_Tags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Product_Tags">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WareHouse_Products">
+          <End Type="ModernDB2Model.Products" Role="Products" Multiplicity="0..1" />
+          <End Type="ModernDB2Model.WareHouse" Role="WareHouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="WareHouse">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WareHouse_WareHouse_Types1">
+          <End Type="ModernDB2Model.WareHouse_Types" Role="WareHouse_Types" Multiplicity="1" />
+          <End Type="ModernDB2Model.WareHouse" Role="WareHouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WareHouse_Types">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="WareHouse">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LNK_REPORT_PARAMETER">
+          <End Type="ModernDB2Model.PARAMETERS" Role="PARAMETERS" Multiplicity="*" />
+          <End Type="ModernDB2Model.REPORTS" Role="REPORTS" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Product_Features">
+          <Key>
+            <PropertyRef Name="PF_ID" />
+          </Key>
+          <Property Name="PF_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Value" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Int32" />
+          <Property Name="ProductID" Type="Guid" Nullable="false" />
+          <Property Name="FeatureID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Features" Relationship="ModernDB2Model.FK_Product_Features_Features" FromRole="Product_Features" ToRole="Features" />
+          <NavigationProperty Name="Products" Relationship="ModernDB2Model.FK_Product_Features_Products" FromRole="Product_Features" ToRole="Products" />
+        </EntityType>
+        <Association Name="FK_Product_Features_Features">
+          <End Type="ModernDB2Model.Features" Role="Features" Multiplicity="1" />
+          <End Type="ModernDB2Model.Product_Features" Role="Product_Features" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Features">
+              <PropertyRef Name="FeatureID" />
+            </Principal>
+            <Dependent Role="Product_Features">
+              <PropertyRef Name="FeatureID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Features_Products">
+          <End Type="ModernDB2Model.Products" Role="Products" Multiplicity="1" />
+          <End Type="ModernDB2Model.Product_Features" Role="Product_Features" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Product_Features">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Product_Comments">
+          <Key>
+            <PropertyRef Name="CommentID" />
+          </Key>
+          <Property Name="CommentID" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ProductID" Type="Guid" />
+          <Property Name="ParentID" Type="Guid" />
+          <NavigationProperty Name="Product_Comments1" Relationship="ModernDB2Model.FK_Product_Comments_Product_Comments" FromRole="Product_Comments" ToRole="Product_Comments1" />
+          <NavigationProperty Name="Product_Comments2" Relationship="ModernDB2Model.FK_Product_Comments_Product_Comments" FromRole="Product_Comments1" ToRole="Product_Comments" />
+          <NavigationProperty Name="Products" Relationship="ModernDB2Model.FK_Product_Comments_Products" FromRole="Product_Comments" ToRole="Products" />
+        </EntityType>
+        <Association Name="FK_Product_Comments_Product_Comments">
+          <End Type="ModernDB2Model.Product_Comments" Role="Product_Comments" Multiplicity="0..1" />
+          <End Type="ModernDB2Model.Product_Comments" Role="Product_Comments1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product_Comments">
+              <PropertyRef Name="CommentID" />
+            </Principal>
+            <Dependent Role="Product_Comments1">
+              <PropertyRef Name="ParentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Comments_Products">
+          <End Type="ModernDB2Model.Products" Role="Products" Multiplicity="0..1" />
+          <End Type="ModernDB2Model.Product_Comments" Role="Product_Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Product_Comments">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="ROLES">
+          <Key>
+            <PropertyRef Name="Role_Id" />
+          </Key>
+          <Property Name="Role_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RoleDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IsSysAdmin" Type="Boolean" Nullable="false" />
+          <Property Name="LastModified" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="PERMISSIONS" Relationship="ModernDB2Model.LNK_ROLE_PERMISSION" FromRole="ROLES" ToRole="PERMISSIONS" />
+          <NavigationProperty Name="REPORTS" Relationship="ModernDB2Model.LNK_ROLE_REPORT" FromRole="ROLES" ToRole="REPORTS" />
+          <NavigationProperty Name="USERS" Relationship="ModernDB2Model.LNK_USER_ROLE" FromRole="ROLES" ToRole="USERS" />
+        </EntityType>
+        <Association Name="LNK_ROLE_PERMISSION">
+          <End Type="ModernDB2Model.PERMISSIONS" Role="PERMISSIONS" Multiplicity="*" />
+          <End Type="ModernDB2Model.ROLES" Role="ROLES" Multiplicity="*" />
+        </Association>
+        <Association Name="LNK_ROLE_REPORT">
+          <End Type="ModernDB2Model.REPORTS" Role="REPORTS" Multiplicity="*" />
+          <End Type="ModernDB2Model.ROLES" Role="ROLES" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="UserID" Type="Guid" />
+          <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsFinaly" Type="Boolean" Nullable="false" />
+          <Property Name="OrderID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="OrderDetails" Relationship="ModernDB2Model.FK_OrderDetails_Orders" FromRole="Orders" ToRole="OrderDetails" />
+          <NavigationProperty Name="USERS" Relationship="ModernDB2Model.FK_Orders_USERS" FromRole="Orders" ToRole="USERS" />
+        </EntityType>
+        <Association Name="FK_OrderDetails_Orders">
+          <End Type="ModernDB2Model.Orders" Role="Orders" Multiplicity="1" />
+          <End Type="ModernDB2Model.OrderDetails" Role="OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ForumComments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ForumPostID" Type="Guid" Nullable="false" />
+          <Property Name="ForumGroupID" Type="Guid" Nullable="false" />
+          <Property Name="ParentID" Type="Guid" />
+          <Property Name="CreatedBy" Type="Guid" />
+          <NavigationProperty Name="ForumGroups" Relationship="ModernDB2Model.FK_ForumComments_ForumGroups" FromRole="ForumComments" ToRole="ForumGroups" />
+          <NavigationProperty Name="ForumPosts" Relationship="ModernDB2Model.FK_ForumComments_ForumPosts" FromRole="ForumComments" ToRole="ForumPosts" />
+          <NavigationProperty Name="USERS" Relationship="ModernDB2Model.FK_ForumComments_USERS" FromRole="ForumComments" ToRole="USERS" />
+        </EntityType>
+        <EntityType Name="ForumGroups">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AdminUserId" Type="Guid" />
+          <Property Name="ParentID" Type="Guid" />
+          <NavigationProperty Name="ForumComments" Relationship="ModernDB2Model.FK_ForumComments_ForumGroups" FromRole="ForumGroups" ToRole="ForumComments" />
+          <NavigationProperty Name="ForumPosts" Relationship="ModernDB2Model.FK_ForumPosts_ForumGroups" FromRole="ForumGroups" ToRole="ForumPosts" />
+          <NavigationProperty Name="USERS" Relationship="ModernDB2Model.FK_ForumGroups_USERS" FromRole="ForumGroups" ToRole="USERS" />
+        </EntityType>
+        <EntityType Name="ForumPosts">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ForumGroupID" Type="Guid" Nullable="false" />
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="CreatedBy" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="ForumComments" Relationship="ModernDB2Model.FK_ForumComments_ForumPosts" FromRole="ForumPosts" ToRole="ForumComments" />
+          <NavigationProperty Name="ForumGroups" Relationship="ModernDB2Model.FK_ForumPosts_ForumGroups" FromRole="ForumPosts" ToRole="ForumGroups" />
+          <NavigationProperty Name="USERS" Relationship="ModernDB2Model.FK_ForumPosts_USERS" FromRole="ForumPosts" ToRole="USERS" />
+        </EntityType>
+        <Association Name="FK_ForumComments_ForumGroups">
+          <End Type="ModernDB2Model.ForumGroups" Role="ForumGroups" Multiplicity="1" />
+          <End Type="ModernDB2Model.ForumComments" Role="ForumComments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ForumGroups">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ForumComments">
+              <PropertyRef Name="ForumGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ForumComments_ForumPosts">
+          <End Type="ModernDB2Model.ForumPosts" Role="ForumPosts" Multiplicity="1" />
+          <End Type="ModernDB2Model.ForumComments" Role="ForumComments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ForumPosts">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ForumComments">
+              <PropertyRef Name="ForumPostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ForumPosts_ForumGroups">
+          <End Type="ModernDB2Model.ForumGroups" Role="ForumGroups" Multiplicity="1" />
+          <End Type="ModernDB2Model.ForumPosts" Role="ForumPosts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ForumGroups">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ForumPosts">
+              <PropertyRef Name="ForumGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="USERS">
+          <Key>
+            <PropertyRef Name="User_Id" />
+          </Key>
+          <Property Name="User_Id" Type="Guid" Nullable="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="LastModified" Type="DateTime" Precision="7" />
+          <Property Name="Inactive" Type="Boolean" />
+          <Property Name="Firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Initial" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="EMail" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ActiveCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Pic" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="FLName" Type="String" MaxLength="101" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="LFName" Type="String" MaxLength="101" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Post" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ForumComments" Relationship="ModernDB2Model.FK_ForumComments_USERS" FromRole="USERS" ToRole="ForumComments" />
+          <NavigationProperty Name="ForumGroups" Relationship="ModernDB2Model.FK_ForumGroups_USERS" FromRole="USERS" ToRole="ForumGroups" />
+          <NavigationProperty Name="ForumPosts" Relationship="ModernDB2Model.FK_ForumPosts_USERS" FromRole="USERS" ToRole="ForumPosts" />
+          <NavigationProperty Name="Orders" Relationship="ModernDB2Model.FK_Orders_USERS" FromRole="USERS" ToRole="Orders" />
+          <NavigationProperty Name="ROLES" Relationship="ModernDB2Model.LNK_USER_ROLE" FromRole="USERS" ToRole="ROLES" />
+          <NavigationProperty Name="BaniChav_Total" Relationship="ModernDB2Model.FK_BaniChav_Total_USERS" FromRole="USERS" ToRole="BaniChav_Total" />
+          <NavigationProperty Name="BaniChav_Total1" Relationship="ModernDB2Model.FK_BaniChav_Total_USERS1" FromRole="USERS" ToRole="BaniChav_Total" />
+          <NavigationProperty Name="BaniChav_Total2" Relationship="ModernDB2Model.FK_BaniChav_Total_USERS2" FromRole="USERS" ToRole="BaniChav_Total" />
+          <NavigationProperty Name="BaniChav_Total3" Relationship="ModernDB2Model.FK_BaniChav_Total_USERS3" FromRole="USERS" ToRole="BaniChav_Total" />
+          <NavigationProperty Name="Automation_Tasks" Relationship="ModernDB2Model.FK_Task_USERS" FromRole="USERS" ToRole="Automation_Tasks" />
+        </EntityType>
+        <Association Name="FK_ForumComments_USERS">
+          <End Type="ModernDB2Model.USERS" Role="USERS" Multiplicity="0..1" />
+          <End Type="ModernDB2Model.ForumComments" Role="ForumComments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="ForumComments">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ForumGroups_USERS">
+          <End Type="ModernDB2Model.USERS" Role="USERS" Multiplicity="0..1" />
+          <End Type="ModernDB2Model.ForumGroups" Role="ForumGroups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="ForumGroups">
+              <PropertyRef Name="AdminUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ForumPosts_USERS">
+          <End Type="ModernDB2Model.USERS" Role="USERS" Multiplicity="1" />
+          <End Type="ModernDB2Model.ForumPosts" Role="ForumPosts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="ForumPosts">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_USERS">
+          <End Type="ModernDB2Model.USERS" Role="USERS" Multiplicity="0..1" />
+          <End Type="ModernDB2Model.Orders" Role="Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LNK_USER_ROLE">
+          <End Type="ModernDB2Model.ROLES" Role="ROLES" Multiplicity="*" />
+          <End Type="ModernDB2Model.USERS" Role="USERS" Multiplicity="*" />
+        </Association>
+        <EntityType Name="BaniChav_Total">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="BranchCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CustomerCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TeamOfSale" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DelivererID" Type="Guid" />
+          <Property Name="DelivererCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SuperVisorOfSupplyID" Type="Guid" />
+          <Property Name="SuperVisorOfSupplyCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SuperVisorOfSaleID" Type="Guid" />
+          <Property Name="SuperVisorOfSaleCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VisitorID" Type="Guid" />
+          <Property Name="VisitorCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Int32" />
+          <NavigationProperty Name="USERS" Relationship="ModernDB2Model.FK_BaniChav_Total_USERS" FromRole="BaniChav_Total" ToRole="USERS" />
+          <NavigationProperty Name="USERS1" Relationship="ModernDB2Model.FK_BaniChav_Total_USERS1" FromRole="BaniChav_Total" ToRole="USERS" />
+          <NavigationProperty Name="USERS2" Relationship="ModernDB2Model.FK_BaniChav_Total_USERS2" FromRole="BaniChav_Total" ToRole="USERS" />
+          <NavigationProperty Name="USERS3" Relationship="ModernDB2Model.FK_BaniChav_Total_USERS3" FromRole="BaniChav_Total" ToRole="USERS" />
+          <NavigationProperty Name="BaniChav_ReturnedProducts" Relationship="ModernDB2Model.FK_BaniChav_ReturnedProducts_BaniChav_Total" FromRole="BaniChav_Total" ToRole="BaniChav_ReturnedProducts" />
+        </EntityType>
+        <Association Name="FK_BaniChav_Total_USERS">
+          <End Type="ModernDB2Model.USERS" Role="USERS" Multiplicity="0..1" />
+          <End Type="ModernDB2Model.BaniChav_Total" Role="BaniChav_Total" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="BaniChav_Total">
+              <PropertyRef Name="SuperVisorOfSaleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaniChav_Total_USERS1">
+          <End Type="ModernDB2Model.USERS" Role="USERS" Multiplicity="0..1" />
+          <End Type="ModernDB2Model.BaniChav_Total" Role="BaniChav_Total" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="BaniChav_Total">
+              <PropertyRef Name="SuperVisorOfSupplyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaniChav_Total_USERS2">
+          <End Type="ModernDB2Model.USERS" Role="USERS" Multiplicity="0..1" />
+          <End Type="ModernDB2Model.BaniChav_Total" Role="BaniChav_Total" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="BaniChav_Total">
+              <PropertyRef Name="VisitorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaniChav_Total_USERS3">
+          <End Type="ModernDB2Model.USERS" Role="USERS" Multiplicity="0..1" />
+          <End Type="ModernDB2Model.BaniChav_Total" Role="BaniChav_Total" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="BaniChav_Total">
+              <PropertyRef Name="DelivererID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Automation_Generic">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Automation_Tasks" Relationship="ModernDB2Model.FK_Automation_Tasks_Automation_GenericTasks" FromRole="Automation_Generic" ToRole="Automation_Tasks" />
+          <NavigationProperty Name="BaniChav_ReturnedProducts" Relationship="ModernDB2Model.FK_BaniChav_ReturnedProducts_Automation_GenericTasks" FromRole="Automation_Generic" ToRole="BaniChav_ReturnedProducts" />
+          <NavigationProperty Name="Automation_Messages" Relationship="ModernDB2Model.FK_Automation_Messages_Automation_GenericTasks" FromRole="Automation_Generic" ToRole="Automation_Messages" />
+        </EntityType>
+        <EntityType Name="Automation_Tasks">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Responsible" Type="Guid" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDone" Type="Boolean" />
+          <Property Name="Description" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="Filter1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Filter2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Filter3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ApproveHtml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ApproveScript" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RejectHtml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RejectScript" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Script" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Html" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TaskOrder" Type="Int32" />
+          <Property Name="genericId" Type="Guid" />
+          <NavigationProperty Name="Automation_Generic" Relationship="ModernDB2Model.FK_Automation_Tasks_Automation_GenericTasks" FromRole="Automation_Tasks" ToRole="Automation_Generic" />
+          <NavigationProperty Name="USERS" Relationship="ModernDB2Model.FK_Task_USERS" FromRole="Automation_Tasks" ToRole="USERS" />
+        </EntityType>
+        <EntityType Name="BaniChav_ReturnedProducts">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BaniChav_TotalID" Type="Guid" />
+          <Property Name="genericId" Type="Guid" />
+          <NavigationProperty Name="Automation_Generic" Relationship="ModernDB2Model.FK_BaniChav_ReturnedProducts_Automation_GenericTasks" FromRole="BaniChav_ReturnedProducts" ToRole="Automation_Generic" />
+          <NavigationProperty Name="BaniChav_Total" Relationship="ModernDB2Model.FK_BaniChav_ReturnedProducts_BaniChav_Total" FromRole="BaniChav_ReturnedProducts" ToRole="BaniChav_Total" />
+        </EntityType>
+        <Association Name="FK_Automation_Tasks_Automation_GenericTasks">
+          <End Type="ModernDB2Model.Automation_Generic" Role="Automation_Generic" Multiplicity="0..1" />
+          <End Type="ModernDB2Model.Automation_Tasks" Role="Automation_Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Automation_Generic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Automation_Tasks">
+              <PropertyRef Name="genericId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaniChav_ReturnedProducts_Automation_GenericTasks">
+          <End Type="ModernDB2Model.Automation_Generic" Role="Automation_Generic" Multiplicity="0..1" />
+          <End Type="ModernDB2Model.BaniChav_ReturnedProducts" Role="BaniChav_ReturnedProducts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Automation_Generic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BaniChav_ReturnedProducts">
+              <PropertyRef Name="genericId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Task_USERS">
+          <End Type="ModernDB2Model.USERS" Role="USERS" Multiplicity="0..1" />
+          <End Type="ModernDB2Model.Automation_Tasks" Role="Automation_Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Automation_Tasks">
+              <PropertyRef Name="Responsible" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaniChav_ReturnedProducts_BaniChav_Total">
+          <End Type="ModernDB2Model.BaniChav_Total" Role="BaniChav_Total" Multiplicity="0..1" />
+          <End Type="ModernDB2Model.BaniChav_ReturnedProducts" Role="BaniChav_ReturnedProducts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaniChav_Total">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BaniChav_ReturnedProducts">
+              <PropertyRef Name="BaniChav_TotalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Automation_Messages">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ForwardLink" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="UnreadBy" Type="Guid" />
+          <Property Name="ReadBy" Type="Guid" />
+          <Property Name="genericId" Type="Guid" />
+          <NavigationProperty Name="Automation_Generic" Relationship="ModernDB2Model.FK_Automation_Messages_Automation_GenericTasks" FromRole="Automation_Messages" ToRole="Automation_Generic" />
+        </EntityType>
+        <Association Name="FK_Automation_Messages_Automation_GenericTasks">
+          <End Type="ModernDB2Model.Automation_Generic" Role="Automation_Generic" Multiplicity="0..1" />
+          <End Type="ModernDB2Model.Automation_Messages" Role="Automation_Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Automation_Generic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Automation_Messages">
+              <PropertyRef Name="genericId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModernDB2ModelStoreContainer" CdmEntityContainer="MainDBEntities">
+          <EntitySetMapping Name="Favorites">
+            <EntityTypeMapping TypeName="ModernDB2Model.Favorites">
+              <MappingFragment StoreEntitySet="Favorites">
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="VideosID" ColumnName="VideosID" />
+                <ScalarProperty Name="NewsID" ColumnName="NewsID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Features">
+            <EntityTypeMapping TypeName="ModernDB2Model.Features">
+              <MappingFragment StoreEntitySet="Features">
+                <ScalarProperty Name="FeatureID" ColumnName="FeatureID" />
+                <ScalarProperty Name="FeatureTitle" ColumnName="FeatureTitle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Gallery">
+            <EntityTypeMapping TypeName="ModernDB2Model.Gallery">
+              <MappingFragment StoreEntitySet="Gallery">
+                <ScalarProperty Name="IsUsedInSlider" ColumnName="IsUsedInSlider" />
+                <ScalarProperty Name="FileData" ColumnName="FileData" />
+                <ScalarProperty Name="Alt" ColumnName="Alt" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LNK_User_Video">
+            <EntityTypeMapping TypeName="ModernDB2Model.LNK_User_Video">
+              <MappingFragment StoreEntitySet="LNK_User_Video">
+                <ScalarProperty Name="VideoID" ColumnName="VideoID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="News">
+            <EntityTypeMapping TypeName="ModernDB2Model.News">
+              <MappingFragment StoreEntitySet="News">
+                <ScalarProperty Name="See" ColumnName="See" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="News_Comments">
+            <EntityTypeMapping TypeName="ModernDB2Model.News_Comments">
+              <MappingFragment StoreEntitySet="News_Comments">
+                <ScalarProperty Name="IsApprove" ColumnName="IsApprove" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="NewsID" ColumnName="NewsID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="ModernDB2Model.OrderDetails">
+              <MappingFragment StoreEntitySet="OrderDetails">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ProductPrice" ColumnName="ProductPrice" />
+                <ScalarProperty Name="ProductCount" ColumnName="ProductCount" />
+                <ScalarProperty Name="DetailID" ColumnName="DetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PARAMETERS">
+            <EntityTypeMapping TypeName="ModernDB2Model.PARAMETERS">
+              <MappingFragment StoreEntitySet="PARAMETERS">
+                <ScalarProperty Name="Required" ColumnName="Required" />
+                <ScalarProperty Name="DisplayLabel" ColumnName="DisplayLabel" />
+                <ScalarProperty Name="ParameterType" ColumnName="ParameterType" />
+                <ScalarProperty Name="ParameterName" ColumnName="ParameterName" />
+                <ScalarProperty Name="Parameter_Id" ColumnName="Parameter_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PERMISSIONS">
+            <EntityTypeMapping TypeName="ModernDB2Model.PERMISSIONS">
+              <MappingFragment StoreEntitySet="PERMISSIONS">
+                <ScalarProperty Name="PermissionDescription" ColumnName="PermissionDescription" />
+                <ScalarProperty Name="Permission_Id" ColumnName="Permission_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product_Gallery">
+            <EntityTypeMapping TypeName="ModernDB2Model.Product_Gallery">
+              <MappingFragment StoreEntitySet="Product_Gallery">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+                <ScalarProperty Name="GalleryID" ColumnName="GalleryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product_Groups">
+            <EntityTypeMapping TypeName="ModernDB2Model.Product_Groups">
+              <MappingFragment StoreEntitySet="Product_Groups">
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="GroupTitle" ColumnName="GroupTitle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product_Tags">
+            <EntityTypeMapping TypeName="ModernDB2Model.Product_Tags">
+              <MappingFragment StoreEntitySet="Product_Tags">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="TagTitle" ColumnName="TagTitle" />
+                <ScalarProperty Name="TagID" ColumnName="TagID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="ModernDB2Model.Products">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Productimage" ColumnName="Productimage" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REPORTS">
+            <EntityTypeMapping TypeName="ModernDB2Model.REPORTS">
+              <MappingFragment StoreEntitySet="REPORTS">
+                <ScalarProperty Name="StoredProcedureName" ColumnName="StoredProcedureName" />
+                <ScalarProperty Name="Template" ColumnName="Template" />
+                <ScalarProperty Name="ReportDescription" ColumnName="ReportDescription" />
+                <ScalarProperty Name="ReportName" ColumnName="ReportName" />
+                <ScalarProperty Name="Inactive" ColumnName="Inactive" />
+                <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+                <ScalarProperty Name="Report_Id" ColumnName="Report_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Videos">
+            <EntityTypeMapping TypeName="ModernDB2Model.Videos">
+              <MappingFragment StoreEntitySet="Videos">
+                <ScalarProperty Name="IsTeaching" ColumnName="IsTeaching" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WareHouse">
+            <EntityTypeMapping TypeName="ModernDB2Model.WareHouse">
+              <MappingFragment StoreEntitySet="WareHouse">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="WareHouseID" ColumnName="WareHouseID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WareHouse_Types">
+            <EntityTypeMapping TypeName="ModernDB2Model.WareHouse_Types">
+              <MappingFragment StoreEntitySet="WareHouse_Types">
+                <ScalarProperty Name="TypeTitle" ColumnName="TypeTitle" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="LNK_REPORT_PARAMETER" TypeName="ModernDB2Model.LNK_REPORT_PARAMETER" StoreEntitySet="LNK_REPORT_PARAMETER">
+            <EndProperty Name="REPORTS">
+              <ScalarProperty Name="Report_Id" ColumnName="Report_Id" />
+            </EndProperty>
+            <EndProperty Name="PARAMETERS">
+              <ScalarProperty Name="Parameter_Id" ColumnName="Parameter_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Product_Features">
+            <EntityTypeMapping TypeName="ModernDB2Model.Product_Features">
+              <MappingFragment StoreEntitySet="Product_Features">
+                <ScalarProperty Name="FeatureID" ColumnName="FeatureID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="PF_ID" ColumnName="PF_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product_Comments">
+            <EntityTypeMapping TypeName="ModernDB2Model.Product_Comments">
+              <MappingFragment StoreEntitySet="Product_Comments">
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CommentID" ColumnName="CommentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ModernDB2Model.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROLES">
+            <EntityTypeMapping TypeName="ModernDB2Model.ROLES">
+              <MappingFragment StoreEntitySet="ROLES">
+                <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+                <ScalarProperty Name="IsSysAdmin" ColumnName="IsSysAdmin" />
+                <ScalarProperty Name="RoleDescription" ColumnName="RoleDescription" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="LNK_ROLE_PERMISSION" TypeName="ModernDB2Model.LNK_ROLE_PERMISSION" StoreEntitySet="LNK_ROLE_PERMISSION">
+            <EndProperty Name="ROLES">
+              <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
+            </EndProperty>
+            <EndProperty Name="PERMISSIONS">
+              <ScalarProperty Name="Permission_Id" ColumnName="Permission_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="LNK_ROLE_REPORT" TypeName="ModernDB2Model.LNK_ROLE_REPORT" StoreEntitySet="LNK_ROLE_REPORT">
+            <EndProperty Name="ROLES">
+              <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
+            </EndProperty>
+            <EndProperty Name="REPORTS">
+              <ScalarProperty Name="Report_Id" ColumnName="Report_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="ModernDB2Model.Orders">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="IsFinaly" ColumnName="IsFinaly" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ForumComments">
+            <EntityTypeMapping TypeName="ModernDB2Model.ForumComments">
+              <MappingFragment StoreEntitySet="ForumComments">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="ForumGroupID" ColumnName="ForumGroupID" />
+                <ScalarProperty Name="ForumPostID" ColumnName="ForumPostID" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ForumGroups">
+            <EntityTypeMapping TypeName="ModernDB2Model.ForumGroups">
+              <MappingFragment StoreEntitySet="ForumGroups">
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="AdminUserId" ColumnName="AdminUserId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ForumPosts">
+            <EntityTypeMapping TypeName="ModernDB2Model.ForumPosts">
+              <MappingFragment StoreEntitySet="ForumPosts">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ForumGroupID" ColumnName="ForumGroupID" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERS">
+            <EntityTypeMapping TypeName="ModernDB2Model.USERS">
+              <MappingFragment StoreEntitySet="USERS">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="Post" ColumnName="Post" />
+                <ScalarProperty Name="LFName" ColumnName="LFName" />
+                <ScalarProperty Name="FLName" ColumnName="FLName" />
+                <ScalarProperty Name="Pic" ColumnName="Pic" />
+                <ScalarProperty Name="ActiveCode" ColumnName="ActiveCode" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="EMail" ColumnName="EMail" />
+                <ScalarProperty Name="Initial" ColumnName="Initial" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Inactive" ColumnName="Inactive" />
+                <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="LNK_USER_ROLE" TypeName="ModernDB2Model.LNK_USER_ROLE" StoreEntitySet="LNK_USER_ROLE">
+            <EndProperty Name="USERS">
+              <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+            </EndProperty>
+            <EndProperty Name="ROLES">
+              <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="BaniChav_Total">
+            <EntityTypeMapping TypeName="ModernDB2Model.BaniChav_Total">
+              <MappingFragment StoreEntitySet="BaniChav_Total">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="VisitorCode" ColumnName="VisitorCode" />
+                <ScalarProperty Name="VisitorID" ColumnName="VisitorID" />
+                <ScalarProperty Name="SuperVisorOfSaleCode" ColumnName="SuperVisorOfSaleCode" />
+                <ScalarProperty Name="SuperVisorOfSaleID" ColumnName="SuperVisorOfSaleID" />
+                <ScalarProperty Name="SuperVisorOfSupplyCode" ColumnName="SuperVisorOfSupplyCode" />
+                <ScalarProperty Name="SuperVisorOfSupplyID" ColumnName="SuperVisorOfSupplyID" />
+                <ScalarProperty Name="DelivererCode" ColumnName="DelivererCode" />
+                <ScalarProperty Name="DelivererID" ColumnName="DelivererID" />
+                <ScalarProperty Name="TeamOfSale" ColumnName="TeamOfSale" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="BranchCode" ColumnName="BranchCode" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Automation_Generic">
+            <EntityTypeMapping TypeName="ModernDB2Model.Automation_Generic">
+              <MappingFragment StoreEntitySet="Automation_Generic">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Automation_Tasks">
+            <EntityTypeMapping TypeName="ModernDB2Model.Automation_Tasks">
+              <MappingFragment StoreEntitySet="Automation_Tasks">
+                <ScalarProperty Name="genericId" ColumnName="genericId" />
+                <ScalarProperty Name="TaskOrder" ColumnName="TaskOrder" />
+                <ScalarProperty Name="Html" ColumnName="Html" />
+                <ScalarProperty Name="Script" ColumnName="Script" />
+                <ScalarProperty Name="RejectScript" ColumnName="RejectScript" />
+                <ScalarProperty Name="RejectHtml" ColumnName="RejectHtml" />
+                <ScalarProperty Name="ApproveScript" ColumnName="ApproveScript" />
+                <ScalarProperty Name="ApproveHtml" ColumnName="ApproveHtml" />
+                <ScalarProperty Name="Filter3" ColumnName="Filter3" />
+                <ScalarProperty Name="Filter2" ColumnName="Filter2" />
+                <ScalarProperty Name="Filter1" ColumnName="Filter1" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsDone" ColumnName="IsDone" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Responsible" ColumnName="Responsible" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BaniChav_ReturnedProducts">
+            <EntityTypeMapping TypeName="ModernDB2Model.BaniChav_ReturnedProducts">
+              <MappingFragment StoreEntitySet="BaniChav_ReturnedProducts">
+                <ScalarProperty Name="genericId" ColumnName="genericId" />
+                <ScalarProperty Name="BaniChav_TotalID" ColumnName="BaniChav_TotalID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Automation_Messages">
+            <EntityTypeMapping TypeName="ModernDB2Model.Automation_Messages">
+              <MappingFragment StoreEntitySet="Automation_Messages">
+                <ScalarProperty Name="genericId" ColumnName="genericId" />
+                <ScalarProperty Name="ReadBy" ColumnName="ReadBy" />
+                <ScalarProperty Name="UnreadBy" ColumnName="UnreadBy" />
+                <ScalarProperty Name="ForwardLink" ColumnName="ForwardLink" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

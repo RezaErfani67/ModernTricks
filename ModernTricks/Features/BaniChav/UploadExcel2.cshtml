@@ -1,0 +1,24 @@
+﻿
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+
+            $.ajax({
+                url: "/BaniChav/TaskData",
+                type: "get"
+            }).done(function (res) {
+
+                console.log(res);
+                alert(res[0].tbl1.Title)
+                alert(res[0].tbl2.Title)
+            });
+
+
+
+
+
+        });
+
+    </script>
+}

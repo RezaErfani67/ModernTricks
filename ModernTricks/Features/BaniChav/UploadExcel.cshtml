@@ -1,0 +1,141 @@
+﻿
+@model System.Data.DataTable
+@using System.Data;
+
+<h2>آپلود فایل اکسل</h2>
+<p>
+    لطفا هنگام درج فایل اکسل، به نکات زیر توجه داشته باشید:
+</p>
+<ul>
+    <li>
+        1- تمام فیلدها از نوع String باشند به غیر از 2 فیلد، تاریخ و مبلغ
+    </li>
+    <li>
+        2- فیلد تاریخ باید از نوع تاریخ و به صورت میلادی باشد
+    </li>
+    <li>
+        3- فیلد مبلغ باید به صورت Int تعریف شود.
+    </li>
+</ul>
+@{
+
+
+
+    var listOfPerson = ViewBag.data;
+    var ggg = ViewBag.ddd;
+
+    foreach (var item in ggg)
+    {
+        <ul>
+            <li>
+                @item.taskItem
+            </li>
+            <li>
+                @item.tbl1
+            </li>
+            <li>
+                @item.tbl2
+            </li>
+            <li>
+                @item.tbl3
+            </li>
+
+        </ul>
+    }
+
+
+
+
+
+
+    if (ViewBag.data != null)
+    {
+        foreach (var item in listOfPerson)
+        {
+            <ul>
+                <li>
+                    @item.SuperVisorOfSupplyCode
+                </li>
+                <li>
+                    @item.SuperVisorOfSaleCode
+                </li>
+                <li>
+                    @item.VisitorCode
+                </li>
+                <li>
+                    @item.Price
+                </li>
+                <li>
+                    @item.CreatedDate
+                </li>
+                <li>
+                    @item.BranchCode
+                </li>
+                <li>
+                    @item.CustomerCode
+                </li>
+                <li>
+                    @item.CustomerName
+                </li>
+                <li>
+                    @item.TeamOfSale
+                </li>
+                <li>
+                    @item.DelivererID
+                </li>
+                <li>
+                    @item.SuperVisorOfSupplyID
+                </li>
+                <li>
+                    @item.SuperVisorOfSaleID
+                </li>
+                <li>
+                    @item.VisitorID
+                </li>
+                <li>
+                    @item.DelivererCode
+                </li>
+            </ul>
+        }
+    }
+}
+
+        @using (Html.BeginForm("UploadExcel", "BaniChav", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary()
+
+            <div class="form-group">
+                <input type="file" id="dataFile" name="upload" />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Upload" class="btn btn-default" />
+            </div>
+
+            if (Model != null)
+            {
+                <table>
+                    <thead>
+                        <tr>
+                            @foreach (DataColumn col in Model.Columns)
+                    {
+                                <th>@col.ColumnName</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (DataRow row in Model.Rows)
+                        {
+                            <tr>
+                                @foreach (DataColumn col in Model.Columns)
+                        {
+                                    <td>@row[col.ColumnName]</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        }
+

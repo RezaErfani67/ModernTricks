@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Main.Models.Gallery>
+@{
+    ViewBag.Title = "test";
+    Layout = "~/Features/Shared/_BSLayout.cshtml";
+}
+
+
+
+<link href="~/Content/Gallery/css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/Content/Gallery/css/jgallery.min.css" rel="stylesheet" />
+<script src="~/Content/Gallery/js/jgallery.min.js"></script>
+<script src="~/Content/Gallery/js/touchswipe.min.js"></script>
+<script src="~/Content/Gallery/js/Custom.js"></script>
+<!--Grid1 CSS-->
+
+<link href="~/Content/Grid1.css" rel="stylesheet" />
+
+
+<div id="gallery">
+    @foreach (var item in Model.Where(q=>q.IsUsedInSlider == true).Take(10).OrderByDescending(q=>q.ID))
+    {
+        <a href="~/Content/Gallery/images/large/@item.Name"><img src="~/Content/Gallery/images/thumbs/@item.Name" alt="@item.Alt" /></a>
+    }
+
+</div>
+
+@*<h3>آخرین خبرها</h3>*@
+
+@Html.Action("_LastNews", "News", new { area = "" })
+@Html.Action("_LastVideos", "Home", new { area = "" })
+
+@section scripts
+
+{
+    <script>
+
+        setTimeout(function () { $("span[tooltip='Slideshow']").click(); }, 2000);
+
+    </script>
+}

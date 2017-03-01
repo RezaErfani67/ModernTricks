@@ -1,0 +1,31 @@
+﻿@model IEnumerable<ModernTricks.Models.Product_Comments>
+
+@foreach (var item in Model)
+{
+    <div class="media" id="Comment_@(item.CommentID)">
+        <div class="media-left"> <a href="#"> <img alt="64x64" data-src="holder.js/64x64" class="media-object" style="width: 64px; height: 64px;" src="/Content/facebookanon.jpg" data-holder-rendered="true"> </a> </div> <div class="media-body">
+            <h4 class="media-heading">
+                @item.Name
+                <p class="text-success pull-left" style="font-size: 15px">@item.Date.ToString().BeforeDate()</p>
+            </h4>
+
+            @item.Text
+
+            <p style="clear: both">
+                <a class="btn btn-primary btn-xs pull-left" onclick="ReplyComment('@item.ProductID','@item.CommentID')">پاسخ</a>
+            </p>
+
+                   @foreach (var item2 in item.Product_Comments1)
+                   {
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="#">
+                                <img alt="64x64" data-src="holder.js/64x64" class="media-object" style="width: 64px; height: 64px;" src="/Content/facebookanon.jpg" data-holder-rendered="true">
+                            </a>
+                        </div>
+                        <div class="media-body"> <h4 class="media-heading">@item2.Name</h4> @item2.Text </div>
+                    </div>
+                   }                                                                                                                                                                                                  
+        </div>
+    </div>
+}

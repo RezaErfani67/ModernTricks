@@ -1,0 +1,302 @@
+﻿<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <title>حیله های مدرن</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <script src="~/Scripts/jquery-2.2.3.js"></script>
+    <link href="~/Content/bootstrap-rtl.min.css" rel="stylesheet" />
+    <link href="~/fonts/font-awesome.min.css" rel="stylesheet" />
+
+    <!--Noty Script        -->
+    <style>
+        body {
+            min-height: 1000px;
+        }
+        /* Remove the navbar's default margin-bottom and rounded borders */
+        .navbar {
+            margin-bottom: 0;
+            border-radius: 0;
+        }
+
+        /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+        .row.content {
+            height: 450px;
+        }
+
+        /* Set gray background color and 100% height */
+        .sidenav {
+            padding-top: 20px;
+            background-color: #f1f1f1;
+            min-height: 100%;
+        }
+
+        /* Set black background color, white text and some padding */
+        footer {
+            background-color: #161616;
+            color: white;
+            padding: 15px;
+        }
+
+        /* On small screens, set height to 'auto' for sidenav and grid */
+        @@media screen and (max-width: 767px) {
+            .sidenav {
+                height: auto;
+                padding: 15px;
+            }
+
+            .row.content {
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav role="navigation" class="navbar navbar-default navbar-fixed-top" id="mainNav">
+        <div class="container-fluid">
+            <div class="navbar-header pull-right">
+
+                <button data-target="#navbar-collapse-1" data-toggle="collapse" class="navbar-toggle" type="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+
+                </button>
+
+            </div>
+
+
+
+            <div class="navbar-header pull-left">
+
+                <div class="text-left" dir="ltr">
+
+                    <a href="/" class="navbar-brand">ModernTricks.com</a>
+                </div>
+            </div>
+
+            <div id="navbar-collapse-1" class="collapse navbar-collapse navbar-links">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="@Url.Content("~/Home/Index")">
+                            <span aria-hidden="true" class="fa fa-wechat"></span>
+                            خانه
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#" aria-expanded="true">
+                            <span class="fa fa-pencil fa-fw" aria-hidden="true"></span>
+                            مطالب <span class="caret"></span>
+                        </a>
+                        <ul role="menu" class="dropdown-menu">
+                            <li>
+                                <a href="@Url.Content("~/News/NewsIndex")">
+                                    @*<span class="right100 badge badge-success pull-left">۲۴۰۰</span>*@
+                                    <span aria-hidden="true" class="left5 fa fa-pencil fa-fw"></span>
+                                    آخرین اخبار
+                                </a>
+                              
+                            </li>
+                            @if (ViewContext.Controller.HasRole("Standard User") || ViewContext.Controller.IsSysAdmin())
+                            {
+                            <li>
+                                <a href="@Url.Content("/favorites/myfav")">
+                                    @*<span class="right100 badge badge-success pull-left">۲۴۰۰</span>*@
+                                    <span aria-hidden="true" class="left5 fa fa-pencil fa-fw"></span>
+                                    مورد علاقه های من
+                                </a>
+                                
+                            </li>
+                            <li>
+                                <a href="@Url.Content("/home/DownloadTeachingVideoPage")">
+                                    @*<span class="right100 badge badge-success pull-left">۲۴۰۰</span>*@
+                                    <span aria-hidden="true" class="left5 fa fa-pencil fa-fw"></span>
+                                   ویدیوهای تدریس شده
+                                </a>
+
+                            </li>
+                            }
+                        </ul>
+                    </li>
+
+                    @{
+                        if (ViewContext.Controller.IsSysAdmin())
+                        {
+
+                            <li class="dropdown">
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#" aria-expanded="true">
+                                    <span class="fa fa-pencil fa-fw" aria-hidden="true"></span>
+                                    پنل مدیریت <span class="caret"></span>
+                                </a>
+                                <ul role="menu" class="dropdown-menu">
+
+                                    <li> <a href="/Admin">کاربران سایت</a></li>
+                                    <li><a href="/Admin/RoleIndex">رول های سایت</a></li>
+                                    <li><a href="/Admin/PermissionIndex">سطوح دسترسی</a></li>
+                                    <li><a href="/Admin/ReportIndex">گزارشات</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#" aria-expanded="true">
+                                    <span class="fa fa-pencil fa-fw" aria-hidden="true"></span>
+                                    مدیریت محتوا<span class="caret"></span>
+                                </a>
+                                <ul role="menu" class="dropdown-menu">
+                                    <li><a href="@Url.Content("~/news/CreateNews")">درج خبر</a></li>
+                                    <li><a href="@Url.Content("~/Home/CreateGallery")"> درج عکس و ویدیو</a></li>
+                                    <li><a href="#">---------------------</a><li>
+                                    <li><a href="@Url.Content("~/Home/PageShowVideos")"> مدیریت ویدیوی آپارات</a></li>
+                                    <li><a href="@Url.Content("~/Home/ShowApproveVideoPage")"> تایید ویدیوی درسی</a></li>
+                                    <li><a href="@Url.Content("~/News/Page_UnApproveComments")"> تایید نظرات</a></li>
+
+                                </ul>
+                            </li>
+                        }
+                    }
+
+                    <li>
+                        <a href="@Url.Content("~/Home/Gallery")">
+
+                            <span aria-hidden="true" class="fa fa-plug"></span>
+                            گالری
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Content("~/Home/Contact")">
+                            <span aria-hidden="true" class="fa fa-wechat"></span>
+                            تماس با ما
+                        </a>
+                    </li>
+                    @Html.Action("StateLogin", "Account", new { area = "" })
+
+                </ul>
+
+                @*<form role="search" method="get" id="searchform" class="navbar-form" action="/search" novalidate="novalidate">
+                        <div style="display: inline;" class="form-group">
+                            <div style="display:table;" class="input-group">
+                                <input type="text" value="" placeholder="جستجو" name="term" id="term" data-val-required="(*)" data-val="true" data-url="/search/scoredterms" data-img="/Content/Images/bullet_shape.png" class="form-control ac_input" autocomplete="off">
+                                <span class="input-group-addon btn btn-default" onclick="customSubmit(this, '#searchform');" style="width:1%;" id="srchBtn">
+                                    <span class="fa fa-search"></span>
+                                    جستجو
+                                </span>
+                            </div>
+                        </div>
+                    </form>*@
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row top10">
+            <ol class="breadcrumb">
+                <li class="active">
+                    <span aria-hidden="true" class="fa fa-home"></span>
+                    خانه
+                </li>
+                <li class="active">
+                    <span aria-hidden="true" class="fa fa-navicon"></span>
+                    ایندکس
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="container-fluid text-center" style="min-height:800px;">
+        <div class="row content">
+            <div class="col-md-12  text-right ">
+                @RenderBody()
+            </div>
+            @*<div class="col-md-3 col-md-pull-9 sidenav">
+                    @Html.Action("StateLogin", "Account", new { area = "" })
+                    @Html.Action("_LastNews", "Home", new { area = "" })
+                    <p><a href="#">Link</a></p>
+                    <p><a href="#">Link</a></p>
+                </div>*@
+            @*<div class="col-sm-2 sidenav">
+                    <div class="well">
+                        <p>ADS</p>
+                    </div>
+                    <div class="well">
+                        <p>ADS</p>
+                    </div>
+                </div>*@
+        </div>
+    </div>
+
+
+
+
+    <script src="~/Scripts/bootstrap-rtl.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <!--Noty Script        -->
+    <link href="~/Content/Noty/animate.css" rel="stylesheet" />
+
+    <script src="~/Content/Noty/packaged/jquery.noty.packaged.min.js"></script>
+    <script type="text/javascript">
+        function notify(type, text) {
+
+            var n = noty({
+                text        : text,
+                type        : type,
+                dismissQueue: true,
+                layout: 'center',
+                timeout: 4000,
+                //closeWith   : ['click'],
+                theme       : 'relax',
+                maxVisible: 10,
+
+                animation   : {
+                    open  : 'animated bounceInLeft',
+                    close : 'animated bounceOutLeft',
+                    easing: 'swing',
+                    speed : 1000
+                }
+            });
+
+        }
+        function generateAll() {
+            //generate('warning', notification_html[0]);
+            //generate('error', notification_html[1]);
+            //generate('information', notification_html[2]);
+            //generate('success', notification_html[3]);
+            noty('success', "salam");
+        }
+    </script>
+
+
+</body>
+
+</html>
+<footer class="container-fluid text-center">
+    <a id="goTop" href="#myPage" title="To Top">
+        <span class="glyphicon glyphicon-chevron-up"></span>
+    </a>
+    <p>تمام حقوق متعلق به سایت حیله های مدرن است.<a href="http://www.ModernTricks.com" title="Visit ModernTricks">www.ModernTricks.com</a></p>
+</footer>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+
+@RenderSection("Scripts", false)
+
+@*Footer Go Up*@
+<script>
+  
+        $('#goTop').on('click', function () {
+
+                    $('html, body').animate({
+                        scrollTop: 0
+                    }, 1500);
+                 
+                    return false;
+            });
+</script>
+<style>
+    footer .glyphicon {
+        font-size: 20px;
+        margin-bottom: 20px;
+        color: #f4511e;
+    }
+</style>

@@ -1,0 +1,44 @@
+﻿<h2>اخبار سایت</h2>
+
+@Html.Action("_NewsIndex","News")
+
+
+@section Scripts
+{
+<script type="text/javascript" src="@Url.Content("~/Scripts/path.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.pager-1.0.2.min.js")"></script>
+<script type="text/javascript">
+    $('#divAjaxPager').pager();
+
+		//pagination before start
+		function AjaxStart() {
+			console.log('Start AJAX call. Loading message can be shown');
+		}
+		// pagination - after request
+		function AjaxStop() {
+			console.log('Stop AJAX call. Loading message can be hidden');
+		};
+</script>
+    <script>
+  
+        $(document).on('click', ".btnDelete", function (e) {
+            var $this = $(this);
+            confirm('آیا اطمینان به حذف دارید؟?')
+            {
+            e.preventDefault();
+           
+                $.ajax({
+                    url: "/News/DeleteNews"  ,
+                    data:{id:$(this).attr('id').split('_')[1],page:1},
+                    type: "get"
+                }).done(function (res) {
+
+                  $this.closest('tr').fadeOut();
+                });
+            }
+        });
+
+    </script>
+}
+
+

@@ -1,0 +1,88 @@
+﻿@model ModernTricks.Models.REPORTS
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Unbind the original image 'href' set by the controller...
+        $('.deleteRole').attr('href', 'javascript://');
+        $('.deleteRole').click(function () {
+            $dialog.data('reportId', $(this).attr('reportId')).data('roleId', $(this).attr('roleId')).dialog("open");
+        });
+
+        var $dialog = $('<div/>')
+        .html("Warning: This will remove the selected Role from this Report.  Removing this Role may prevent users from accessing this report in the application.  Only remove this Role if you intend to restrict report access.<br/><br/>Do you wish to continue?")
+		.dialog({
+		    autoOpen: false,
+		    resizable: false,
+		    height: 250,
+		    modal: true,
+		    title: 'حذف رول',
+		    buttons: [
+                        {
+                            text: "ادامه",
+                            id: "continuebtn",
+                            click: function () {
+                                var _reportId = $(this).data('reportId');
+                                var _roleId = $(this).data('roleId');
+
+                                var _parameters = { reportId: _reportId, id: _roleId };
+                                $.ajax({
+                                    url: "/Admin/DeleteRoleFromReportReturnPartialView",
+                                    type: "GET",
+                                    data: _parameters,
+                                    success: function (data, textStatus, jqXHR) {
+                                        $('#RolesTable').html(data);
+                                    }
+                                });
+                                $(this).dialog('close');
+                            }
+                        },
+                        {
+                            text: "لغو",
+                            id: "cancelbtn",
+                            click: function () {
+                                $(this).dialog("close");
+                            }
+                        }]
+		});
+    });
+</script>
+@{if (Model.ROLES.Count == 0)
+{
+    <h2><font color="red">هیچ نقشی اختصاص داده نشده است.</font></h2>
+    <br />
+}
+else
+{
+    <table id="RolesTable" class="table table-bordered table-hover">
+        <thead>
+        <th style="width: 30%">
+            رول
+        </th>
+        <th style="width: 60%">
+            توضیحات
+        </th>
+        <th>
+            Action
+        </th>
+        </thead>
+        <td>
+            @foreach (var role in Model.ROLES.OrderBy(u => u.RoleDescription))
+            {
+            <tr>
+                <td>
+                    @Html.ActionLink(role.RoleName, "/RoleDetails", new { id = role.Role_Id })
+                </td>
+                <td>
+                    @role.RoleDescription
+                </td>
+                <td>
+                    <center>
+                        <a href="@Url.Action("DeleteReport", "Admin", new { id = role.Role_Id, reportId = Model.Report_Id })" class="btn btn-danger deleteRole" reportid=@Model.Report_Id roleid=@role.Role_Id>
+                            حذف رول
+                        </a>
+                    </center>
+                </td>
+            </tr>
+            }
+        </table>
+        <br />
+}}

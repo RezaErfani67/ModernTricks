@@ -1,0 +1,29 @@
+﻿@model IEnumerable<ModernTricks.Models.PERMISSIONS>
+@{
+    ViewBag.Title = "Rights";
+   
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(":input[type='button']").button();
+    });
+</script>
+<div class="container">
+    <fieldset>
+        <legend>
+            <h3>
+                دسترسی ها
+            </h3>
+        </legend>
+        @Html.Partial("_ListPermissionsTable", Model)
+        <br />
+        <div>
+            <input type="button" value="ایجاد دسترسی" onclick="location.href='@Url.Action("PermissionCreate", "Admin")'" />
+            <input type="button" id="importPermissions2" name="importPermissions2" value="Import Permissions" onclick="location.href='@Url.Action("PermissionsImport", "Admin")'" />
+            <br />
+        </div>
+    </fieldset>
+    @Html.ActionLink("رول های کاربران", "RoleIndex", "Admin")
+</div>
+<br />

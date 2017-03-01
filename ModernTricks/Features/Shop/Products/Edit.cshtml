@@ -1,0 +1,177 @@
+﻿@model ModernTricks.Models.Products
+
+@{
+    ViewBag.Title = "ویرایش " + Server.HtmlDecode(Html.DisplayNameFor(model => model).ToString());
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Edit", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">        
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ProductID)
+        @Html.HiddenFor(model => model.Productimage)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.GroupID, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("GroupID", String.Empty)
+                @Html.ValidationMessageFor(model => model.GroupID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title)
+                @Html.ValidationMessageFor(model => model.Title)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ShortDescription, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ShortDescription)
+                @Html.ValidationMessageFor(model => model.ShortDescription)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Text, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Text)
+                @Html.ValidationMessageFor(model => model.Text)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Productimage, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+              
+                <input name="Image" type="file" class="form-control" />
+                @Html.ValidationMessageFor(model => model.Productimage)
+                <br/>
+                <img src="~/Content/Product/Images/thumb/@Model.Productimage" class="thumbnail"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Price" class="control-label col-md-2">گالری تصاویر</label>
+            <div class="col-md-10">
+                <input name="Gallery" type="file" class="form-control" multiple />
+                <input name="Gallery" type="file" class="form-control" multiple />
+                <input name="Gallery" type="file" class="form-control" multiple />
+                @if (Model.Product_Gallery.Any())
+                {
+                    foreach (var productGallery in Model.Product_Gallery)
+                    {
+                        <div id="Gallery_@(productGallery.GalleryID)" class="thumbnail col-md-3">
+                            <img src="~/Content/Product/Images/thumb/@productGallery.ImageName" style="height: 150px"/>
+                            <a class="btn btn-danger btn-xs btn-block" onclick="DeleteImage(@productGallery.GalleryID)">حذف</a>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Price, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Price)
+                @Html.ValidationMessageFor(model => model.Price)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="Title" class="control-label col-md-2">کلمات کلیدی</label>
+            <div class="col-md-10">
+                <input type="text" value="@ViewBag.Tags" name="Tags" id="Tags" class="text-box single-line form-control" placeholder="کلمات کلیدی را با - جدا کنید">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-md-2"></div>
+            <div class="col-md-10">
+                <fieldset>
+                    <legend>ویژگی های این محصول</legend>
+                    <div class="col-md-12">
+                        <div class="col-md-5">
+                            @Html.DropDownList("Features", String.Empty)
+                        </div>
+                        <div class="col-md-5">
+                            <input class="form-control" id="FeatureValue" placeholder="مقدار ویژگی را وارد کنید" />
+                        </div>
+                        <div class="col-md-2">
+                            <a class="btn btn-success" onclick="AddFeature()">
+                                <i class="glyphicon glyphicon-plus"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div id="ListFeatures" style="clear: both">
+                        @Html.Action("listFeature")
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+      
+
+        <div class="form-group" id="buttons">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="ثبت" class="btn btn-primary" />
+				@Html.ActionLink("بازگشت به فهرست", "Index")
+            </div>
+        </div>
+    </div>
+}
+
+<script src="/ckeditor/ckeditor.js"></script>
+<script src="/ckeditor/adapters/jquery.js"></script>
+
+<script>
+    $(function () {
+        $('#Text').ckeditor();
+    });
+
+
+    function DeleteImage(id) {
+        if(confirm('آیا مطمئنی ؟')==true)
+            {
+        $.ajax({
+            url: "/Products/DeleteImage/" + id,
+            type: "Get"
+        }).done(function(result) {
+            //if (result == 'true') {
+                
+            //}
+
+            $('#Gallery_' + id).hide(500);
+        });
+}
+
+    }
+
+    function AddFeature() {
+        $.ajax({
+            url: "/Products/AddFeature",
+            data: {
+                FeatureID: $('#Features').val(), FeatureTitle: $('#Features :selected').text(), Value: $('#FeatureValue').val()
+            }
+        }).done(function (res) {
+            $('#FeatureValue').val('');
+            $('#ListFeatures').html(res);
+        });
+    }
+
+    function DeleteFeature(id, value) {
+        $.ajax({
+            url: "/Products/DeleteFeature",
+            data: {
+                FeatureID: id, Value: value
+            }
+        }).done(function (res) {
+            $('#ListFeatures').html(res);
+        });
+    }
+</script>

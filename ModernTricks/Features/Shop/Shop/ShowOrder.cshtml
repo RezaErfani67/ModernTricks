@@ -1,0 +1,58 @@
+﻿@model IEnumerable<ModernTricks.Models.ShowOrderItemViewModel>
+@{
+ 
+    int Counter = 1;
+}
+
+<table class="table table-bordered">
+    <caption>
+        <a class="btn btn-success" href="/Shop/Save">تایید و پرداخت</a>
+    </caption>
+    <tr>
+        <th>#</th>
+        <th>کالا</th>
+        <th>تعداد</th>
+        <th>قیمت واحد</th>
+        <th>جمع</th>
+        <th></th>
+    </tr>
+    
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Counter</td>
+            <td>@item.Title</td>
+            <td>
+                <input type="number" id="count_@(item.ProductID)" class="form-control" value="@item.Count" onblur="CountChange('@item.ProductID')" />
+            </td>
+            <td>
+                @item.Price
+            </td>
+            <td>
+                <p class="text-success">
+                    @item.Sum.ToString("#,0 ریال")
+                </p>
+            </td>
+            <td><a class="text-danger cartlink" onclick="DeleteItemOrder('@item.ProductID')">
+                    <i class="glyphicon glyphicon-trash"></i>
+                </a></td>
+        </tr>
+        
+        Counter+=1;
+    }
+    <tr>
+        <td colspan="2" class="text-left">
+            جمع تعداد : 
+        </td>
+        <td>
+            @Model.Sum(m=>m.Count)
+        </td>
+        <td>
+            جمع مبالغ :
+        </td>
+        <td>
+            @Model.Sum(m=>m.Sum)
+        </td>
+    </tr>
+</table>
+

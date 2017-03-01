@@ -1,0 +1,64 @@
+﻿@model List<dynamic>
+
+@{
+  Layout = null;
+}
+<div id="printableArea" style="text-align: left;">
+  <h2>
+    @ViewBag.ReportName
+  </h2>
+  </h3>(@Model.Count() matching records)
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $(":input[type='button']").button();
+      $(":input[type='submit']").button();
+      $("#ResultsTable tr:even").css("background-color", "#dedede");
+      $("#ResultsTable tr:odd").css("background-color", "#ffffff");
+      $('#msgContainer').hide();
+
+    });
+  </script>
+
+  @using (Html.BeginForm("ExportData", "Reports", FormMethod.Post, new { enctype = "multipart/form-data" }))
+  {
+    TempData["ModelData"] = Model;
+    <div>
+      <table id="ResultsTable" style="width: 100%">
+        <thead>
+          @foreach (DynamicDataRow item in Model)
+          {
+            foreach (DynamicDataObject col in item.Columns)
+            {
+            <th>
+              @col.Name
+            </th>
+            }
+            break;
+          }
+          </thead>
+          @foreach (DynamicDataRow item in Model)
+          {
+            <tr>
+              @foreach (DynamicDataObject col in item.Columns)
+              {
+                <td>
+                  @if (col.DataType == "money")
+                  {
+                    @Convert.ToDecimal(col.Value).ToString("#,##0.00");
+                  }
+                  else
+                  {
+                    @col.Value
+                  }
+                </td>
+              }
+            </tr>
+          }
+        </table>
+      </div>
+      <br />
+      <input type="submit" id="exportdata" value="Export Results to CSV" />
+  }
+  <br />
+</div>

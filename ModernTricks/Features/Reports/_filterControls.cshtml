@@ -1,0 +1,43 @@
+﻿@model REPORT
+
+<script>
+  $(function () {
+    $('[datepicker]').datepicker();
+  });
+</script>
+
+<table>
+  @foreach (var _parameter in Model.PARAMETERS)
+  {
+    <tr>
+      <td>
+        @{
+    string controlLabel = _parameter.DisplayLabel;
+    if (_parameter.Required)
+    {
+      controlLabel = controlLabel + "*";
+    }
+        }
+        @Html.Raw(controlLabel)
+      </td>
+      <td>
+        @{
+
+    string control = string.Format("<input type='{0}' id='{1}' name='{1}' displaylabel='{2}' class='filter-input'", "text", _parameter.ParameterName, _parameter.DisplayLabel);
+    if (_parameter.Required)
+    {
+      control += " required='required'";
+    }
+
+    if (_parameter.ParameterType.ToLower() == "date" || _parameter.ParameterType.ToLower() == "datetime")
+    {
+      control += "datepicker";
+    }
+
+    control += control + " />";
+    @Html.Raw(control)
+        }
+      </td>
+    </tr>
+  }
+</table>

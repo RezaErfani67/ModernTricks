@@ -1,0 +1,632 @@
+﻿@model ModernTricks.Features.Automation.VM_Task
+@{
+    ViewBag.Title = "MyTask";
+    Layout = "~/Features/Shared/SideLayout.cshtml";
+
+    if (User.Identity.IsAuthenticated == true)
+    {
+        var CurrentUserID = @ViewBag.CurrentUserID;
+        var CurrentUserLFName = @ViewBag.CurrentUserLFName;
+    }
+    else
+    {
+        <div class="alert alert-danger">لطفا با دسترسی مناسب وارد شوید</div>
+    }
+
+
+}
+<input type=hidden class=GlobalUserID value='@ViewBag.CurrentUserID' />
+<input type=hidden class=GlobalLFName value='@ViewBag.CurrentUserLFName' />
+
+<div class="filter" id="filter"></div>
+<div class="main" id="main">
+
+
+</div>
+
+@section Scripts
+{
+
+    <script src="~/Scripts/asq.src.js"></script>
+    <script src="~/Scripts/FilterPlug.js"></script>
+    <script>
+            $(document).ready(function () {
+
+                ASQ().all(FillTask_Async(), FillPeople_Async())
+                .val(function (taskResult, peopleResult) {
+
+                    //-------------filter
+                    $(".filter").StartFilter({
+                        'DataSource': taskResult.data,
+                        'FieldsName': ["Filter1", "Filter2", "Filter3"],
+                        'rowUniqueClass': 'f1',
+                        'appendToClass':'filter'
+                    });
+
+
+
+
+                    //---------------
+                    $(".main").append(taskResult.html);
+
+                    for (var i in taskResult.data) {
+                        var s1 = "", s2 = "", s3 = "";
+                        s1 = taskResult.data[i].Script;
+                        s2 = taskResult.data[i].ApproveScript;
+                        s3 = taskResult.data[i].RejectScript;
+                        var scriptElement = document.createElement("script");
+
+                        if (taskResult.data[i].Script != null) { s1 = taskResult.data[i].Script; } else { s1 = ""; }
+                        if (taskResult.data[i].ApproveScript != null) { s2 = taskResult.data[i].ApproveScript; } else { s2 = ""; }
+                        if (taskResult.data[i].RejectScript != null) { s3 = taskResult.data[i].RejectScript; } else { s3 = ""; }
+
+                        scriptElement.type = "text/javascript";
+                        scriptElement.innerHTML = s1 + " " + s2 + " " + s3;
+                        $(".script_" + taskResult.data[i].ID).append(scriptElement);
+                    }
+
+
+
+                    $('.btnShowTaskLevel').on('click', function (e) {
+                        e.preventDefault();
+                        var $this = $(this);
+                        var index = $(this).attr('index').split('_')[1];
+                        var listItemID = taskResult.data[index].ListItemID;
+                        var listTitle = taskResult.data[index].ListTitle;
+                        window.open("http://spserver/SitePages/Shared/Task/TraceTask.aspx?ListTitle=" + listTitle + "&ListItemID=" + listItemID, '_blank');
+
+                    });
+                    $('.btnShowMessage').on('click', function (e) {
+                        e.preventDefault();
+                        $(".MessageDiv").remove();
+                        var $this = $(this);
+                        var index = $(this).attr('index').split('_')[1];
+
+                        ASQ()
+                        .seq(ShowMessage("'" + taskResult.data[index].ID + "'", "'" + taskResult.data[index].genericId + "'", peopleResult.html))
+                        .val(
+                            function (result) {
+                                $this.closest(".MainDiv").append(result);
+
+                                //ایکس را اسکرول میکنیم تا به {وای} برسد
+                                var x = document.getElementById("main");
+                                var y = document.getElementById("tblMessage").offsetTop;
+                                $(x).animate({ scrollTop: y - 10 }, 2000);
+
+                            }
+                            )//end val()
+                    });
+                    $('.btnShowDetail').click();
+                    $(".container").css('width', '1317px');
+                });//end val()
+
+
+            });
+
+            //----------Message Function--------------
+            var htmlMessage = "";
+            var htmlPeople = "";
+
+
+            //----------------------------------------
+            function setGlobalUserName() {
+                $SP().whoami({ url: "http://spserver" }, function (people) {
+                    //for(var i=people.length;i--;)
+                    //{
+                    //    alert(people[i]+"="+people[people[i]]);
+                    //}
+                    GlobalDisplayName = people["PreferredName"];
+                    localUserName = people["UserName"];
+                    var fieldFirstName = getStaticName('کارکنان شرکت', 'نام و نام خانوادگی');
+                    var fieldUserName = getStaticName('کارکنان شرکت', 'یوزرنیم');
+                    $SP().list('کارکنان شرکت').get({ fields: fieldFirstName + ",_x0646__x0627__x0645__x0020__x062,_x0627__x06cc__x0646__x0641__x06,_x0646__x0627__x0645__x0020__x060", where: fieldUserName + "='" + localUserName + "'" },
+                        function (data) {
+                            GlobalAccountID = data[0].getAttribute("_x0646__x0627__x0645__x0020__x060");
+                            GlobalFLName = data[0].getAttribute(fieldFirstName);
+                            GlobalLFName = data[0].getAttribute("_x0646__x0627__x0645__x0020__x062");
+                            GlobalUserID = parseInt(data[0].getAttribute("_x0627__x06cc__x0646__x0641__x06"));
+                            $(".GlobalDisplayName").val(GlobalDisplayName);
+                            $(".GlobalAccountID").val(GlobalAccountID);
+                            $(".GlobalFLName").val(GlobalFLName);
+                            $(".GlobalLFName").val(GlobalLFName);
+
+                            $(".GlobalUserID").val(GlobalUserID);
+                        });
+
+                });
+            }
+            var listOfObjectTask = [];
+            var htmlTask = "";
+            //-----------------------------------------
+
+            function ActiveNextTask(isApprove, count, currentTaskId, callback) {
+
+                if (isApprove == true) {
+                    $('.overlay').show();
+                    var TaskOrder;
+                    var ListTitle;
+                    var ListItemID;
+                    var Html;
+                    var Script;
+
+                    //گرفتن بقیه فیلدهای آیتم جاری
+                    $SP().list('Task').get({ fields: "ID,ListItemID,ListTitle,TaskOrder,Html,Script", where: "ID=" + currentTaskId, rowlimit: 1, paging: true, page: 1 },
+                           function (data) {
+                               for (var j = data.length; j--;) {
+                                   TaskOrder = parseInt(data[j].getAttribute("TaskOrder"));
+                                   ListTitle = data[j].getAttribute("ListTitle");
+                                   ListItemID = parseInt(data[j].getAttribute("ListItemID"));
+                                   Html = data[j].getAttribute("Html");
+                                   Script = data[j].getAttribute("Script");
+                               }
+
+                               $SP().list('Task').update({ IsDone: true, DoneBy: GlobalLFName, DueDate: ToShamsi(0) + "_" + new Date().getHours() + ":" + new Date().getMinutes() },
+                                {
+                                    where: "ID=" + currentTaskId, success:
+                                   function (items) {
+                                       notify('success', "لطفا چند لحظه صبر نمایید...");
+                                       TaskOrder = TaskOrder + count;
+                                       $SP().list('Task').update({ IsActive: true }, {
+                                           where: "TaskOrder = " + TaskOrder + " And ListItemID='" + ListItemID + "' And ListTitle='" + ListTitle + "'"
+                                           , success: function (items) {
+                                               $SP().list('Task').get({ fields: "ResponsibleName", where: "TaskOrder = " + TaskOrder + " And ListItemID='" + ListItemID + "'", rowlimit: 1, paging: true, page: 1 },
+                                                     function getData(data) {
+                                                         notify('notification', "<a><img src=\"http://spserver/PublishingImages/" + data[0].getAttribute("ResponsibleName") + ".jpg\" height=80px; width=60px;/>وظیفه ی {" + data[0].getAttribute("ResponsibleName") + "} فعال گردید.</a>");
+                                                         $('.overlay').fadeOut(1000);
+                                                         callback(items[0].ID);
+                                                     });
+                                               $('.overlay').fadeOut(2500);//برای آخرین تسک ها مجبوریم این خط رو بزاریم
+
+                                           }
+                                       });
+                                   }
+                                });
+
+
+                           });
+                }//End IF Approve Or Reject
+                if (isApprove == false) {
+                    $('.overlay').show();
+                    var ListTitle = "";
+                    var ListItemID = "";
+                    var TaskOrder;
+                    var Author = ";";
+                    $SP().list('Task').get({ fields: "ID,ListItemID,ListTitle,TaskOrder,Author", where: "ID = " + currentTaskId },
+                          function (data) {
+                              for (var i = data.length; i--;) {
+                                  ListTitle = data[i].getAttribute("ListTitle");
+                                  ListItemID = data[i].getAttribute("ListItemID");
+                                  TaskOrder = data[i].getAttribute("TaskOrder");
+                                  Author = data[i].getAttribute("Author");
+                              }
+                              $SP().list('Task').update({ Log: "این رویه در مرحله ی " + parseInt(TaskOrder) + " لغو شده است." + "دلیل رد:" + $(".txtMessage_" + currentTaskId).val(), IsDone: 1 }, { where: "ID='" + currentTaskId + "'", success: function (items) { } });
+                              $SP().list('Messages').add({ Title: "درخواست شما به شناسه " + ListItemID + " رد گردید.", UnReadBy: Author, ForwardLink: "http://spserver/SitePages/Shared/Detail/" + ListTitle + ".aspx?ListTitle=" + ListTitle + "&ListItemID=" + ListItemID + "" }, { success: function (items) { } });
+                          });
+                    notify('warning', "وظیفه ی شما با موفقیت لغو شد.");
+
+                    $('.overlay').fadeOut(2000);
+                }
+
+            }
+            function GetNextSerialTaskID(currentTaskId, count, callback) {
+                return ASQ(function (done) {
+
+                    var TaskOrder;
+                    var ListTitle;
+                    var ListItemID;
+
+
+                    //گرفتن بقیه فیلدهای آیتم جاری
+                    $SP().list('Task').get({ fields: "ID,ListItemID,ListTitle,TaskOrder", where: "ID=" + currentTaskId, rowlimit: 1, paging: true, page: 1 },
+                           function (data) {
+                               for (var j = data.length; j--;) {
+                                   TaskOrder = parseInt(data[j].getAttribute("TaskOrder"));
+                                   ListTitle = data[j].getAttribute("ListTitle");
+                                   ListItemID = parseInt(data[j].getAttribute("ListItemID"));
+                               }
+                               TaskOrder = TaskOrder + count;
+                               $SP().list('Task').get({ fields: "ID,ListTitle,ListItemID,ResponsibleAccountID", where: "TaskOrder = " + TaskOrder + " And ListItemID='" + ListItemID + "' And ListTitle='" + ListTitle + "'", rowlimit: 1, paging: true, page: 1 },
+                                   function (data) {
+                                       for (var item in data) {
+                                           var object = {};
+                                           object.ID = data[item].getAttribute("ID");
+                                           object.ListTitle = data[item].getAttribute("ListTitle");
+                                           object.ListItemID = data[item].getAttribute("ListItemID");
+                                           object.ResponsibleAccountID = data[item].getAttribute("ResponsibleAccountID");
+                                           done(object);
+                                           callback(object);
+                                           //return data[item].getAttribute("ID");
+                                       }
+
+                                   });
+                           });
+                });
+            }
+            function ActiveNextNotDoneTask(currentTaskId, callback) {
+
+                var TaskOrder;
+                var ListTitle;
+                var ListItemID;
+
+                //گرفتن بقیه فیلدهای آیتم جاری
+                $SP().list('Task').get({ fields: "ID,ListItemID,ListTitle,TaskOrder", where: "ID=" + currentTaskId, rowlimit: 1, paging: true, page: 1 },
+                       function (data) {
+                           for (var j = data.length; j--;) {
+                               TaskOrder = parseInt(data[j].getAttribute("TaskOrder"));
+                               ListTitle = data[j].getAttribute("ListTitle");
+                               ListItemID = parseInt(data[j].getAttribute("ListItemID"));
+                           }
+                           $SP().list('Task').update({ IsDone: true, DoneBy: GlobalLFName, DueDate: ToShamsi(0) + "_" + new Date().getHours() + ":" + new Date().getMinutes() }, {
+                               where: "ID=" + currentTaskId, success:
+                                      function (items) {
+                                          notify('success', "وظیفه ی شما با موفقیت انجام شد.");
+
+                                          //جستجوی اولین تسکی که باید اکتیو شود.
+                                          $SP().list('Task').get({ fields: "ID,ListTitle,ListItemID", where: "IsDone=0 AND TaskOrder > " + TaskOrder + " AND ListItemID='" + ListItemID + "' AND ListTitle='" + ListTitle + "'", rowlimit: 1, paging: true, page: 1, orderby: "TaskOrder ASC" },
+                                          function (data) {
+                                              for (var item in data) {
+                                                  $SP().list('Task').update({ IsActive: 1 }, { where: "ID=" + data[item].getAttribute("ID") + "" });
+                                                  var object = {};
+                                                  object.ID = data[item].getAttribute("ID");
+                                                  object.ListTitle = data[item].getAttribute("ListTitle");
+                                                  object.ListItemID = data[item].getAttribute("ListItemID");
+
+
+                                                  $SP().list('Task').get({ fields: "ResponsibleName", where: "ID=" + data[item].getAttribute("ID"), rowlimit: 1, paging: true, page: 1 },
+                                                            function getData(data) {
+                                                                notify('notification', "<a><img src=\"http://spserver/PublishingImages/" + data[0].getAttribute("ResponsibleName") + ".jpg\" height=80px; width=60px;/>وظیفه ی {" + data[0].getAttribute("ResponsibleName") + "} فعال گردید.</a>");
+                                                                $('.overlay').fadeOut(1000);
+
+                                                            });
+
+                                                  callback(object);
+                                              }
+                                          });
+                                      }
+                           });
+
+                       });
+
+            }
+            function ActiveTask(listTitle, listItemID, taskOrder, ResponsibleName, successCallBack) {
+                return ASQ(function (done) {
+                    $('.overlay').show();
+                    $SP().list('Task').update({ IsActive: 1 }, {
+                        where: "ListTitle='" + listTitle + "' AND ListItemID='" + listItemID + "' AND TaskOrder=" + taskOrder + ""
+                            , success: function (items) {
+                                notify('notification', "<a><img src=\"http://spserver/PublishingImages/" + ResponsibleName + ".jpg\" height=80px; width=60px;/>وظیفه ی {" + ResponsibleName + "} فعال گردید.</a>");
+                                $('.overlay').fadeOut(2000);
+                                successCallBack();
+                                done(items);
+                            }
+
+                    });
+                });
+            }
+            function DoneTask(listTitle, listItemID, taskOrder, successCallBack) {
+                return ASQ(function (done) {
+                    $('.overlay').show();
+                    $SP().list('Task').update({ IsDone: 1, DoneBy: GlobalLFName, DueDate: ToShamsi(0) + "_" + new Date().getHours() + ":" + new Date().getMinutes() }, {
+                        where: "ListTitle='" + listTitle + "' AND ListItemID='" + listItemID + "' AND TaskOrder=" + taskOrder + ""
+                            , success: function (items) {
+                                notify('success', "این وظیفه با موفقیت از کارتابل شما خارج گردید.");
+                                $('.overlay').fadeOut(2000);
+                                successCallBack();
+                                done(items);
+                            }
+                    });
+                });
+            }
+            function ChangeResponsible(listTitle, listItemID, taskOrder, responsibleName, message, successCallBack) {
+
+                return ASQ(function (GlobalDone) {
+                    ASQ()
+                    .then(function step1(done) {
+                        $SP().list('کارکنان شرکت').get({
+                            fields:
+                                    "ID,_x0627__x06cc__x0646__x0641__x06," +
+                                    "_x0646__x0627__x0645__x0020__x062," +
+                                    "_x0646__x0627__x0645__x0020__x060",
+                            where: "_x0646__x0627__x0645__x0020__x062='" + responsibleName + "'",
+                            rowlimit: 1,
+                            paging: true,
+                            page: 1
+                        },
+                                      function (data) {
+
+                                          done(data);
+                                      });
+                    })
+                    .then(function step2(done, PeopleResult) {
+
+                        $SP().list('Task').update({
+                            ResponsibleAccountID: PeopleResult[0].getAttribute('_x0646__x0627__x0645__x0020__x060'),
+                            ResponsibleName: PeopleResult[0].getAttribute('_x0646__x0627__x0645__x0020__x062'),
+                            ResponsibleID: PeopleResult[0].getAttribute('_x0627__x06cc__x0646__x0641__x06')
+                        },
+                                              {
+                                                  where: "ListTitle='" + listTitle + "' AND ListItemID='" + listItemID + "' AND TaskOrder=" + taskOrder + "", success:
+                                                  function (items) {
+                                                      notify('notification', "<a><img src=\"http://spserver/PublishingImages/" + responsibleName + ".jpg\" height=80px; width=60px;/> " + message + "</a>");
+                                                      console.log(items)
+                                                      done(items);
+                                                  }
+                                              });
+                    })
+                    .then(function step3(done, msg) { GlobalDone(msg); })
+                });
+                //ASQ()
+                //.seq(function(){
+                //    return ASQ(function(done){
+
+                //    });//end ASQ
+                //})//end seq
+                //.val(function(PeopleResult){
+
+
+                //    return ASQ(function(done){
+
+                //    });//end ASQ
+
+                //});
+            }
+            function LogTask(listTitle, listItemID, taskOrder, message, successCallBack) {
+                return ASQ(function (done) {
+                    $SP().list('Task').update({
+                        Log: message
+                    },
+                                     {
+                                         where: "ListTitle='" + listTitle + "' AND ListItemID='" + listItemID + "' AND TaskOrder=" + taskOrder + "", success:
+                                         function (items) {
+                                             done(items);
+                                         }
+                                     });
+                });
+            }
+            //-------------------------------------------
+            function FillTask_Async() {
+                return ASQ(function (GlobalDone) {
+                    ASQ()
+                    .then(function (done) {
+                        $.ajax({
+                            url: "/Automation/FillTask_Async",
+                            async: true
+                        })
+                        .success(function (result) {
+
+                            done(result);
+                        });
+
+
+                    })//end then
+                    .then(function (done, TaskResult) {
+
+                        function DetectDetailView(Index) {
+                            var htm = "";
+
+                            htm += "<div class='panel panel-info'>";
+                            htm += "<div class=panel-heading>مرجوعی بانی چاو</div>";
+                            htm += "<div class=panel-body>";
+                            htm += "<table class='table table-bordered'>";
+                            htm += "<tr><th>عنوان</th></tr>";
+                            htm += "<tr>";
+                            htm += "<td>  " + TaskResult[Index].BaniChav_ReturnedProducts_Title + "  </td>";
+                            htm += "</tr>";
+                            htm += "</table>";
+                            htm += "</div>";
+                            htm += "</div>";
+
+                            return htm;
+
+                        }
+
+                        var html = "";
+                        //تعریف فیلدهای مخفی--
+
+                        html += "<div class=row>";
+                        var backColor = "#006CB5";
+
+                        for (var i = 0; i < TaskResult.length; i++) {
+                            html += "<div class='MainDiv panel panel-primary' index='MainDiv_" + TaskResult[i].ID + "' Title='" + TaskResult[i].Title + "'>";
+                            html += "<div class=panel-heading></div>";
+                            html += "<table  class='table table-bordered'><tr style='color:white;background-color:" + backColor + ";border-top:solid 1px #337AB7'><th></th>";
+                            html += "<th>عنوان وظیفه</th>";
+                            html += "<th>پیام این وظیفه</th>";
+                            html += "<th>دلیل رد این وظیفه</th>";
+                            html += "</tr>";
+
+                            //Create Rows-----------------------
+                            html += "<tr class=row_" + TaskResult[i].ID + ">";
+                            html += "<div class=script_" + TaskResult[i].ID + "></div>";
+                            html += "<td>";
+
+                            html += "<button class=btnShowTaskLevel  title='ارسال پیام-نمایش مراحل رویه' index=btnShowTaskLevel_" + i + "><span class='glyphicon glyphicon-option-horizontal' area-hidden=true></span></button>";
+
+                            html += "<button class=btnShowMessage   title='ایجاد مکالمه' index=btnShowMessage_" + i + "><span class='glyphicon glyphicon-envelope' area-hidden=true></span></button>";
+                            html += TaskResult[i].ApproveHtml;
+                            html += TaskResult[i].RejectHtml + "</td>";
+                            html += "<td><strong>" + TaskResult[i].Title + "</strong></td>";
+                            html += "<td>" + TaskResult[i].Description + "</td>";
+                            html += "<td><input type=text class=txtMessage_" + TaskResult[i].ID + "></input></td>";
+                            html += "<tr><td  colspan=4>" + TaskResult[i].Html + "</td></tr>";
+                            html += "</table>";
+
+
+                            html += DetectDetailView(i);
+
+
+
+                            html += "</div>";//End of panel MainDiv
+                        }
+                        html += "</div>";//End of Container
+
+                        var object = {};
+                        object.data = TaskResult;
+                        object.html = html;
+
+                        GlobalDone(object);
+
+
+                    }
+                    ) // end then
+
+                })// End ASQ
+
+
+            }//End function
+            function FillMessage_Async() {
+
+                return ASQ(function (done) {
+
+                    $.ajax({
+                        url: "/Automation/FillMessage_Async",
+                        type: "Get",
+                        async: true,
+
+                    }).success(function (result) {
+                        done(result);
+                    })
+                });
+
+            }
+            function FillPeople_Async() {
+
+                return ASQ(function (done) {
+
+                    $.ajax({
+                        url: "/Automation/FillPeople_Async",
+                        type: "get"
+                    }).success(function (result) {
+
+                        var html = "<select class=txtAssignTo>";
+                        for (var i in result) {
+                            html += "<option  value='" + result[i].User_Id + "'>";//value=AccountID
+                            html += result[i].LFName;
+                            html += "</option>";
+                        }
+                        html += "</select>";
+
+                        var object = {};
+                        object.data = result;
+                        object.html = html;
+                        done(object);
+                    });
+
+                });
+
+            }
+            function ShowMessage(taskId, genericId, peopleHtml) {
+
+                return ASQ(function (done) {
+
+                    ASQ()
+                    .seq(
+                    FillMessage_Async(genericId))
+                   .val(function (messageResult) {
+
+                       var html = "<div class='MessageDiv' id=tblMessage style=margin:3px;>";
+                       if (messageResult.html != null) {
+                           html += messageResult.html;
+                       }
+
+
+                       html += "<div class='panel panel-success'><div class=panel-heading>ایجاد پیام جدید</div>";
+                       html += "<div class=panel-body>";
+                       //----------------
+                       html += "<div class=col-lg-3>";
+                       html += "<p><b>از طرف: </b></p>";
+                       html += "</div>";
+                       html += "<div class=col-lg-9>";
+                       html += "<p><b>" + $(".GlobalLFName").val() + "</b></p>";
+                       html += "</div>";
+                       //-----------------
+                       html += "<div class=col-lg-3>";
+                       html += "<p>ارسال پیام به</p>";
+                       html += "</div>";
+                       html += "<div class=col-lg-9>";
+                       html += peopleHtml;
+                       html += "</div>";
+                       //-----------------
+                       html += "<div class='col-lg-3'>";
+                       html += "<p>متن پیام</p>";
+                       html += "</div>";
+                       html += "<div class=col-lg-9>";
+                       html += "<p><textarea id=Message_txtArea_" + genericId + " style=width:80%;height:100px;></textarea></p>";
+                       html += "</div>";
+                       //-----------------
+                       html += "<div class=col-lg-12>";
+                       html += "<input type=button value='ثبت' class=btnSendMessage onclick=btnSendMessage(" + taskId + "," + genericId + ")></input>";
+                       html += "</div>";
+                       //-----------------
+                       html += "</div>";//end body
+                       html += "</div>";//end panel
+
+                       html += "</div>";//end MessageDiv
+                       done(html);
+
+                   });
+                });
+
+            }
+            function btnSendMessage(taskId, genericId) {
+
+
+                $.ajax({
+                    url: "/Automation/CreateMessage",
+                    type: "post",
+                    data: {
+                        Title: 'پیام اختصاصی',
+                        UnReadBy: $("div[index='MainDiv_" + taskId + "']").find(".txtAssignTo").val(),
+                        TextMessage: 'ViewBag.CurrentUserLFName' + ": " + $("div[index='MainDiv_" + taskId + "']").find(".MessageDiv").find("#Message_txtArea_" + taskId).val(),
+                        genericId: genericId,
+                        ForwardLink: "/Automation/TraceMessage.aspx?genericId=" + genericId
+                    }
+                }).done(function (result) {
+                    notify('success', 'پیام شما با موفقیت ثبت گردید.');
+                    $("div[index=MainDiv_" + taskId + "]").find(".MessageDiv").slideUp(2000);
+
+                });
+            }
+            function Notify(type, text, time, maxVisible) {
+
+                time = time || 2000;
+                maxVisible = maxVisible || 2;
+                var n = noty({
+                    text: text,
+                    type: type,
+                    timeout: time,
+                    dismissQueue: true,
+                    layout: 'center',
+                    closeWith: ['click'],
+                    theme: 'relax',
+                    maxVisible: maxVisible,
+                    animation: {
+                        open: 'animated bounceInLeft',
+                        close: 'animated bounceOutLeft',
+                        easing: 'swing',
+                        speed: 500
+                    }
+                });
+                //console.log('html: ' + n.options.id);
+            }
+            function HidePanel(taskId) {
+                var $this = $(this);
+                $("#MainDiv_" + taskId).fadeOut(1000, function () {
+                    $this.remove();
+                })
+
+            }
+            function DoneTask(taskId)
+            {
+                return ASQ(function (done) {
+                    $.ajax({ url: '/Automation/DoneTask', data: { taskId: taskId } }).done(function (result) { done(result);});
+                });
+            }
+            function ActiveTask(genericId, nextTaskOrder) {
+                return ASQ(function (done) {
+                    $.ajax({ url: '/Automation/ActiveTask', data: { genericId: genericId, nextTaskOrder: nextTaskOrder } }).done(function (result) { done(result); });
+                });
+            }
+    </script>
+}
+

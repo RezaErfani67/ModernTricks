@@ -1,0 +1,7 @@
+﻿@model ModernTricks.Models.USERS
+<div style="direction: rtl">
+    <h2>@Model.Username عزیز !</h2>
+    <p>با تشکر از ثبت نام شما در سایت ما ، برای فعال سازی حساب کاربری خود روی لینک زیر کلیک کنید</p>
+    <a href="@System.Configuration.ConfigurationManager.AppSettings["MyDomain"]/Account/ActiveUser/@Model.ActiveCode">لینک فعال سازی</a>
+</div>
+

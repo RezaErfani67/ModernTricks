@@ -1,0 +1,529 @@
+﻿@model IEnumerable<ModernTricks.Models.Gallery>
+@{
+    ViewBag.Title = "test";
+   
+}
+
+<section class="no-margin" id="main-slider">
+    <div class="carousel slide">
+        <ol class="carousel-indicators">
+            <li class="" data-slide-to="0" data-target="#main-slider"></li>
+            <li data-slide-to="1" data-target="#main-slider" class=""></li>
+            <li data-slide-to="2" data-target="#main-slider" class="active"></li>
+            <li data-slide-to="3" data-target="#main-slider" class=""></li>
+            <li data-slide-to="4" data-target="#main-slider" class=""></li>
+            <li data-slide-to="5" data-target="#main-slider" class=""></li>
+            <li data-slide-to="6" data-target="#main-slider" class=""></li>
+            <li data-slide-to="7" data-target="#main-slider" class=""></li>
+            <li data-slide-to="8" data-target="#main-slider" class=""></li>
+            <li data-slide-to="9" data-target="#main-slider" class=""></li>
+        </ol>
+        <div class="carousel-inner">
+            <div style="background-image: url(../../Content/Gallery/Images/khademSlider1.jpg)" class="item active">
+                <div class="container">
+                    <div class="row slide-margin">
+                        <div class="col-sm-6">
+                            <div class="carousel-content">
+                                <h1 class="animation animated-item-1">طراحی انواع پروژه ها در محیط های</h1>
+                                <h2 class="animation animated-item-2">گازی ، گازوئیلی ، بادی، آبی و هسته ای</h2>
+                                <a href="#" class="btn-slide animation animated-item-3">Read More</a>
+                            </div>
+                        </div>
+                        @*<div class="col-sm-6 hidden-xs animation animated-item-4">
+                                <div class="slider-img">
+                                    <img class="img-responsive" src="~/Content/CorlateTheme/images/slider/img3.png">
+                                </div>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+            @foreach (var item in Model)
+            {
+                if (item.Name != "khademSlider1")
+                {
+                    <div style="background-image: url(../../Content/Gallery/Images/@item.Name)" class="item">
+                
+                        <div class="container">
+                            <div class="row slide-margin">
+                                <div class="col-sm-6">
+                                    <div class="carousel-content">
+                                        <h1 class="animation animated-item-1">@item.Alt</h1>
+                                        @* <h2 class="animation animated-item-2">نهایت آرامش را با طراحی استاندارد سخت افزارهای ما تجربه نمایید</h2>*@
+                                        @*<a href="#" class="btn-slide animation animated-item-3">Read More</a>*@
+                                    </div>
+                                </div>
+                                @*<div class="col-sm-6 hidden-xs animation animated-item-4">
+                                        <div class="slider-img">
+                                            <img class="img-responsive" src="~/Content/CorlateTheme/images/slider/img1.png">
+                                        </div>
+                                    </div>*@
+                            </div>
+                        </div>
+                    </div><!--/.item-->
+                }
+            }
+
+        </div><!--/.carousel-inner-->
+    </div><!--/.carousel-->
+    <a data-slide="prev" href="#main-slider" class="prev hidden-xs">
+        <i class="fa fa-chevron-left"></i>
+    </a>
+    <a data-slide="next" href="#main-slider" class="next hidden-xs">
+        <i class="fa fa-chevron-right"></i>
+    </a>
+</section>
+<section id="feature">
+    <div class="container">
+        <div class="center wow fadeInDown animated" style="visibility: visible; animation-name: fadeInDown;">
+            <h2>گالری قشنگ مبل برادران خادم</h2>
+            <h3 class="lead">انواع مبل های راحتی<br>سرویس چوب ، تخت و میز نهار خوری</h3>
+        </div>
+        <div class="row">
+            <div class="features">
+                <div data-wow-delay="600ms" data-wow-duration="1000ms" class="col-md-4 col-sm-6 wow fadeInDown animated" style="visibility: visible; animation-duration: 1000ms; animation-delay: 600ms; animation-name: fadeInDown;">
+                    <div class="feature-wrap">
+                        <i class="fa fa-bullhorn"></i>
+                        <h2>جدید و به روز</h2>
+                        <h3>لورم ایپسوم یک متن آزمایشیست که طراح برای جبران متن های خود استفاده میکند.</h3>
+                    </div>
+                </div><!--/.col-md-4-->
+                <div data-wow-delay="600ms" data-wow-duration="1000ms" class="col-md-4 col-sm-6 wow fadeInDown animated" style="visibility: visible; animation-duration: 1000ms; animation-delay: 600ms; animation-name: fadeInDown;">
+                    <div class="feature-wrap">
+                        <i class="fa fa-comments"></i>
+                        <h2>تجربه ی پایدار</h2>
+                        <h3>لورم ایپسوم یک متن آزمایشیست که طراح برای جبران متن های خود استفاده میکند.</h3>
+
+                    </div>
+                </div><!--/.col-md-4-->
+                <div data-wow-delay="600ms" data-wow-duration="1000ms" class="col-md-4 col-sm-6 wow fadeInDown animated" style="visibility: visible; animation-duration: 1000ms; animation-delay: 600ms; animation-name: fadeInDown;">
+                    <div class="feature-wrap">
+                        <i class="fa fa-cloud-download"></i>
+                        <h2>تنوع طرح و رنگ</h2>
+                        <h3>لورم ایپسوم یک متن آزمایشیست که طراح برای جبران متن های خود استفاده میکند.</h3>
+                    </div>
+                </div><!--/.col-md-4-->
+
+                <div data-wow-delay="600ms" data-wow-duration="1000ms" class="col-md-4 col-sm-6 wow fadeInDown animated" style="visibility: visible; animation-duration: 1000ms; animation-delay: 600ms; animation-name: fadeInDown;">
+                    <div class="feature-wrap">
+                        <i class="fa fa-leaf"></i>
+                        <h2>قیمت مناسب</h2>
+                        <h3>لورم ایپسوم یک متن آزمایشیست که طراح برای جبران متن های خود استفاده میکند.</h3>
+                    </div>
+                </div><!--/.col-md-4-->
+                <div data-wow-delay="600ms" data-wow-duration="1000ms" class="col-md-4 col-sm-6 wow fadeInDown animated" style="visibility: visible; animation-duration: 1000ms; animation-delay: 600ms; animation-name: fadeInDown;">
+                    <div class="feature-wrap">
+                        <i class="fa fa-cogs"></i>
+                        <h2>امکان شرایط اقساط</h2>
+                        <h3>لورم ایپسوم یک متن آزمایشیست که طراح برای جبران متن های خود استفاده میکند.</h3>
+                    </div>
+                </div><!--/.col-md-4-->
+                <div data-wow-delay="600ms" data-wow-duration="1000ms" class="col-md-4 col-sm-6 wow fadeInDown animated" style="visibility: visible; animation-duration: 1000ms; animation-delay: 600ms; animation-name: fadeInDown;">
+                    <div class="feature-wrap">
+                        <i class="fa fa-heart"></i>
+                        <h2>ضمانت چند ساله</h2>
+                        <h3>لورم ایپسوم یک متن آزمایشیست که طراح برای جبران متن های خود استفاده میکند.</h3>
+                    </div>
+                </div><!--/.col-md-4-->
+            </div><!--/.services-->
+        </div><!--/.row-->
+    </div><!--/.container-->
+</section>
+<section id="recent-works">
+    <div class="container">
+        <div class="center wow fadeInDown animated" style="visibility: visible; animation-name: fadeInDown;">
+            <h2>محصولات ما</h2>
+            <p class="lead">چند نمونه از محصولات ما را می توانید  مشاهده نمایید</p>
+        </div>
+        <div class="row">
+            @foreach (var item in Model.Take(12))
+            {
+
+                <div class="col-xs-12 col-sm-4 col-md-3">
+                    <div class="recent-work-wrap">
+                        <img alt="" src="~/Content/Gallery/Images/thumbnails/@item.Name" class="img-responsive">
+                        <div class="overlay">
+                            <div class="recent-work-inner">
+                                @*<h3><a href="#">Business theme</a> </h3>*@
+                                <p>@item.Alt</p>
+                                <a rel="prettyPhoto" href="~/Content/Gallery/Images/@item.Name" class="preview"><i class="fa fa-eye"></i> View</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            
+
+        </div><!--/.row-->
+    </div><!--/.container-->
+</section>
+<section class="service-item" id="services">
+    <div class="container">
+        <div class="center wow fadeInDown animated" style="visibility: visible; animation-name: fadeInDown;">
+            <h2>Our Service</h2>
+            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <br> et dolore magna aliqua. Ut enim ad minim veniam</p>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-md-4">
+                <div class="media services-wrap wow fadeInDown animated" style="visibility: visible; animation-name: fadeInDown;">
+                    <div class="pull-left">
+                        <img src="~/Content/CorlateTheme/images/services/services1.png" class="img-responsive">
+                    </div>
+                    <div class="media-body">
+                        <h3 class="media-heading">زمان مناسب</h3>
+                        <p>لورم ایپسوم یک متن آزمایشیست که طراح برای جبران متن های خود استفاده میکند.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="media services-wrap wow fadeInDown animated" style="visibility: visible; animation-name: fadeInDown;">
+                    <div class="pull-left">
+                        <img src="~/Content/CorlateTheme/images/services/services2.png" class="img-responsive">
+                    </div>
+                    <div class="media-body">
+                        <h3 class="media-heading">زمان مناسب</h3>
+                        <p>لورم ایپسوم یک متن آزمایشیست که طراح برای جبران متن های خود استفاده میکند.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="media services-wrap wow fadeInDown animated" style="visibility: visible; animation-name: fadeInDown;">
+                    <div class="pull-left">
+                        <img src="~/Content/CorlateTheme/images/services/services3.png" class="img-responsive">
+                    </div>
+                    <div class="media-body">
+                        <h3 class="media-heading">زمان مناسب</h3>
+                        <p>لورم ایپسوم یک متن آزمایشیست که طراح برای جبران متن های خود استفاده میکند.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="media services-wrap wow fadeInDown animated" style="visibility: visible; animation-name: fadeInDown;">
+                    <div class="pull-left">
+                        <img src="~/Content/CorlateTheme/images/services/services4.png" class="img-responsive">
+                    </div>
+                    <div class="media-body">
+                        <h3 class="media-heading">زمان مناسب</h3>
+                        <p>لورم ایپسوم یک متن آزمایشیست که طراح برای جبران متن های خود استفاده میکند.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="media services-wrap wow fadeInDown animated" style="visibility: visible; animation-name: fadeInDown;">
+                    <div class="pull-left">
+                        <img src="~/Content/CorlateTheme/images/services/services5.png" class="img-responsive">
+                    </div>
+                    <div class="media-body">
+                        <h3 class="media-heading">زمان مناسب</h3>
+                        <p>لورم ایپسوم یک متن آزمایشیست که طراح برای جبران متن های خود استفاده میکند.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="media services-wrap wow fadeInDown animated" style="visibility: visible; animation-name: fadeInDown;">
+                    <div class="pull-left">
+                        <img src="~/Content/CorlateTheme/images/services/services6.png" class="img-responsive">
+                    </div>
+                    <div class="media-body">
+                        <h3 class="media-heading">زمان مناسب</h3>
+                        <p>لورم ایپسوم یک متن آزمایشیست که طراح برای جبران متن های خود استفاده میکند.</p>
+                    </div>
+                </div>
+            </div>
+        </div><!--/.row-->
+    </div><!--/.container-->
+</section>
+<section id="middle">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 wow fadeInDown" style="visibility: hidden; animation-name: none;">
+                <div class="skill">
+                    <h2>Our Skills</h2>
+                    <p>لورم ایپسوم یک متن آزمایشیست که طراح برای جبران متن های خود استفاده میکند.</p>
+                    <div class="progress-wrap">
+                        <h3>Graphic Design</h3>
+                        <div class="progress">
+                            <div style="width: 85%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar  color1">
+                                <span class="bar-width">85%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="progress-wrap">
+                        <h3>HTML</h3>
+                        <div class="progress">
+                            <div style="width: 95%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" role="progressbar" class="progress-bar color2">
+                                <span class="bar-width">95%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="progress-wrap">
+                        <h3>CSS</h3>
+                        <div class="progress">
+                            <div style="width: 80%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class="progress-bar color3">
+                                <span class="bar-width">80%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="progress-wrap">
+                        <h3>Wordpress</h3>
+                        <div class="progress">
+                            <div style="width: 90%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="80" role="progressbar" class="progress-bar color4">
+                                <span class="bar-width">90%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/.col-sm-6-->
+            <div class="col-sm-6 wow fadeInDown" style="visibility: hidden; animation-name: none;">
+                <div class="accordion">
+                    <h2>Why People like us?</h2>
+                    <div id="accordion1" class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading active">
+                                <h3 class="panel-title">
+                                    <a href="#collapseOne1" data-parent="#accordion1" data-toggle="collapse" class="accordion-toggle">
+                                        Lorem ipsum dolor sit amet
+                                        <i class="fa fa-angle-right pull-right"></i>
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="panel-collapse collapse in" id="collapseOne1">
+                                <div class="panel-body">
+                                    <div class="media accordion-inner">
+                                        <div class="pull-left">
+                                            <img src="~/Content/CorlateTheme/images/accordion1.png" class="img-responsive">
+                                        </div>
+                                        <div class="media-body">
+                                            <h4>Adipisicing elit</h4>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    <a href="#collapseTwo1" data-parent="#accordion1" data-toggle="collapse" class="accordion-toggle">
+                                        Lorem ipsum dolor sit amet
+                                        <i class="fa fa-angle-right pull-right"></i>
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="panel-collapse collapse" id="collapseTwo1">
+                                <div class="panel-body">
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    <a href="#collapseThree1" data-parent="#accordion1" data-toggle="collapse" class="accordion-toggle">
+                                        Lorem ipsum dolor sit amet
+                                        <i class="fa fa-angle-right pull-right"></i>
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="panel-collapse collapse" id="collapseThree1">
+                                <div class="panel-body">
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    <a href="#collapseFour1" data-parent="#accordion1" data-toggle="collapse" class="accordion-toggle">
+                                        Lorem ipsum dolor sit amet
+                                        <i class="fa fa-angle-right pull-right"></i>
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="panel-collapse collapse" id="collapseFour1">
+                                <div class="panel-body">
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor.
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--/#accordion1-->
+                </div>
+            </div>
+        </div><!--/.row-->
+    </div><!--/.container-->
+</section>
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 wow fadeInDown" style="visibility: hidden; animation-name: none;">
+                <div class="tab-wrap">
+                    <div class="media">
+                        <div class="parrent pull-left">
+                            <ul class="nav nav-tabs nav-stacked">
+                                <li class=""><a class="analistic-01" data-toggle="tab" href="#tab1">Responsive Web Design</a></li>
+                                <li class="active"><a class="analistic-02" data-toggle="tab" href="#tab2">Premium Plugin Included</a></li>
+                                <li class=""><a class="tehnical" data-toggle="tab" href="#tab3">Predefine Layout</a></li>
+                                <li class=""><a class="tehnical" data-toggle="tab" href="#tab4">Our Philosopy</a></li>
+                                <li class=""><a class="tehnical" data-toggle="tab" href="#tab5">What We Do?</a></li>
+                            </ul>
+                        </div>
+                        <div class="parrent media-body">
+                            <div class="tab-content">
+                                <div id="tab1" class="tab-pane fade">
+                                    <div class="media">
+                                        <div class="pull-left">
+                                            <img src="images/tab2.png" class="img-responsive">
+                                        </div>
+                                        <div class="media-body">
+                                            <h2>Adipisicing elit</h2>
+                                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="tab2" class="tab-pane fade active in">
+                                    <div class="media">
+                                        <div class="pull-left">
+                                            <img src="images/tab1.png" class="img-responsive">
+                                        </div>
+                                        <div class="media-body">
+                                            <h2>Adipisicing elit</h2>
+                                            <p>لورم ایپسوم یک متن آزمایشیست که طراح برای جبران متن های خود استفاده میکند.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="tab3" class="tab-pane fade">
+                                    <p>لورم ایپسوم یک متن آزمایشیست که طراح برای جبران متن های خود استفاده میکند.</p>
+                                </div>
+
+                                <div id="tab4" class="tab-pane fade">
+                                    <p>لورم ایپسوم یک متن آزمایشیست که طراح برای جبران متن های خود استفاده میکند.</p>
+                                </div>
+                                <div id="tab5" class="tab-pane fade">
+                                    <p>لورم ایپسوم یک متن آزمایشیست که طراح برای جبران متن های خود استفاده میکند.</p>
+                                </div>
+                            </div> <!--/.tab-content-->
+                        </div> <!--/.media-body-->
+                    </div> <!--/.media-->
+                </div><!--/.tab-wrap-->
+            </div><!--/.col-sm-6-->
+            <div class="col-xs-12 col-sm-4 wow fadeInDown" style="visibility: hidden; animation-name: none;">
+                <div class="testimonial">
+                    <h2>Testimonials</h2>
+                    <div class="media testimonial-inner">
+                        <div class="pull-left">
+                            <img src="images/testimonials1.png" class="img-responsive img-circle">
+                        </div>
+                        <div class="media-body">
+                            <p>لورم ایپسوم یک متن آزمایشیست که طراح برای جبران متن های خود استفاده میکند.لورم ایپسوم یک متن آزمایشیست که طراح برای جبران متن های خود استفاده میکند.</p>
+                            <span><strong>-John Doe/</strong> Director of corlate.com</span>
+                        </div>
+                    </div>
+                    <div class="media testimonial-inner">
+                        <div class="pull-left">
+                            <img src="images/testimonials1.png" class="img-responsive img-circle">
+                        </div>
+                        <div class="media-body">
+                            <p>لورم ایپسوم یک متن آزمایشیست که طراح برای جبران متن های خود استفاده میکند.لورم ایپسوم یک متن آزمایشیست که طراح برای جبران متن های خود استفاده میکند.</p>
+                            <span><strong>-John Doe/</strong> Director of corlate.com</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--/.row-->
+    </div><!--/.container-->
+</section>
+<section id="partner">
+    <div class="container">
+        <div class="center wow fadeInDown" style="visibility: hidden; animation-name: none;">
+            <h2>Our Partners</h2>
+            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <br> et dolore magna aliqua. Ut enim ad minim veniam</p>
+        </div>
+        <div class="partners">
+            <ul>
+                <li> <a href="#"><img src="~/Content/CorlateTheme/images/partners/partner1.png" data-wow-delay="300ms" data-wow-duration="1000ms" class="img-responsive wow fadeInDown" style="visibility: hidden; animation-duration: 1000ms; animation-delay: 300ms; animation-name: none;"></a></li>
+                <li> <a href="#"><img src="~/Content/CorlateTheme/images/partners/partner2.png" data-wow-delay="600ms" data-wow-duration="1000ms" class="img-responsive wow fadeInDown" style="visibility: hidden; animation-duration: 1000ms; animation-delay: 600ms; animation-name: none;"></a></li>
+                <li> <a href="#"><img src="~/Content/CorlateTheme/images/partners/partner3.png" data-wow-delay="900ms" data-wow-duration="1000ms" class="img-responsive wow fadeInDown" style="visibility: hidden; animation-duration: 1000ms; animation-delay: 900ms; animation-name: none;"></a></li>
+                <li> <a href="#"><img src="~/Content/CorlateTheme/images/partners/partner4.png" data-wow-delay="1200ms" data-wow-duration="1000ms" class="img-responsive wow fadeInDown" style="visibility: hidden; animation-duration: 1000ms; animation-delay: 1200ms; animation-name: none;"></a></li>
+                <li> <a href="#"><img src="~/Content/CorlateTheme/images/partners/partner5.png" data-wow-delay="1500ms" data-wow-duration="1000ms" class="img-responsive wow fadeInDown" style="visibility: hidden; animation-duration: 1000ms; animation-delay: 1500ms; animation-name: none;"></a></li>
+            </ul>
+        </div>
+    </div><!--/.container-->
+</section>
+<section id="conatcat-info">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <div data-wow-delay="600ms" data-wow-duration="1000ms" class="media contact-info wow fadeInDown" style="visibility: hidden; animation-duration: 1000ms; animation-delay: 600ms; animation-name: none;">
+                    <div class="pull-left">
+                        <i class="fa fa-phone"></i>
+                    </div>
+                    <div class="media-body">
+                        <h2>Have a question or need a custom quote?</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation +0123 456 70 80</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--/.container-->
+</section>
+<section id="bottom">
+    <div data-wow-delay="600ms" data-wow-duration="1000ms" class="container wow fadeInDown" style="visibility: hidden; animation-duration: 1000ms; animation-delay: 600ms; animation-name: none;">
+        <div class="row">
+            <div class="col-md-3 col-sm-6">
+                <div class="widget">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#">About us</a></li>
+                        <li><a href="#">We are hiring</a></li>
+                        <li><a href="#">Meet the team</a></li>
+                        <li><a href="#">Copyright</a></li>
+                        <li><a href="#">Terms of use</a></li>
+                        <li><a href="#">Privacy policy</a></li>
+                        <li><a href="#">Contact us</a></li>
+                    </ul>
+                </div>
+            </div><!--/.col-md-3-->
+            <div class="col-md-3 col-sm-6">
+                <div class="widget">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Faq</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Forum</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Refund policy</a></li>
+                        <li><a href="#">Ticket system</a></li>
+                        <li><a href="#">Billing system</a></li>
+                    </ul>
+                </div>
+            </div><!--/.col-md-3-->
+            <div class="col-md-3 col-sm-6">
+                <div class="widget">
+                    <h3>Developers</h3>
+                    <ul>
+                        <li><a href="#">Web Development</a></li>
+                        <li><a href="#">SEO Marketing</a></li>
+                        <li><a href="#">Theme</a></li>
+                        <li><a href="#">Development</a></li>
+                        <li><a href="#">Email Marketing</a></li>
+                        <li><a href="#">Plugin Development</a></li>
+                        <li><a href="#">Article Writing</a></li>
+                    </ul>
+                </div>
+            </div><!--/.col-md-3-->
+            <div class="col-md-3 col-sm-6">
+                <div class="widget">
+                    <h3>Our Partners</h3>
+                    <ul>
+                        <li><a href="#">Adipisicing Elit</a></li>
+                        <li><a href="#">Eiusmod</a></li>
+                        <li><a href="#">Tempor</a></li>
+                        <li><a href="#">Veniam</a></li>
+                        <li><a href="#">Exercitation</a></li>
+                        <li><a href="#">Ullamco</a></li>
+                        <li><a href="#">Laboris</a></li>
+                    </ul>
+                </div>
+            </div><!--/.col-md-3-->
+        </div>
+    </div>
+</section>

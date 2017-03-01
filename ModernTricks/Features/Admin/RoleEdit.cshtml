@@ -1,0 +1,121 @@
+﻿@model ModernTricks.Models.ROLES
+
+@{
+    ViewBag.Title = "Edit " + Model.RoleDescription + " Role";
+  
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(":input[type='submit']").button();
+        $(":input[type='button']").button();
+    });
+</script>
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Role_Id)
+        <fieldset>
+            <legend>
+                <h3>
+                    جزئیات رول ها
+                </h3>
+            </legend>
+            <div>
+                <table style='width: 100%' class="table table-bordered table-hover">
+                    <tr>
+                        <td style='width: 120px;font-weight: bold'>
+                            نام رول
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.RoleName, new { @class = "singlelinetextinput" })
+                            @Html.ValidationMessageFor(model => model.RoleName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style='font-weight: bold'>
+                           توضیحات رول
+                        </td>
+                        <td>
+                            @Html.TextAreaFor(model => model.RoleDescription, new { @class = "multilinetextinput" })
+                            @Html.ValidationMessageFor(model => model.RoleDescription)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style='font-weight: bold'>
+                            @Html.LabelFor(model => model.IsSysAdmin, "System Role")
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.IsSysAdmin)
+                            @Html.ValidationMessageFor(model => model.IsSysAdmin)
+                        </td>
+                    </tr>
+                </table>
+                <br />
+                <input type="submit" value="Save" />
+        </fieldset>
+    }
+    <!--<fieldset>
+        <legend>
+            <h3>
+                Users Associated with this Role
+            </h3>
+        </legend>
+        <div id="UsersTable">
+            @Html.Partial("_ListUsersTable4Role", Model)
+            <br />
+        </div>
+        <div>
+            @Html.Partial("_AddUserToUsersTable4Role", Model)
+        </div>
+        <br />
+        <div>
+        @Html.ActionLink("هدایت به صفحه کاربران", "Index", "Admin", new { @class = "btn btn-primary" })
+        </div>
+    </fieldset>
+    <br />-->
+    <br />
+    <fieldset>
+        <legend>
+            <h3>
+               دسترسی های اختصاص داده شده به این رول:
+            </h3>
+        </legend>
+
+        <div id="PermissionsTable">
+            @Html.Partial("_ListPermissions", Model)
+            <br />
+        </div>
+        <div>
+            @Html.Partial("_AddPermission2PermissionsTable4Role", Model)
+        </div>
+        <br />
+        <div>
+            @Html.ActionLink("هدایت به صفحه دسترسی ها", "PermissionIndex", "Admin", new { @class = "btn btn-primary" })
+        </div>
+    </fieldset>
+    <br />
+    <fieldset>
+        <legend>
+            <h3>
+              گزارش های اختصاص داده شده به این رول:
+            </h3>
+        </legend>
+
+        <div id="ReportsTable">
+            @Html.Partial("_ListReportsTable4Role", Model.REPORTS.ToList())
+            <br />
+        </div>
+        <div>
+            @Html.Partial("_AddReport2ReportsTable4Role", Model)
+        </div>
+        <br />       
+        <div>
+            @Html.ActionLink("هدایت به صفحه گزارشات", "ReportIndex", "Admin", new { @class = "btn btn-primary" })
+            @Html.ActionLink("هدایت به صفحه رول ها", "RoleIndex", "Admin", new { @class = "btn btn-primary" })
+        </div>
+    </fieldset>
+
+</div>
+<br />
+

@@ -1,0 +1,103 @@
+﻿@model IEnumerable<ModernTricks.Models.USERS>
+<script type="text/javascript">
+  $(document).ready(function () {
+    //Unbind the original image 'href' set by the controller...
+
+    $('.deleteUser').attr('href', 'javascript://');
+    $('.deleteUser').click(function () {
+      $.row_index = $(this).parent().parent().parent().parent().children().index($(this).parent().parent().parent()) + 1;
+      $dialog.data('id', $(this).attr('id')).data('Id', $(this).attr('Id')).dialog("open");
+    });
+
+    var $dialog = $('<div/>')
+    .html("Warning: This will delete the selected User from the System and will prevent future access to the System.<br/><br/>Do you wish to continue?")
+    .dialog({
+      autoOpen: false,
+      resizable: false,
+      height: 250,
+      modal: true,
+      title: 'Delete User',
+      buttons: [
+            {
+              text: "Continue",
+              id: "continuebtn",
+              click: function () {
+                var _id = $(this).data('Id');
+                var _parameters = { userId: _id };
+                $.ajax({
+                  url: "/Admin/DeleteUser",
+                  type: "GET",
+                  data: _parameters,
+                  success: function (data, textStatus, jqXHR) {
+                    document.getElementById("UserTable").deleteRow($.row_index);
+                  },
+                  error: function (jqXHR, textStatus, errorThrown) {
+                    if (jqXHR.status == 500) {
+                      alert('Internal error: ' + errorThrown);
+                    } else {
+                      alert('Unexpected error.');
+                    }
+                  }
+                });
+                $(this).dialog('close');
+              }
+            },
+            {
+              text: "Cancel",
+              id: "cancelbtn",
+              click: function () {
+                $(this).dialog("close");
+              }
+            }]
+    });
+  });
+</script>
+<div class="panel" id="divUsers">
+    <table class="table table-bordered table-hover" id="UserTable">
+
+            <thead>
+            <th>
+                نام کاربری
+            </th>
+            <th>
+                ایمیل
+            </th>
+            <th>
+                حذف
+            </th>
+            <th>
+                ویرایش
+            </th>
+
+            </thead>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @if (item.Firstname != null && item.Lastname != null)
+                        {
+                            @Html.ActionLink(item.Username, "UserDetails", new { id = item.User_Id })
+                        }
+                        else
+                        {
+                            @item.Username
+                        }
+                    </td>
+                    <td>
+                        @item.EMail
+    </td>
+    <td>
+
+        <a class="btn  btn-danger deleteUser" id=@item.User_Id src="@Url.Content("~/Content/images/bin.png")">حذف کاربر</a>
+
+    </td>
+    <td>
+        <a href="@Url.Action("UserEdit", "Admin", new { id = item.User_Id })" id='@item.User_Id' class="btn btn-default">
+            ویرایش کاربر
+        </a>
+    </td>
+
+</tr>
+            }
+        </table>
+</div>

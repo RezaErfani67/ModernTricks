@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewBag.Title = "test";
+ 
+}
+@if (ViewBag.ISOK == true)
+{
+    <div class="alert alert-success">پیغام شما با موفقیت ثبت گردید.</div>
+}
+<div class="container">
+    <div class="col-md-12">
+        @using (Html.BeginForm("SendEmailForContact", "Home", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="well well-sm">
+                <form>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">
+                                    نام
+                                </label>
+                                <input class="form-control" name="name" placeholder="Enter name" required="required" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">
+                                    آدرس ایمیل
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-envelope"></span>
+                                    </span>
+                                    <input class="form-control" name="email" placeholder="Enter email" required="required" type="email">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">
+                                    موضوع
+                                </label>
+                                <select id="subject" name="subject" class="form-control" required="required">
+                                    <option value="na" selected="">انتخب نمایید:</option>
+                                    <option value="پیشنهاد و انتقاد">پیشنهاد و انتقاد</option>
+                                    <option value="پشتیبانی محصولات">پشتیبانی محصولات</option>
+                                    <option value="مشکلات فنی">مشکلات فنی</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">
+                                    متن پیام
+                                </label>
+                                <textarea name="body" id="message" class="form-control" rows="9" cols="25" required="required" placeholder="Message"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary pull-right" id="btnContactUs">
+                                ارسال پیام
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+        }
+
+
+        <div class="col-md-12">
+            <legend><span class="glyphicon glyphicon-globe"></span>آدرس موسسه</legend>
+            <address>
+                <strong>تهران</strong><br>
+                اتوبان صدر<br>
+                کامرانیه جنوبی - خیابان بیات-خیابان نادر-بن بست نیما<br>
+                <abbr title="کد پستی">
+
+                </abbr>
+                1951934619
+            </address>
+            <address>
+                <strong>موسسه ی مهدوی تذکار</strong><br>
+                <a href="mailto:#">info@ModernTricks.com</a>
+            </address>
+        </div>
+    </div>
+</div>

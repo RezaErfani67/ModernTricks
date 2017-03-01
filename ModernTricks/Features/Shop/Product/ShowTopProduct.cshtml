@@ -1,0 +1,30 @@
+﻿@using ModernTricks.Common
+@model IEnumerable<ModernTricks.Models.Products>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img src="~/Content/Product/Images/thumb/@item.Productimage" alt="@item.Title" style="width: 100%;height: 180px">
+                <div class="caption">
+                    <h3>@item.Title</h3>
+                    <p>@item.ShortDescription</p>
+                    <p>
+                        <a href="/Product/ShowProduct/@item.ProductID" class="btn btn-primary" role="button">جزئیات</a>
+                        @if (WareHouseChecker.Count(item.ProductID) > 0)
+                {
+                            <a onclick="AddTooCart('@item.ProductID')" class="btn btn-default" role="button">خرید</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-danger">نا موجود</a>
+                        }
+                        <a class="btn btn-warning" role="button" onclick="AddTooCompareList('@item.ProductID')">مقایسه</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

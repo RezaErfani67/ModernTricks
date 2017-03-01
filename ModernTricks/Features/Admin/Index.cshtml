@@ -1,0 +1,63 @@
+﻿@model IEnumerable<ModernTricks.Models.USERS>
+@{
+    ViewBag.Title = "RBAC Administration";
+    Layout = "~/Features/Shared/_BSLayout.cshtml";
+}
+
+<script>
+    $(function () {
+        $("#pbFilter").click(function () {
+            $.get("/Admin/filter4Users", { _surname: $("#SurnameId").val() }, function (data) {
+                $("#divUsers").html(data);
+            })
+        })
+    });
+
+    $(function () {
+        $("#pbReset").click(function () {
+            $("#SurnameId").val('');
+            $.get("/Admin/filterReset", {}, function (data) {
+                $("#divUsers").html(data);
+            })
+        })
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(":input[type='button']").button();
+    });
+</script>
+
+<div class="container">
+
+            <div class="row">
+                <table class="table table-bordered">
+                    <tr><th></th><th></th></tr>
+                    <tr>
+                        <td>
+                              قسمتی از نام کاربری یا ایمیل را وارد نمایید
+                        </td>
+                        <td>
+                            @Html.TextBox("SurnameId", string.Empty, new { style = "width:200px", maxlength = 30 })
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input value="اعمال فیلتر" id="pbFilter" name="pbFilter" class="ui-button ui-corner-all ui-widget" role="button" type="button">
+                            <input value="ریست" id="pbReset" class="ui-button ui-corner-all ui-widget" role="button" type="button">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+     
+        <br />
+        <br />
+        @Html.Partial("_ListUserTable", Model)
+        <br />
+        <div>
+            <input type="button" value="ایجاد کاربر" onclick="location.href='@Url.Action("UserCreate", "Admin")'" />
+            <br />
+        </div>
+   
+</div>

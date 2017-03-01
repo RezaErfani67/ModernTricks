@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ModernTricks.Models.News>
+
+<div class="row">
+    <div class="alert alert-success">
+
+        @Html.ActionLink("مشاهده آرشیو پستها", "NewsIndex", "News", new { @class = "btn btn-default" })
+    </div>
+    </div>
+
+    @foreach (var item in Model)
+            {
+
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="well" style='overflow: hidden'>
+
+                    <div class="hovereffect">
+                     
+                        <img class="img-responsive" src="~/Content/News/Images/@item.Image" alt="">
+                        <div class="overlay">
+                          </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="col-sm-9">
+                <div class="well">
+                    <h4>@Html.ActionLink(item.Title, "DetailsNews", "News", new { id = item.ID }, null)</h4>
+                    <p>@Html.DisplayFor(modelItem => item.ShortDescription)</p>
+                    <p>@Html.ActionLink("ادامه مطلب...", "DetailsNews", "News", new { id = item.ID, title = item.Title }, new { @class = "info" })</p>
+                    <a class="btn btn-success btnAddNewsToMyFav" name="@item.Title" id="@item.ID">افزودن به علاقمندی ها</a>
+                </div>
+            </div>
+        </div>
+        
+    }
+
+<script>
+    $(".btnAddNewsToMyFav").on('click', function (e,xhr) {
+        e.preventDefault();
+        $.ajax({
+
+            method: "post",
+            url: "/Favorites/AddToMyFav",
+            data: { newsID:$(this).attr('id') }
+        }).done(function (result) {
+            notify('success', result.msg);
+        }).error(function (result) {
+
+            notify('error', result.responseJSON.msg);
+            //window.location.href = "/Account/Login";
+  
+
+        });
+
+    });
+
+</script>

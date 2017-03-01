@@ -1,0 +1,129 @@
+﻿@using MvcAjaxPager
+@model PagedList<ModernTricks.Features.Forum.VM_Forum_AllPost>
+
+
+
+<div>
+    @Html.AjaxPager(Model, new PagerOptions
+{
+    FirstPageText = "اول",
+    LastPageText = "آخر",
+    MorePageText = "بیشتر",
+    NextPageText = "بعد",
+    PrevPageText = "قبل",
+    ShowDisabledPagerItems = true,
+    AlwaysShowFirstLastPageNumber = true,
+    HorizontalAlign = "center",
+    ShowFirstLast = true,
+    CssClass = "NavigationBox",
+    AjaxUpdateTargetId = "dvTopics",
+    AjaxOnBegin = "AjaxStart",
+    AjaxOnComplete = "AjaxStop"
+})
+
+
+    @{int i = 0; }
+
+    @foreach (var item in Model)
+    {
+
+        string color = "white";
+        if (i % 2 == 0) { color = "#efefef"; }
+        i++;
+        if (ViewContext.Controller.IsSysAdmin() || HttpContext.Current.User.Identity.Name == ViewBag.Admin.ToString())
+        {
+            <div class="row postRow" style='background-color:@color'>
+
+
+                <div class="col-sm-2">
+
+                 <img src="~/Content/Forum/Users/@item.Pic"    height="80" width="60" />
+
+                </div>
+                <div class="col-sm-3">
+
+                    <h5><b>@Html.ActionLink(item.Title, "ShowPost", new { id = item.postID })</b></h5>
+
+
+                </div>
+
+                <div class="col-sm-2">
+                    <h6>
+                       توسط: @item.CreatedBy_FLName
+                    </h6>
+                </div>
+                <div class="col-sm-3">
+                    <h6>
+                      @item.CreatedDate.ToString().BeforeDate()
+                    </h6>
+                </div>
+                <div class="col-sm-4">
+                    <h6>@Html.ActionLink("ویرایش", "EditPost", new { id = item.postID }, new { @class = "btn btn-default" })
+                    @Html.ActionLink("حذف", "DeletePost", new { id = item.postID }, new { @id = item.postID, @class = "btn btn-danger btnDeletePost" })</h6>
+                </div>
+
+
+            </div>
+        }
+
+        else
+        {
+            <div class="col-sm-12" style='background-color:@color'>
+
+                <div class="col-sm-2">
+
+                    <img src="~/Content/Forum/Users/@item.Pic" class="img-thumbnail" height="100" width="80" />
+
+                </div>
+                <div class="col-sm-3">
+
+                    <h5><b>@Html.ActionLink(item.Title, "ShowPost", new { id = item.postID })</b></h5>
+
+
+                </div>
+
+
+                <div class="col-sm-2">
+                    <h6>
+                        توسط: @item.CreatedBy_FLName
+                    </h6>
+                </div>
+                <div class="col-sm-4">
+                    <h6>
+                        ایجاد شده در:  @item.CreatedDate
+                    </h6>
+                </div>
+
+
+            </div>
+        }
+    }
+
+</div>
+<script>
+    $(".btnDeletePost").on('click', function (e) {
+        e.preventDefault();
+        var $this = $(this);
+
+        $.ajax({
+            url: "/Forum/DeletePost",
+            method: "post",
+            data:
+                {
+                    id: $this.attr("id")
+                }
+
+        }).done(function (result) {
+
+            if (result.state == "success") {
+                $this.closest('.postRow').fadeOut('slow');
+            }
+            if (result.state == "error") {
+                notify(result.state, result.msg)
+            }
+
+        })
+    });
+
+
+</script>

@@ -1,0 +1,134 @@
+﻿@model ModernTricks.Models.Products
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+
+<link href="~/Content/Product/ShowProduct/vlb_files1/visuallightbox.css" rel="stylesheet" />
+<link href="~/Content/Product/ShowProduct/vlb_files1/vlightbox1.css" rel="stylesheet" />
+
+<div class="row">
+    @*عکس ها*@
+    <div class="col-md-4">
+        <div class="row" style="text-align:center;">
+            <img src="~/Content/Product/Images/thumb/@Model.Productimage" width="100%" class="thumbnail" />
+        </div>
+        <div class="row">
+            @if (Model.Product_Gallery.Any())
+        {
+                <div class="col-sm-12" id="vlightbox1">
+                    @foreach (var item in Model.Product_Gallery)
+                    {
+
+                        <a class="vlightbox1" href="~/Content/Product/Images/large/@item.ImageName" title="@Model.Title">
+                            <img class="img-circle" src="~/Content/Product/Images/thumb/@item.ImageName" style="width: 50px;height: 50px" />
+                        </a>
+
+                    }
+                </div>
+
+        }
+
+
+        </div>
+    </div>
+    @*نوشته ها*@
+    <div class="col-md-8">
+
+        <div class="well well-sm text-center">
+            <h3>@Model.Title</h3>
+        </div>
+      
+        <h5> @Model.ShortDescription</h5>
+        
+
+    </div>
+
+</div>
+<div class="row">
+    <div class="thumbnail" style="border-radius: 0;overflow: hidden">
+        @Html.Raw(Model.Text)
+        @if (Model.Product_Features.Any())
+    {
+        int CounterRow = 1;
+            <table class="table table-hover">
+                <caption>امکانات @Model.Title</caption>
+                <tr class="bg-primary">
+                    <th>#</th>
+                    <th>ویژگی</th>
+                    <th>مقدار</th>
+                </tr>
+                @foreach (var item in Model.Product_Features)
+            {
+                    <tr>
+                        <td>@CounterRow</td>
+                        <td>@item.Features.FeatureTitle</td>
+                        <td>@item.Value</td>
+                    </tr>
+
+                CounterRow += 1;
+            }
+
+            </table>
+    }
+
+
+        @if (Model.Product_Tags.Any())
+    {
+            <hr style="clear: both" />
+        foreach (var item in Model.Product_Tags)
+        {
+                <a class="btn btn-xs btn-default" href="/Search?q=@item.TagTitle">
+                    <i class="glyphicon glyphicon-tag"></i> @item.TagTitle
+                </a>
+        }
+
+    }
+    </div>
+</div>
+
+@section Scripts
+{
+<script src="~/Content/Product/ShowProduct/vlb_engine/visuallightbox.js"></script>
+<script src="~/Content/Product/ShowProduct/vlb_engine/vlbdata1.js"></script>
+
+
+    <script>
+        function ReplyComment(productid, commentid) {
+            $.ajax({
+                url: "/Product/Comment",
+                type: "Get",
+                data: { ParentID: commentid, id: productid }
+            }).done(function (result) {
+                $('#Comment_' + commentid).append(result);
+            });
+        }
+    </script>
+
+}
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">نظر های @Model.Title</div>
+    <div class="panel-body">
+        <div id="CommentList">
+
+            @Html.Action("ListComment")
+        </div>
+        <hr />
+        @Html.Action("Comment")
+    </div>
+</div>
+
+
+<script>
+    function CommentSuccess() {
+        $('#Name').val('');
+        $('#Email').val('');
+        $('#Text').val('');
+    }
+
+
+</script>
+

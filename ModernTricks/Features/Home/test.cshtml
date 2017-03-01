@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<br /><br />
+<h3>
+    You should ensure that the user '@User.Identity.Name' is added to the USERS table and then associated with the Administrator role so as you can create new roles to which specific application permissions are assigned.
+    <br /><br />Use the following Sql to add this user to your database
+    <br /><br />
+    INSERT INTO USERS(Username, LastModified, Inactive) VALUES('@User.Identity.Name', GetDate(), 0)
+    <br /><br />
+    INSERT INTO LNK_USER_ROLE(User_Id, Role_Id) VALUES((SELECT User_Id FROM USERS WHERE Username='@User.Identity.Name'),(SELECT Role_Id FROM ROLES WHERE RoleName='Administrator'))
+
+    <br /><br />
+    Once you've assigned to the 'Administrator' role, the 'System Administration' menu will appear where you can create new roles and then change this user from the Administrator role to your new role(s) in order to test...
+    <br /><br />
+</h3>

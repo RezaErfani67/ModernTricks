@@ -1,0 +1,63 @@
+﻿@model IEnumerable<REPORT>
+@{
+  ViewBag.Title = "Reports";
+}
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $(":input[type='button']").button();
+
+    $("#expanderHead").click(function () {
+      $("#expanderContent").slideToggle();
+      if ($("#expanderSign").text() == "+") {
+        $("#expanderSign").html("−")
+      }
+      else {
+        $("#expanderSign").text("+")
+      }
+    });
+  });
+
+  function GetReportPreview(Report_Id) {
+    $("#expanderHead").click();
+    $('#preview').html('<br /><br /><br /><br /><h2>Please wait, loading Report...</h2><br /><img src="../../Content/Images/data-loader.gif" style="float: middle" />');
+
+    $.get('/Reports/Preview?report_id=' + Report_Id, function (data) {
+      $('#preview').html(data);
+    });
+  };
+</script>
+
+<div id="expanderHead" style="cursor: pointer; padding-left: 10px; font-weight: bold; margin-bottom: 5px">
+  Report List <span id="expanderSign" style="color: Black; font-size: larger"><strong>-</strong></span>
+</div>
+<div id="expanderContent" style="padding-left: 30px">
+  <fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
+        border-width: thin; border-color: Silver; width: 580px">
+    <legend><strong>User Reports Summary (Role Based)</strong></legend>
+    Select a report from the list above
+    <table id="ReportTable">
+      <tbody>
+        <ul>
+          @foreach (var item in Model)
+          {
+            <tr>
+              <td width="10px"></td>
+              <td>
+                <li>
+                  <strong><font size="4.2em"><a onclick="GetReportPreview(@item.Report_Id)" style=" cursor:pointer;">@item.ReportName</a></font></strong>
+                  <br />@Html.DisplayFor(modelItem => item.ReportDescription)
+                </li>
+              </td>
+            </tr>
+          }
+        </ul>
+      </tbody>
+    </table>
+
+    <br />
+  </fieldset>
+</div>
+<br />
+<div id="preview" style="text-align: center;" />
+

@@ -1,0 +1,164 @@
+﻿
+@{
+
+    Layout = "~/Features/Shared/SideLayout.cshtml";
+}
+
+
+<div class="row">
+    <h4>مدیریت ویدیوها و عکس ها </h4>
+    <div class="col-sm-6">
+        <div class="row">
+            <div class="panel panel-success">
+                <div class="panel-heading"></div>
+                <div class="panel-body">
+                    <table class="table table-bordered tblVideos"></table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-sm-6">
+        <div class="row">
+            <div class="panel panel-success">
+                <div class="panel-heading"></div>
+                <div class="panel-body">
+                    <table class="table table-bordered tblPictures"></table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+@section scripts
+    {
+    <script src="~/Scripts/asq.src.js"></script>
+
+    <script>
+
+        function DataShowVideos() {
+
+            return ASQ(function (done) {
+                $.ajax({
+                    url: "/Home/DataShowVideos",
+                    type:"get",
+                    data: {},
+                    async: true
+
+                }).done(function (Result) {
+                    done(Result);
+                });
+            });
+        }
+        function DataShowPicture() {
+
+            return ASQ(function (done) {
+                $.ajax({
+                    url: "/Home/DataShowPicture",
+                    type: "get",
+                    data: {},
+                    async: true
+
+                }).done(function (Result) {
+                    done(Result);
+                });
+            });
+        }
+
+        $(document).ready(function () {
+
+        
+
+            ASQ()
+            .all(DataShowVideos(),DataShowPicture())
+            .then(function step1(done, VideosResult,PictureResult) {
+
+                var htmVideos = "";
+
+
+                htmVideos += "<tr>";
+                htmVideos += "<th></th>";
+
+                htmVideos += "<th>عنوان ویدیو</th>";
+               
+              
+                htmVideos += "</tr>";
+                for (var item in VideosResult)
+                {
+                    htmVideos += "<tr videoID='"+VideosResult[item].ID+"'>";
+                    htmVideos += "<td>";
+                    htmVideos += "<input type=button class='btn btn-danger btnDeleteVideo'  value='حذف'/></td>";
+                    htmVideos += "<td >" + VideosResult[item].Title + "</td>";
+                    htmVideos += "</tr>";
+                }
+
+                $(".tblVideos").html(htmVideos);
+                //------------------------------------------------------
+                var htmlPictures = "";
+
+                htmlPictures += "<tr>";
+                htmlPictures += "<th></th>";
+
+                htmlPictures += "<th>نام عکس</th>";
+
+
+                htmVideos += "</tr>";
+                for (var item in PictureResult) {
+                    htmlPictures += "<tr picID='" + PictureResult[item].ID + "'>";
+                    htmlPictures += "<td>";
+                    htmlPictures += "<input type=button class='btn btn-danger btnDeletePicture'  value='حذف'/></td>";
+                    htmlPictures += "<td ><img width=100px height=100px src=/Content/Gallery/images/thumbs/" + PictureResult[item].Name + " /></td>";
+                    htmlPictures += "</tr>";
+                }
+
+                $(".tblPictures").html(htmlPictures);
+
+            })
+
+        });
+
+
+     
+        $(document).on('click', ".btnDeleteVideo", function () {
+
+            var id = $(this).closest('tr').attr('videoID');
+            var $this = $(this)
+            $.ajax({
+                url: "/home/DeleteVideo",
+                data: { id: id }
+
+            }).done(function (result) {
+                notify(result.state, result.msg);
+                $this.closest('tr').fadeOut('slow');
+            }).error(function (result) {
+                notify('error', result.responseJSON.msg);
+
+            });
+
+        });
+
+        $(document).on('click', ".btnDeletePicture", function () {
+
+            var id = $(this).closest('tr').attr('picID');
+            var $this = $(this)
+            $.ajax({
+                url: "/home/DeletePicture",
+                data: { id: id }
+
+            }).done(function (result) {
+                notify(result.state, result.msg);
+                $this.closest('tr').fadeOut('slow');
+            }).error(function (result) {
+                notify('error', result.responseJSON.msg);
+
+            });
+
+        });
+    </script>
+
+
+}
+
+
+

@@ -1,0 +1,131 @@
+﻿@model Main.Features.Home.GalleyVideoViewModel
+@{
+    ViewBag.Title = "CreateGallery";
+  
+}
+<div class="container">
+@using (Html.BeginForm("CreateGallery","Home",FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h2>ایجاد گالری تصاویر</h2>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.Label("برچسب", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Gallry.Alt , new { htmlAttributes = new { @class = "form-control" , @Name="Alt" }})
+                @Html.ValidationMessageFor(model => model.Gallry.Alt, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("آپلود فایل", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div id="multiple">
+                    <input type="file" class="form-control multiple" name="files" multiple />
+                </div>
+                <div id="single">
+                    <input type="file" class="single" name="files" /><br />
+                    <input type="file" class="single" name="files" /><br />
+                    <input type="file" class="single" name="files" /><br />
+                </div>
+            </div>
+           
+        </div>
+        <div class="form-group">
+            @Html.Label("آیا در اسلایدر استفاده می شود؟", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Gallry.IsUsedInSlider, new { htmlAttributes = new { @class = "form-control", @Name = "IsUsedInSlider" } })
+                @Html.ValidationMessageFor(model => model.Gallry.IsUsedInSlider, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="ثبت" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+<!---------------------------Create Videos----------------->
+@using (Html.BeginForm("CreateVideo", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <h2>آپلود ویدیو</h2>
+        <hr />
+        <div class="form-group">
+            @Html.Label("نام ویدیو در آپارات", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Video.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Video.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("عنوان ویدیو برای نمایش در سایت", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Video.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Video.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+  
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="ثبت" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+}
+    <!---------------------------upload teaching Videos----------------->
+   @using (Html.BeginForm("UploadVideoForTeach", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+  @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+            <h2>آپلود ویدیوی آموزشی</h2>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.Label("عنوان ویدیو", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                   <input type="text" name="title" />
+                    @Html.ValidationMessageFor(model => model.Video.Title, "", new { @class = "text-danger", name = "title" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("آپلود فایل", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                  
+                  <input type="file" class="form-control" name="file" />
+                  
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="ثبت" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+}
+
+
+ </div>
+@section Scripts{
+<script type="text/javascript">
+        $(function () {
+            if(window.FileReader != null){
+                $('#single').hide();
+                $('.single').prop('disabled', true);
+            } else {
+                $('#multiple').hide();
+                $('.multiple').prop('disabled', true);
+            }
+        });
+    </script>
+}
+

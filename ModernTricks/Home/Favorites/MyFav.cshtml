@@ -1,0 +1,75 @@
+﻿@model  IEnumerable<Main.Models.Favorites>
+
+@{
+    ViewBag.Title = "MyFav";
+    Layout = "~/Features/Shared/_BSLayout.cshtml";
+}
+
+<div class="alert alert-success"><h2>ویدیوهای من</h2></div>
+
+<div class="row">
+    @foreach (var item in Model.Where(i=>i.VideosID != null))
+            {
+        <div class="col-sm-4">
+            <div class="well text-center">
+                <div class="h_iframe-aparat_embed_frame">
+                    <span style="display: block;padding-top: 57%"></span><iframe src="http://www.aparat.com/video/video/embed/videohash/@item.Videos.Name/vt/frame" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
+                </div>
+
+            </div>
+        </div>
+    }
+</div>
+<div class="alert alert-success"><h2>خبرهای مورد علاقه من</h2></div>
+<div class="row">
+    @foreach (var item in Model.Where(i => i.NewsID!= null))
+    {
+        <div class="col-sm-6">
+           
+                <div class="col-sm-5">
+                    <div class="well" style='overflow: hidden'>
+                        <div class="hovereffect">
+
+                            <img class="img-responsive" src="~/Content/News/Images/@item.News.Image" alt="">
+                            <div class="overlay">
+                                <h2>@Html.ActionLink(item.News.Title, "DetailsNews", "News", new { id = item.ID }, null)</h2>
+                                <p>@Html.ActionLink("ادامه مطلب...", "DetailsNews", "News", new { id = item.ID, title = @item.News.Title }, new { @class = "info" })</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <div class="well">
+                        <p>@Html.DisplayFor(modelItem => item.News.ShortDescription)</p>
+                        <p>@Html.ActionLink("ادامه مطلب...", "DetailsNews", "News", new { id = item.ID, title = item.News.Title }, new { @class = "info" })</p>
+                        <a class="btn btn-success btnAddNewsToMyFav" name="@item.News.Title" id="@item.ID">افزودن به علاقمندی ها</a>
+                    </div>
+                </div>
+
+          
+        </div>
+    }
+</div>
+
+
+
+
+<style>
+    .h_iframe-aparat_embed_frame {
+        position: relative;
+    }
+
+        .h_iframe-aparat_embed_frame .ratio {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .h_iframe-aparat_embed_frame iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+</style>

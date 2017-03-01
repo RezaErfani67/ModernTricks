@@ -1,0 +1,54 @@
+﻿@using MvcAjaxPager
+@model IEnumerable<Main.Models.News>
+
+
+    <div class="container" id="NewsIndex">
+        <div class="col-sm-12">
+            <div class="row">
+   @Html.AjaxPager((int)TempData["totalItemCount"], 10, (int)TempData["pageIndex"], "_NewsIndex", "News", null,
+    new PagerOptions
+    {
+
+        FirstPageText = "اول",
+        LastPageText = "آخر",
+        MorePageText = "بیشتر",
+        NextPageText = "بعد",
+        PrevPageText = "قبل",
+        Id = "divAjaxPager",
+        AjaxUpdateTargetId = "NewsIndex"
+
+    }, null, null)
+            </div>
+            <div class="row">
+                <table class="table">
+                    <tr><th></th><th>عنوان خبر</th><th>توضیحات کوتاه</th><th></th></tr>
+
+                    @foreach (var item in Model)
+            {
+                        <tr>
+                            <td>
+                                <img style="width:200px;height:112px" src="~/Content/News/Images/@item.Image" />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ShortDescription)
+                            </td>
+
+                            <td>
+
+                                @Html.ActionLink("ادامه مطلب", "DetailsNews","News", new { id = item.ID }, new { @class = "btn btn-success", style = "width:100%" })
+                                @if (ViewContext.Controller.IsSysAdmin())
+                        {
+                                    @Html.ActionLink("حذف", "DeleteNews", "News", new { id = item.ID }, new { @id = "btnDelete_" + item.ID + "", @class = "btnDelete btn btn-warning" ,style="width:100%"})
+                                    @Html.ActionLink("ویرایش", "EditNews", "News", new { id = item.ID }, new { @class = "btn btn-primary", style = "width:100%" })
+                        }
+
+                            </td>
+                        </tr>
+            }
+                </table>
+            </div>
+        </div>
+    </div>

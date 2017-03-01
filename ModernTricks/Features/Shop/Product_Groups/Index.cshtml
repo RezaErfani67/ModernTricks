@@ -1,0 +1,26 @@
+﻿
+
+
+ @Html.ActionLink("افزودن گروه", "Create", "Product_Groups", new{@id = "btnCreate" })
+
+
+<h2>@ViewBag.Title</h2>
+
+<div id="ShowList">
+    @Html.Action("ListGroup")
+</div>
+<script>
+    $('#btnCreate').on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: "/Product_Groups/Create",
+                type: "Get"
+            }).done(function(result) {
+                $('#myModal').modal();
+                $('#myModalLabel').html('افزودن گروه جدید');
+                $('#BodyModal').html(result);
+            });
+
+        } );
+
+</script>

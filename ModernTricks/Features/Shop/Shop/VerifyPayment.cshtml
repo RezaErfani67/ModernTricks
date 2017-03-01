@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "VerifyPayment";
+    Layout = "~/Features/Shared/SideLayout.cshtml";
+}
+
+<h2>تایید پرداخت</h2>
+
+@if(ViewBag.state == "success")
+{
+    <div class="alert alert-success">
+        <h5><b>پرداخت شما با موفقیت انجام شد.</b></h5>
+        <h6><b>@ViewBag.result</b></h6>
+    </div>
+}
+
+
+@if (ViewBag.state == "error")
+{
+    <div class="alert alert-danger">
+        <h5><b>پرداخت شما با خطا مواجه شد.</b></h5>
+        <h6><b>@ViewBag.result</b></h6>
+    </div>
+}
+

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<ModernTricks.Models.ShopCartItem>
+           
+
+@if (Model.Any())
+{
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">سبد خرید شما</div>
+        <!-- Table -->
+        <table class="table">
+            <tr>
+                <th>کالا</th>
+                <th>تعداد</th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.Count</td>
+                    <td>
+                        <a class="text-success cartlink" onclick="CommandShopCart('@item.ProductID',1)">
+                            <i class="glyphicon glyphicon-arrow-up"></i>
+                        </a>
+                        <a class="text-warning cartlink" onclick="CommandShopCart('@item.ProductID',2)">
+                            <i class="glyphicon glyphicon-arrow-down"></i>
+                        </a>
+                        <a class="text-danger cartlink" onclick="CommandShopCart('@item.ProductID',3)">
+                            <i class="glyphicon glyphicon-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td colspan="3">
+                    <a href="/Shop/Order" class="btn btn-default btn-block">نمایش فاکتور</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+else
+{
+    <div class="thumbnail" style="margin: 5px 0">
+        <p class="text-muted text-center">سبد خرید خالی است</p>
+    </div>
+}

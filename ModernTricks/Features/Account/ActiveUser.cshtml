@@ -1,0 +1,26 @@
+﻿@model ModernTricks.Models.USERS
+
+@{
+    ViewBag.Title = "ActiveUser";
+  
+}
+<div class="container">
+<h2 >فعال سازی حساب کاربری</h2>
+
+@if (Model != null)
+{
+    <div class="alert alert-success">
+        <p>
+            <strong >@Model.Username عزیز !</strong>
+            حساب کاربری شما فعال شد .
+        </p>
+    </div>
+}
+else
+{
+    <div class="alert alert-warning">
+        <p>
+            کاربری با پارامتر های ارسالی یافت نشد
+        </p>
+    </div>
+}</div>

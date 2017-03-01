@@ -1,0 +1,139 @@
+﻿@model ModernTricks.Models.Products
+
+@{
+    ViewBag.Title = "افزودن " + Server.HtmlDecode(Html.DisplayNameFor(model => model).ToString());
+}
+
+<h2>افزودن @Html.DisplayNameFor(model => model)</h2>
+
+@using (Html.BeginForm("Create","Products",FormMethod.Post,new{enctype="multipart/form-data"})) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">        
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.GroupID, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("GroupID", String.Empty)
+                @Html.ValidationMessageFor(model => model.GroupID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title)
+                @Html.ValidationMessageFor(model => model.Title)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ShortDescription, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ShortDescription)
+                @Html.ValidationMessageFor(model => model.ShortDescription)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Text, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Text)
+                @Html.ValidationMessageFor(model => model.Text)
+            </div>
+        </div>
+      
+        <div class="form-group">
+            @Html.LabelFor(model => model.Productimage, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input name="Image" type="file" class="form-control" multiple />
+                @Html.ValidationMessageFor(model => model.Productimage)
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Price" class="control-label col-md-2">گالری تصاویر</label>
+            <div class="col-md-10">
+                <input name="Gallery" type="file" class="form-control" multiple />
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Price, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Price)
+                @Html.ValidationMessageFor(model => model.Price)
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="Title" class="control-label col-md-2">کلمات کلیدی</label>
+            <div class="col-md-10">
+                <input type="text" value="" name="Tags" id="Tags"   class="text-box single-line form-control" placeholder="کلمات کلیدی را با - جدا کنید">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2"></div>
+            <div class="col-md-10">
+                <fieldset>
+                    <legend>ویژگی های این محصول</legend>
+                    <div class="col-md-12">
+                        <div class="col-md-5">
+                            @Html.DropDownList("Features", String.Empty)
+                        </div>
+                        <div class="col-md-5">
+                            <input class="form-control" id="FeatureValue" placeholder="مقدار ویژگی را وارد کنید"/>
+                        </div>
+                        <div class="col-md-2">
+                            <a class="btn btn-success" onclick="AddFeature()">
+                                <i class="glyphicon glyphicon-plus"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div id="ListFeatures" style="clear: both">
+                        @Html.Action("listFeature")
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+   
+        <div class="form-group" id="buttons">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="ایجاد" class="btn btn-primary" />
+				@Html.ActionLink("بازگشت به فهرست", "Index")
+            </div>
+        </div>
+    </div>
+}
+<script src="~/ckeditor/ckeditor.js"></script>
+<script src="/ckeditor/adapters/jquery.js"></script>
+
+<script>
+    $(function () {
+        $('#Text').ckeditor();
+    });
+
+
+    function AddFeature() {
+        $.ajax({
+            url: "/Admin/Products/AddFeature",
+            data: {
+                FeatureID: $('#Features').val(), FeatureTitle: $('#Features :selected').text(), Value: $('#FeatureValue').val()
+    }
+        }).done(function(res) {
+            $('#FeatureValue').val('');
+            $('#ListFeatures').html(res);
+        });
+    }
+
+    function DeleteFeature(id, value) {
+        $.ajax({
+            url: "/Admin/Products/DeleteFeature",
+            data: {
+                FeatureID: id, Value: value
+            }
+        }).done(function (res) {
+            $('#ListFeatures').html(res);
+        });
+    }
+</script>

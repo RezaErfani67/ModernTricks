@@ -1,0 +1,68 @@
+﻿@model IEnumerable<ModernTricks.Features.Forum.VM_Forum_Index>
+
+
+
+@if (ViewContext.Controller.IsSysAdmin())
+{
+    <div class="well"><a href="/forum/CreateGroup">درج گروه جدید</a></div>
+    foreach (var item in Model.Where(q => q.groupParentID == null))
+    {
+      
+            <div class="row">
+
+                <ul class="list-group">
+                    <li class="list-group-item active">
+                        <a style="color:white" href="#"><h5 class="list-group-item-heading">@item.groupTitle</h5></a>
+                           
+                        <p></p>
+                            <a href="/Forum/EditGroup?id=@item.groupID"  class="btn btn-default">ویرایش گروه</a>
+                            <input type="hidden" id="@item.groupID" groupID="@item.groupID" parentID="@item.groupParentID" class="hideInfo" />
+                        
+                    </li>
+                    @foreach (var childItem in Model.Where(w => w.groupParentID == item.groupID))
+                    {
+                        <li class="list-group-item">
+                            <a href="/Forum/AllPost?groupId=@childItem.groupID" ><h5 class="list-group-item-heading"><b>@childItem.groupTitle</b></h5></a>
+                              
+                                <p class="list-group-item-text">نام مدیر: @item.groupManager</p>
+                            <p></p>
+                                <p><a href="/Forum/EditGroup?id=@childItem.groupID" class="btn btn-default">ویرایش گروه</a></p>
+                         
+                        </li>
+                    }
+                </ul>
+            </div>
+        
+
+    }
+
+}
+
+
+else
+{
+    foreach (var item in Model.Where(q => q.groupParentID == null))
+    {
+     
+            <div class="row">
+
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action active">
+                        <h5 class="list-group-item-heading">@item.groupTitle</h5>
+                        <input type="hidden" id="@item.groupID" groupID="@item.groupID" parentID="@item.groupParentID" class="hideInfo" />   
+                    </a>
+                  @foreach (var childItem in Model.Where(w => w.groupParentID == item.groupID))
+                  {
+                    <a href="/Forum/AllPost?groupId=@childItem.groupID" class="list-group-item list-group-item-action">
+                        <h5 class="list-group-item-heading"><b>@childItem.groupTitle</b></h5>
+                        <p class="list-group-item-text">نام مدیر: @item.groupManager</p>
+                    </a>
+                
+                  }
+                </div>
+
+            </div>
+
+
+    }
+}

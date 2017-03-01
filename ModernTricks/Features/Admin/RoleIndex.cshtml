@@ -1,0 +1,98 @@
+﻿@model IEnumerable<ModernTricks.Models.ROLES>
+@{
+    ViewBag.Title = "Roles";
+}
+
+<script type="text/javascript">
+    onload = function () {
+        var rows = document.getElementById('RoleTable').getElementsByTagName('tr');
+        for (i = 0; i < rows.length; i++) {
+            rows[i].onclick = function () {
+                $.row_index = this.rowIndex;
+            }
+        }
+    }
+
+    $(document).ready(function () {
+        $(":input[type='button']").button();
+    });
+
+    function DeleteRole(id) {
+        if (confirm('آیا از حذف رول اطمینان دارید؟')) {
+            // delete it!
+            //demonstrates using a dialog confirmation using JavaScript and NOT JQuery...
+
+            $.ajax({
+                url: "/Admin/RoleDelete/" + id,
+                type: "GET",
+                success: function (data, textStatus, jqXHR) {
+                    alert($.row_index);
+                    document.getElementById("RoleTable").deleteRow($.row_index);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    if (jqXHR.status == 500) {
+                        alert('Internal error: ' + errorThrown);
+                    } else {
+                        alert('Unexpected error.');
+                    }
+                }
+            });
+
+            //var _url = window.location.href.substring(0, window.location.href.lastIndexOf("/") + 1) + "RoleDelete/" + id;
+            //window.location.href(_url);
+        } else {
+            // Do nothing!
+        }
+    };
+</script>
+
+<div class="container">
+    <fieldset>
+        <legend>
+            <h3>
+                رول ها
+            </h3>
+        </legend>
+        <table id="RoleTable" class="table table-bordered table-hover">
+            <tr>
+                <th>
+                    نام رول
+                </th>
+                <th>
+                    توضیحات رول
+                </th>
+                <th>
+                    آیا ادمین است؟
+                </th>
+               
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(item.RoleName, "RoleDetails", new { id = item.Role_Id })
+                    </td>
+                    <td>
+                        @item.RoleDescription
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsSysAdmin)
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" onclick="DeleteRole(@item.Role_Id)">حذف رول</a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("RoleEdit", "Admin", new { id = item.Role_Id })" class="table btn btn-default">ویرایش رول</a>
+                    </td>
+                </tr>
+            }
+        </table>
+        <br />
+        <div>
+            <input type="button" class="btn btn-default" value="ایجاد رول" onclick="location.href='@Url.Action("RoleCreate", "Admin")'" />
+            @Html.ActionLink("هدایت به صفحه کاربران", "Index", "Admin",new { @class="btn btn-primary"})
+        </div>
+    </fieldset>
+  
+</div>
+<br />

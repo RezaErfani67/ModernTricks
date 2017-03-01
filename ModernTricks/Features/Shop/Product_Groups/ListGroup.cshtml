@@ -1,0 +1,63 @@
+﻿@model IEnumerable<ModernTricks.Models.Product_Groups>
+    
+
+<table class="table">
+    <tr>
+
+        <th>
+            نام گروه
+        </th>
+        <th>
+            شناسه گروه
+        </th>
+        <th>
+            ویرایش
+        </th>
+        <th>
+            حذف
+        </th>
+      
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.GroupTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GroupID)
+            </td>
+           
+            <td>
+                <a href="#" class="btn btn-warning" onclick="Edit('@item.GroupID')">ویرایش</a>
+
+            </td>
+            <td>
+                @Html.ActionLink("حذف", "Delete", new { id = @item.GroupID }, new { @class = "btn btn-danger" })
+            </td>
+        <td>
+         
+        </td>
+        </tr>
+    }
+
+</table>
+<script>
+
+
+        function Edit(id) {
+            $.ajax({
+                url: "/Product_Groups/Edit/"+id,
+                type: "Get"
+            }).done(function (result) {
+                $('#myModal').modal();
+                $('#myModalLabel').html('ویرایش گروه');
+                $('#BodyModal').html(result);
+            });
+        }
+        function Success() {
+
+            $('#myModal').modal('toggle');
+        }
+</script>

@@ -1,0 +1,76 @@
+﻿
+@{
+
+    Layout = "~/Features/Shared/_BSLayout.cshtml";
+}
+
+
+<div class="container">
+    <h4>مشاهده ویدیوهای درسی و دانلود آنها </h4>
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="panel panel-success">
+                <div class="panel-heading"></div>
+                <div class="panel-body tblTeachVideo">
+                    
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    
+</div>
+@section scripts
+    {
+    <script src="~/Scripts/asq.src.js"></script>
+
+    <script>
+
+        function getTeachingVideo() {
+
+            return ASQ(function (done) {
+                $.ajax({
+                    url: "/Home/ShowTeachingVideoForUser",
+                    async: true
+
+                }).done(function (TeachVideoResult) {
+
+                    done(TeachVideoResult);
+                });
+            });
+        }
+
+        $(document).ready(function () {
+
+            ASQ()
+            .then(getTeachingVideo())
+            .then(function (done, videosResult) {
+                console.log(videosResult);
+                var html = "";
+                html += "<table class='tblTeachingVideo table table-bordered'>";
+                html += "<tr>";
+                html += "<th>انتخاب</th>";
+                html += "</tr>";
+                for (var item in videosResult) {
+                    console.log(item);
+                    html += "<tr>";
+                    html += "<td><a href=/Home/TeachVideoDownload?videoID=" + videosResult[item].VideoID + "  videoID=" + videosResult[item].VideoID + " class=DownloadLink >" + videosResult[item].VideoTitle + "</a></td>";
+                   
+                    html += "</tr>";
+                }
+                html += "</table>";
+                done(html);
+            })
+            .then(function (done,msg) { $(".tblTeachVideo").html(msg) })
+
+        });
+
+
+    </script>
+    
+
+}
+
+
+

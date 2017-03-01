@@ -1,0 +1,10 @@
+﻿@using System.Configuration
+@model ModernTricks.Models.USERS
+
+<div style="direction: rtl;overflow: hidden">
+    <h1>
+        @Model.Username عزیز !
+    </h1>
+    <p>جهت تغییر کلمه عبور خود روی لینک زیر کلیک کنید</p>
+    <a href="@ConfigurationManager.AppSettings["MyDomain"]/Account/ChangePassFromEmail/@Model.ActiveCode">تغییر کلمه عبور</a>
+</div>

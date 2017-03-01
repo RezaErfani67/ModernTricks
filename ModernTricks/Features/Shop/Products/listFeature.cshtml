@@ -1,0 +1,24 @@
+﻿@model IEnumerable<ModernTricks.Models.ViewModel.FeatureItem>
+
+<table class="table">
+    <tr><th>عنوان ویژگی</th><th>مقدار</th></tr>
+    @foreach (var item in Model)
+    {
+
+        <tr>
+            <td>
+                @item.FeatureTitle
+            </td>
+            <td>
+                @item.Value
+            </td>
+            <td>
+                <a class="btn btn-danger" onclick="DeleteFeature(@item.FeatureID,'@item.Value')">
+                    <i class="glyphicon glyphicon-remove"></i>
+                </a>
+            </td>
+        </tr>
+
+    }
+</table>
+

@@ -1,0 +1,59 @@
+﻿@using ModernTricks.Models
+@model List<Guid>
+@{
+    ViewBag.Title = "ShowComparisonList";
+    var db = new MainDBEntities();
+    var listfeatures = new List<Product_Features>();
+    foreach (var i in Model)
+    {
+        listfeatures.AddRange(db.Product_Features.Where(p => p.ProductID == i).ToList());
+    }
+}
+<style>
+    td {
+        padding: 5px;
+    }
+</style>
+@if (Model.Any())
+{
+    <table class="table-bordered" width="100%">
+        <tr>
+            <td><b>تصویر</b></td>
+
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var product = db.Products.Find(Model[i]);
+                <td><img width="70" src="/Content/Product/Images/thumb/@product.Productimage" class="thumbnail" /></td>
+            }
+        </tr>
+        <tr>
+            <td><b>عنوان</b></td>
+
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var product = db.Products.Find(Model[i]);
+                <td>@product.Title</td>
+            }
+        </tr>
+
+        @foreach (var item in listfeatures.GroupBy(g => g.FeatureID).Select(s => s.First()))
+        {
+            <tr>
+                <td>@item.Features.FeatureTitle</td>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    var fet = listfeatures.FirstOrDefault(f => f.ProductID == Model[i] && f.FeatureID == item.FeatureID);
+                    <td>
+                        @if (fet != null)
+                        {
+                            <text>@fet.Value</text>
+                        }
+                </td>
+                }
+            </tr>
+        }
+    </table>
+}
+
+
+

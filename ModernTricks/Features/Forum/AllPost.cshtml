@@ -1,0 +1,33 @@
+﻿@using MvcAjaxPager
+@model PagedList<ModernTricks.Features.Forum.VM_Forum_AllPost>
+
+<div class="row>">
+
+    <div class="alert alert-info"><a href="/forum/CreatePost?groupID=@ViewBag.groupID">درج پست جدید</a></div>
+</div>
+
+
+@*@Html.Action("_Posts", "Forum", new { groupId = TempData["groupId"] })*@
+<div id="row dvTopics">
+    @{ Html.RenderPartial("_AllPost", Model); }
+    </div>
+
+@section Scripts
+{
+        <script type="text/javascript" src="@Url.Content("~/Scripts/path.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.pager-1.0.2.min.js")"></script>
+        <script type="text/javascript">
+            $('#divAjaxPager').pager();
+
+            ////pagination before start
+            //function AjaxStart() {
+            //    console.log('Start AJAX call. Loading message can be shown');
+            //}
+            //// pagination - after request
+            //function AjaxStop() {
+            //    console.log('Stop AJAX call. Loading message can be hidden');
+            //};
+        </script>
+    }
+
+

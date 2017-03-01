@@ -1,0 +1,68 @@
+﻿@model ModernTricks.Models.REPORTS
+@{
+    ViewBag.Title = "Create Report";
+    Layout = "~/Features/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(":input[type='submit']").button();
+        $(":input[type='button']").button();
+    })
+</script>
+<div class="panel">
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        <fieldset>
+            <legend>
+                <h3>
+                    Create Report
+                </h3>
+            </legend>
+            <table style='width: 100%'>
+                <tr>
+                    <td style='width: 10%; font-weight: bold' class='userTable'>
+                        @Html.LabelFor(model => model.ReportName)
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ReportName, new { style = "width:550px" })
+                        @Html.ValidationMessageFor(model => model.ReportName)
+                    </td>                   
+                </tr>
+                <tr>
+                    <td style='font-weight: bold' class='userTable'>
+                        @Html.LabelFor(model => model.ReportDescription)
+                    </td>
+                    <td>
+                        @Html.TextAreaFor(model => model.ReportDescription, new { style = "width:550px" })
+                        @Html.ValidationMessageFor(model => model.ReportDescription)
+                    </td>
+                </tr>                
+                <tr>
+                    <td style='font-weight: bold'>
+                        @Html.LabelFor(model => model.Template, new { style = "vertical-align:top" })
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Template, new { @class = "singlelinetextinput", @Value = "DefaultResultsTemplate" })
+                        @Html.ValidationMessageFor(model => model.Template)
+                    </td>
+                </tr>
+                <tr>
+                    <td style='font-weight: bold'>
+                        @Html.LabelFor(model => model.StoredProcedureName, new { style = "vertical-align:top" })
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.StoredProcedureName, new { @class = "singlelinetextinput" })
+                        @Html.ValidationMessageFor(model => model.StoredProcedureName)
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <input type="submit" value="Create Report" />
+        </fieldset>
+    }
+</div>
+<br />
+<div>
+    @Html.ActionLink("Go to Reports", "ReportIndex", "Admin")
+</div>

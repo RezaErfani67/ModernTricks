@@ -1,0 +1,182 @@
+﻿<div class="stateLogin">
+        @if (User.Identity.IsAuthenticated)
+        {
+
+            <a href="#" class="btn btn-info btn-xs">@ViewBag.FLName خوش آمدید</a>
+            <a href="@Url.Content("~/Account/_ChangePass")" class="btn btn-default btnChangePass" style="display:block;" data-url='@Url.Action("_ChangePass", "Account")'>تغییر کلمه عبور</a>
+            <a href="@Url.Content("~/Account/Logoff")" class="btn btn-default" style="display:block;">خروج از سایت</a>
+            <div id='changePassModal' class='modal fade' role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h2 class="text-right">تغییر کلمه عبور</h2>
+                            
+                        </div>
+                        <div class="modal-body">
+
+
+                            <div id='changePassContainer'>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+
+           <a href="#" class="btn btn-default" style="display:block;">کاربر مهمان خوش آمدید</a>
+            <a href="@Url.Content("~/Account/RecoveryPassword")" class="btn btn-default btnRecoverPass" style="display:block;" data-url='@Url.Action("RecoveryPassword", "Account")'>بازیابی کلمه عبور</a>
+           <a href="@Url.Content("~/Account/Register")" class="btn btn-default btnRegister" style="display:block;" data-url='@Url.Action("Register", "Account")'>ثبت نام در  سایت</a>
+            <a href="@Url.Content("~/Account/Login")" class="btn btn-default btnLogin" style="display:block;" data-url='@Url.Action("Login", "Account")'>ورود به  سایت</a>
+            <div id='loginModal' class='modal fade' role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h2 class="text-right">ورود به سایت</h2>
+                        </div>
+                        <div class="modal-body">
+
+
+                            <div id='loginContainer'>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id='registerModal' class='modal fade' role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h2 class="text-right">ثبت نام در سایت</h2>
+                        </div>
+                        <div class="modal-body">
+
+
+                            <div id='registerContainer'>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id='recoverModal' class='modal fade' role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h2 class="text-right">بازیابی کلمه عبور</h2>
+                        </div>
+                        <div class="modal-body">
+
+
+                            <div id='recoverContainer'>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+                    <script>
+                        function getUrlVars() {
+                            var vars = [], hash;
+                            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+                            for (var i = 0; i < hashes.length; i++) {
+                                hash = hashes[i].split('=');
+                                vars.push(hash[0]);
+                                vars[hash[0]] = hash[1];
+                            }
+                            return vars;
+                        }
+
+
+                        $(document).on("click", '.btnLogin', function (e) {
+                            e.preventDefault();
+
+                            var returnUrl = getUrlVars()["returnUrl"];
+                            var url = $(this).data('url');
+                            if (returnUrl != "")
+                            {
+                                url = url + "?returnUrl=" + returnUrl;
+                            }
+
+
+                            $.get(url, function (data) {
+                             
+                                $('#loginContainer').html(data);
+                                $('form').removeData('validator');
+                                $('form').removeData('unobtrusiveValidation');
+                                $.validator.unobtrusive.parse('form');
+                                $('#loginModal').modal('show');
+                            });
+
+                        });
+
+                        $(document).on("click", '.btnRegister', function (e) {
+                            e.preventDefault();
+
+                            var url = $(this).data('url');
+
+                            $.get(url, function (data) {
+
+                                $('#registerContainer').html(data);
+                                $('form').removeData('validator');
+                                $('form').removeData('unobtrusiveValidation');
+                                $.validator.unobtrusive.parse('form');
+                                $('#registerModal').modal('show');
+                            });
+
+                        });
+
+                        $(document).on("click", '.btnRecoverPass', function (e) {
+                            e.preventDefault();
+
+                            var url = $(this).data('url');
+
+                            $.get(url, function (data) {
+
+                                $('#recoverContainer').html(data);
+                                $('form').removeData('validator');
+                                $('form').removeData('unobtrusiveValidation');
+                                $.validator.unobtrusive.parse('form');
+                                $('#recoverModal').modal('show');
+                            });
+
+                        });
+
+                        $(document).on("click", '.btnChangePass', function (e) {
+                            e.preventDefault();
+
+                            var url = $(this).data('url');
+
+                            $.get(url, function (data) {
+
+                                $('#changePassContainer').html(data);
+                                $('form').removeData('validator');
+                                $('form').removeData('unobtrusiveValidation');
+                                $.validator.unobtrusive.parse('form');
+                                $('#changePassModal').modal('show');
+                                
+                            });
+
+                        });
+                        
+                    </script>
+<style>
+.modal-backdrop {
+    z-index: 1020;
+}
+
+div .stateLogin a{
+    margin-bottom:3px;
+}
+</style>

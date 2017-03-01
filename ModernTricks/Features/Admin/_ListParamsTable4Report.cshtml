@@ -1,0 +1,101 @@
+﻿@model ModernTricks.Models.REPORTS
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		//Unbind the original image 'href' set by the controller...
+		$('.deleteParam').attr('href', 'javascript://');
+		$('.deleteParam').click(function () {
+			$dialog.data('reportId', $(this).attr('reportid')).data('paramId', $(this).attr('paramid')).dialog("open");
+		});
+
+		var $dialog = $('<div/>')
+		.html("Warning: This will permanently delete the Report Filter Parameter from the System and remove any associations.<br/><br/>Do you wish to continue?")
+		.dialog({
+			autoOpen: false,
+			resizable: false,
+			height: 250,
+			modal: true,
+			title: 'Delete Report Filter Parameter',
+			buttons: [
+						{
+							text: "Continue",
+							id: "continuebtn",
+							click: function () {
+								var _reportId = $(this).data('reportId');
+								var _paramId = $(this).data('paramId');
+								var _parameters = { reportId: _reportId, paramId: _paramId };
+
+								$.ajax({
+									url: "/Admin/DeleteReportParameterReturnPartialView",
+									type: "GET",
+									data: _parameters,
+									success: function (data, textStatus, jqXHR) {
+										$('#ParamsTable').html(data);
+									}
+								});
+								$(this).dialog('close');
+							}
+						},
+						{
+							text: "Cancel",
+							id: "cancelbtn",
+							click: function () {
+								$(this).dialog("close");
+							}
+						}]
+		});
+	});
+</script>
+
+@Html.HiddenFor(model => model.Report_Id)
+@if (Model.PARAMETERS.Count == 0)
+{
+	<h2><font color="red">No Associated Parameters...</font></h2>
+	<br />
+}
+else
+{
+	<table style="width: 800px">
+		<thead>
+		<th style="width:30%">
+			Parameter Name
+		</th>
+		<th>
+			Parameter Type
+		</th>
+		<th style="width:30%">
+			Display Label
+		</th>
+		<th style="width: 50px">
+			Required
+		</th>
+		<th style="width: 50px">
+			Action
+		</th>
+		</thead>
+		@foreach (var _param in Model.PARAMETERS)
+		{
+			<tr>
+				<td>
+					@_param.ParameterName
+				</td>
+				<td>
+					@_param.ParameterType
+				</td>
+				<td>
+					@_param.DisplayLabel
+				</td>
+				<td>
+					<input type="checkbox" checked="@_param.Required" disabled readonly />
+				</td>
+				<td>
+					<center>
+						<a href="@Url.Action("DeleteReportParameterReturnPartialView", "Admin", new { reportid = Model.Report_Id, paramid = _param.Parameter_Id })" class="deleteParam" reportid=@Model.Report_Id paramid=@_param.Parameter_Id>
+							<img src="@Url.Content("~/Content/images/bin.png")" />
+						</a>
+					</center>
+				</td>
+			</tr>
+		}
+	</table>
+}

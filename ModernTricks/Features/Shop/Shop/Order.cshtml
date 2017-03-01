@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "Order";
+}
+
+
+<div id="listorder">
+    @Html.Action("ShowOrder")
+</div>
+
+<script>
+    function CountChange(id) {
+        $.ajax({
+            url: "/Shop/ChangeCount",
+            type: "Get",
+            data: { id: id, count: $("#count_" + id).val() }
+        }).done(function(res) {
+            $("#listorder").html(res);
+        });
+    }
+
+    function DeleteItemOrder(id) {
+        $.ajax({
+            url: "/Shop/DeleteItemOrder/" + id,
+            type: "Get",
+        }).done(function (res) {
+            $("#listorder").html(res);
+        });
+    }
+</script>

@@ -1,0 +1,52 @@
+﻿@using ModernTricks.Common
+@model IEnumerable<ModernTricks.Models.WareHouse>
+
+@{
+    ViewBag.Title = "فهرست " + Server.HtmlDecode(Html.DisplyModelPluralName(model => model).ToString());
+    int Counter = 1;
+}
+
+<h2>@ViewBag.Title</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>#</th> 
+            <th>تراکنش</th>
+            <th>کالا</th>
+            <th>تعداد</th> 
+            <th>شماره فاکتور</th> 
+            <th>تاریخ</th>
+        </tr> 
+    </thead>
+    <tbody>
+   @foreach (var item in Model)
+   {
+    <tr>
+        <th scope="row">@Counter</th>
+        <td>@item.WareHouse_Types.TypeTitle</td>
+        <td>@item.Products.Title</td>
+        <td>@item.Count</td>
+        <td>@if (item.OrderID != null)
+            {
+                <p>@item.OrderID</p>
+            }
+            else
+            {
+                <p class="text-danger">ناموجود</p>
+            }
+        </td>
+        <td>
+            @item.Date.ToString("yyyy/MM/dd - HH:mm")
+        </td>
+    </tr>
+
+       Counter += 1;
+   }
+        <tr>
+            <td colspan="3" class="text-left">موجودی :</td>
+            <td>
+                <p class="text-success">@WareHouseChecker.Count((int)ViewBag.ProductID)</p>
+            </td>
+        </tr>    
+    </tbody> 
+</table>

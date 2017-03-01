@@ -1,0 +1,112 @@
+﻿@{
+  Layout = null;
+}
+@model REPORT
+
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    jQuery.ajaxSettings.traditional = true;
+    $(":input[type='button']").button();
+
+    $("#ReportPreview").click(function () {
+      GetReportParameters2Execute();
+    });
+  });
+
+  // Function to retrieve all filter parameters from the page to pass to Reporting Services
+  function GetReportParameters2Execute() {
+    var ReportURL = '/Execute?report_id=' + $("#Report_Id").val();
+    var FilterParameters = "";
+    var bContinue = true;
+
+    $('.filter-input').each(function (i, obj) {
+      if ((this == null || $(this).val() == "") & $(this).attr('required') == 'required') {
+        alert($(this).attr('displaylabel') + ' must be entered');
+        bContinue = false;
+        return false;
+      }
+      else {
+        FilterParameters = FilterParameters + "\\" + $(this).attr('id') + "=" + $(this).val();
+      }
+    });
+
+    //Don't continue if mandatory fields are not entered...
+    if (bContinue == false)
+      return false;
+
+    FilterParameters = FilterParameters.substring(1);
+    //Removes any trailing & characters as this will break the reporting link...
+    FilterParameters = FilterParameters.replace(/\&$/, '');
+
+    $('#preview').html('<br /><br /><br /><br /><h2>Please wait, generating report...</h2><br /><img src="../../Content/Images/data-loader.gif" style="float: middle" />');
+    ReportURL = ReportURL + '&rawParams=' + FilterParameters;
+    $.get('/Reports' + ReportURL, function (data) {
+      $('#preview').html(data);
+    });
+  };
+
+
+
+  function GetSSRSReportParameters2Execute() {
+    var SSRSReportURL = $("#SSRSUrl").val();
+    var FilterParameters = "";
+    var bContinue = true;
+
+    $('.filter-input').each(function (i, obj) {
+      if ((this == null || $(this).val() == "") & $(this).attr('required') == 'required') {
+        alert($(this).attr('displaylabel') + ' must be entered');
+        bContinue = false;
+        return false;
+      }
+      else {
+        if ($(this).val() != "")
+          FilterParameters = FilterParameters + "&" + $(this).attr('id') + "=" + $(this).val();
+      }
+    });
+
+    //Don't continue if mandatory fields are not entered...
+    if (bContinue == false)
+      return false;
+
+    SSRSReportURL = SSRSReportURL + "?" + $("#SSRSReportName").val() + FilterParameters;
+    alert(SSRSReportURL);
+    window.open(SSRSReportURL, '', 'scrollbars=no,menubar=no,height=600,width=800,resizable=yes,toolbar=no,location=no,status=no');
+  };
+</script>
+
+<input type="hidden" name="ReportId" id="ReportId" value="@Model.Report_Id" />
+<input type="hidden" name="SSRSReportName" id="SSRSReportName" value="@Model.Template" />
+<input type="hidden" name="SSRSUrl" id="SSRSUrl" value="@ViewBag.ReportUrl" />
+
+<div style="text-align: left; background-color: Black; font-size: 1.2em; color: #fff;">
+  <strong>Report Title:</strong> @Html.DisplayFor(model => model.ReportName)<br />
+  <br />
+  @{if (Model.ReportDescription != null)
+  {
+    <strong>Description:</strong> @Html.DisplayFor(model => model.ReportDescription)
+  }
+  }
+</div>
+<br />
+@{if (Model.PARAMETERS.Count > 0)
+{
+  <div class="row" style="text-align: left;">
+    <strong>
+      Please enter optional report parameters below and then click 'Generate Report' to display your report results...<br />
+      * - Indicates a required field
+    </strong>
+  </div>}
+}
+<div class="panel" style="text-align: left;">
+  <br />
+  @Html.HiddenFor(model => model.Report_Id)
+  @Html.Partial("_filterControls", Model)
+  <br />
+  <input type="button" value="Generate Report" name="ReportPreview" id="ReportPreview" />
+</div>
+<div class="row">
+  <div id="reportError">
+    &nbsp;
+  </div>
+</div>

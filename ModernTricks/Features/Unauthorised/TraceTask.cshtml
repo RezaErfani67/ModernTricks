@@ -1,0 +1,52 @@
+﻿
+@{
+    
+    Layout = "~/Features/Shared/SideLayout.cshtml";
+}
+ <div class="main"></div>
+@section Scripts
+{
+    var genericId=@ViewBag.genericId;
+    var parentTableHtml=@ViewBag.parentTableHtml;
+
+    <script src="~/Scripts/asq.src.js"></script>
+
+    <script>
+        ASQ()
+            .then(function(done) {
+
+                $.ajax({
+                        url: "/Automation/TraceTask",
+                        type: "Get",
+                        data: { genericId: genericId }
+
+                    })
+                    .success(function(result) {
+
+                        done(result);
+                    });
+
+            })
+            .then(function(done, traceTaskResult) {
+
+                var htm = "";
+                htm += parentTableHtml;
+
+                htm += "<div class=container>";
+                htm += "<table class=table>";
+                htm += "<tr><th>1</th><th>2</th></tr>";
+                for (var item in traceTaskResult) {
+                    htm += "<tr>";
+                    
+                    htm += "</tr>";
+                }
+                htm += "</table>";
+                htm += "</div>";//end html
+                $(".main").append(htm);
+            })
+    </script>
+
+}
+
+
+

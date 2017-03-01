@@ -1,0 +1,45 @@
+﻿@using ModernTricks.Models
+@model IEnumerable<Guid>
+@{
+    var db = new MainDBEntities();
+    int Counter = 1;
+}
+
+@if (Model.Any())
+{
+    <table class="table">
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                عنوان
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Counter
+                </td>
+                <td>
+                    @db.Products.Find(item).Title
+                </td>
+                <td>
+                    <a class="btn btn-danger btn-xs">
+                        <i class="glyphicon glyphicon-remove" onclick="DeleteComparisonList(@item)"></i>
+                    </a> 
+                </td>
+            </tr>
+            Counter += 1;
+        }
+        <tr>
+            <td colspan="3">
+                <a class="btn btn-default btn-block" href="/Compare/ShowComparisonList">نمایش</a>
+            </td>
+        </tr>
+    </table>
+}
+

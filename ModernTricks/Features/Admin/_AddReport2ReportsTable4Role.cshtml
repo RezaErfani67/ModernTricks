@@ -1,0 +1,45 @@
+﻿@model ModernTricks.Models.ROLES
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#AddReport').click(function () {
+            var _roleId = $('#Role_Id').val();
+            var _reportId = $('#ReportId').val();
+            var _parameters = { roleId: _roleId, reportId: _reportId };
+            $.ajax({
+                url: "/Admin/AddReport2RoleReturnPartialView",
+                type: "GET",
+                data: _parameters,
+                success: function (data, textStatus, jqXHR) {
+                    $('#Report4RoleTable').html(data);
+                    $('#ReportId').val("");
+                }
+            });
+        });
+
+        $('#AddAllReports').click(function () {
+            var _roleId = $('#Role_Id').val();
+            var _parameters = { id: _roleId };
+            $.ajax({
+                url: "/Admin/AddAllReports2RoleReturnPartialView",
+                type: "GET",
+                data: _parameters,
+                success: function (data, textStatus, jqXHR) {
+                    $('#Report4RoleTable').html(data);
+                    $('#ReportId').val("");
+                }
+            });
+        });
+    });
+</script>
+@Html.HiddenFor(model => model.Role_Id)
+<fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
+    border-width: thin; border-color: Silver; width: 650px">
+    <legend><strong>Add Report To Role</strong></legend>
+    <br />
+    <label>
+        Report:
+    </label>
+    @Html.DropDownList("ReportId", null, string.Empty, new { style = "width:300px" })
+    <input type="button" id="AddReport" value="Add Report" />
+    <input type="button" id="AddAllReports" value="Add All Reports" />
+</fieldset>

@@ -1,0 +1,86 @@
+﻿@model ModernTricks.Models.BaniChav_ReturnedProducts
+
+@{
+    Layout = "~/Features/Shared/SideLayout.cshtml";
+}
+
+@section Scripts
+{
+    <script>
+        //$(".selectTotal").on('change',function(){
+
+        //    $('.table').find('input[type="checkbox"]:checked').not(this).prop('checked', false);
+
+        //});
+        $(document).on('click', '.btnSubmit', function () {
+            var arr = "";
+            var $this = $(this);
+            //$('.table').find('input[type="checkbox"]:checked').each(function () {
+
+            //    arr=$(this).attr('totalID');
+
+            //});
+
+            //ارسال درخواست تمام آیدی های توتال
+
+            $.ajax({
+                url: "/BaniChav/Create_ReturenedProduct",
+                data:
+                    {
+                        totalItem: $this.attr('totalID'),
+                        description:$this.closest('tr').find('.title').val()
+                    },
+                type: "post"
+            })
+
+                .done(function (result) {
+                    console.log(result);
+                    $this.closest('tr').fadeOut();
+                    notify('success','خووووووب بووووووووود');
+                });
+        });
+
+    </script>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    var Totals = ViewBag.Totals;
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th>انتخاب</th>
+                <th>نام مشتری</th>
+                <th>تیم فروش</th>
+                <th>قیمت</th>
+                <th>دلیل مرجوعی</th>
+            </tr>
+            @foreach (var item in Totals)
+            {
+                <tr>
+                    <td><input type="button" class="btnSubmit btn btn-default" totalID="@item.ID" value="ارسال" /></td>
+                    <td>@item.CustomerName</td>
+                    <td>@item.TeamOfSale</td>
+                    <td>@item.Price</td>
+                    <td>
+                        <select name="title" class="title">
+                            <option>عدم سفارش</option>
+                            <option>عدم سفارش برخی اقلام</option>
+                            <option>عدم وجه</option>
+                            <option>حساب باز</option>
+                            <option>تعطیل</option>
+                            <option>اشانتیون</option>
+                            <option>لجاجت صاحب فروشگاه</option>
+                            <option>نبود صاحب فروشگاه</option>
+                        </select>
+                    </td>
+
+                </tr>
+            }
+
+        </table>
+        </div>
+ }
+

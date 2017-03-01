@@ -1,0 +1,45 @@
+﻿@model IEnumerable<ModernTricks.Models.Gallery>
+@{
+    ViewBag.Title = "test";
+    Layout = "~/Features/Shared/SideLayout.cshtml";
+}
+
+
+
+<link href="~/Content/Gallery/css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/Content/Slider/sliderengine/amazingslider-1.css" rel="stylesheet" />
+<script src="~/Content/Slider/sliderengine/amazingslider.js"></script>
+<script src="~/Content/Slider/sliderengine/initslider-1.js"></script>
+
+
+<div id="amazingslider-wrapper-1" style="display:block;position:relative;max-width:1200px;padding-left:0px; padding-right:110px;margin-bottom:10px;">
+    <div id="amazingslider-1" style="display:block;position:relative;margin:0 auto;">
+        <ul class="amazingslider-slides" style="display:none;">
+            @foreach (var item in Model.Where(q => q.IsUsedInSlider == true).Take(10).OrderByDescending(q => q.ID))
+            {
+                <li>
+                    <img src="~/Content/Gallery/images/large/@item.Name" alt="@item.Alt" title="@item.Alt" />
+                </li>
+
+            }
+        </ul>
+        <ul class="amazingslider-thumbnails" style="display:none;">
+            @foreach (var item in Model.Where(q => q.IsUsedInSlider == true).Take(10).OrderByDescending(q => q.ID))
+            {
+                <li>
+                    <img src="~/Content/Gallery/images/thumbs/@item.Name" alt="@item.Alt" title="@item.Alt" />
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+
+
+
+
+
+@Html.Action("ShowTopProduct", "Product", new { area = "" })
+@Html.Action("_LastNews", "News", new { area = "" })
+@*@Html.Action("_LastVideos", "Home", new { area = "" })*@
+

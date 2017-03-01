@@ -1,0 +1,177 @@
+﻿@model IEnumerable<ModernTricks.Features.Forum.VM_Forum_ShowComments>
+<h3 class="alert alert-info text-center">ارسال پاسخ سریع</h3>
+<div class="col-md-12">
+
+    <div class="row">
+        <div class="col-sm-12 form-group">
+            <textarea multiline="true" name="text" rows="5" class="form-control txtTextParentComment" placeholder="متن نظرتان را اینجا بنویسید"></textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 form-group">
+
+            <button type="button" class="btn btn-success pull-right btnAddParentComment" postID='@ViewBag.postID' groupID='@ViewBag.groupID'>ثبت </button>
+          <a href="/Forum/AllPost?groupId=@ViewBag.groupID" class="btn btn-default" style="margin-right:5px;">بازگشت</a>
+        </div>
+    </div>
+</div>
+
+@GetComments(null, 0)
+
+
+@helper GetComments(Guid? parentId, int paddingRight)
+{
+
+    <div class="">
+        @foreach (var item in Model.Where(q => q.ParentID.Equals(parentId)))
+        {
+            string ssss = paddingRight.ToString() + "px";
+            <div class="col-sm-12" style='padding:10px @ssss 0 0'>
+                <div class="panel panel-default">
+
+                    <div class="panel-heading" style="overflow:hidden">
+                        <input type="hidden" id='@item.ID' forumGroupID='@item.ForumGroupID' forumPostID='@item.ForumPostID' parentID='@item.ParentID' class="hideInfo" />
+
+                        <div class="name col-sm-6">
+                            <h4>@item.Username <span class="label label-primary"></span></h4>
+                        </div>
+
+
+                        @if (ViewContext.Controller.IsSysAdmin() || HttpContext.Current.User.Identity.Name == ViewBag.Admin)
+                        {
+                            <input type="button" class="btn btn-danger btnDeleteComment" value="حذف پاسخ" />
+                        }
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="textField col-sm-12"><p>@Html.Raw(item.Text)</p></div>
+                    </div>
+                    <div class="panel-footer">
+                        <button class="btnShowCommentForm btn btn-primary">پاسخ</button>
+                    </div>
+
+                </div>
+            </div>
+
+            @GetComments(item.ID, paddingRight + 20);
+
+        }
+    </div>
+}
+
+
+<script>
+
+
+    $(".btnDeleteComment").on('click', function () {
+        var $this = $(this);
+
+        $.ajax({
+            url: "/Forum/DeleteComment",
+            method: "post",
+            data:
+                {
+                    id: $this.closest('.panel').find(".hideInfo").attr('id'),
+                }
+
+        }).done(function (result) {
+
+            if (result.state == "success") {
+                $this.closest('.panel').fadeOut('slow');
+            }
+            if (result.state == "error") {
+                notify(result.state, result.msg)
+            }
+
+        })
+
+
+
+    });
+    $(".btnShowCommentForm").on('click', function () {
+
+        $(".AddComment ").slideUp('slow', function () { $(this).remove(); });
+
+        var html = "";
+
+        html += "<div class='AddComment col-md-12' style=display:none;margin-top:10px;>";
+
+        html += " <div class='row'>";
+        html += "    <div class='col-sm-12 form-group'>";
+        html += "       <textarea multiline='true' name='text' rows='5' class='form-control txtTextComment' placeholder='متن نظرتان را اینجا بنویسید'></textarea>";
+        html += "       </div>";
+        html += "   </div>";
+        html += " <div class='row'>";
+        html += "<div class='col-md-12 form-group'>";
+
+        html += "<button type='button' class='btn btn-success pull-right btnAddChildComment'>ثبت </button>";
+        html += "    </div>";
+        html += " </div>";
+        html += "  </div>";
+
+
+        $(this).closest('.panel-footer').after(html);
+        $(".AddComment").slideDown('slow');
+        console.log($(this).closest(".panel").find(".hideInfo").attr("parentID"));
+    })
+    $(document).on('click', '.btnAddChildComment', function () {
+        var $this = $(this);
+
+        $.ajax({
+            url: "/Forum/AddComment",
+            method: "post",
+            data:
+                {
+                    forumGroupID: $this.closest('.panel').find(".hideInfo").attr('forumGroupID'),
+                    forumPostID: $this.closest('.panel').find(".hideInfo").attr('forumPostID'),
+                    parentID: $this.closest('.panel').find(".hideInfo").attr('id'),//پدر این کامنت جدید،کیشه آیدی کامنت جاری
+                    text: $this.closest('.panel').find(".txtTextComment").val()
+                }
+
+        }).done(function (result) {
+
+            notify(result.state, result.msg);
+
+            $(".AddComment ").slideUp();
+
+        })
+            .error(function (result) {
+                notify(result.state, result.msg)
+            });
+
+
+
+    });
+    $(document).on('click', '.btnAddParentComment', function () {
+        var $this = $(this);
+        var postID = $this.attr('postID'); //this var come from viewBag
+        var groupID = $this.attr('groupID'); //this var come from viewBag
+
+        $.ajax({
+            url: "/Forum/AddComment",
+            method: "post",
+            data:
+                {
+                    forumGroupID: groupID,
+                    forumPostID: postID,
+                    parentID: null,
+                    text: $('.txtTextParentComment').val()
+                }
+        }).done(function (result) {
+
+            if (result.state == "success") {
+                notify(result.state, result.msg);
+                window.location.href = "/Forum/AllPost?groupID=" + groupID;
+            }
+
+            console.log(result.msg)
+            $(".AddComment").slideUp();
+
+        })
+         .error(function (result) {
+             notify(result.state, result.msg)
+         });
+
+    });
+
+</script>

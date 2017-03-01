@@ -1,0 +1,90 @@
+﻿@model IEnumerable<Main.Models.Gallery>
+@{
+    ViewBag.Title = "Gallery";
+}
+
+
+<div class="container">
+    <div class="gallery cf" style="padding:100px">
+       @* @foreach (var item in Model.Where(q=>q.IsUsedInSlider==false))*@
+         @foreach (var item in Model)
+        {
+
+
+            <div>
+                <img src="~/Content/Gallery/Images/large/@item.Name" />
+            </div>
+
+        }
+    </div>
+
+    </div>
+<style>
+   @@import url('http://fonts.googleapis.com/css?family=Open+Sans:300');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font: 14px/1 'Open Sans', sans-serif;
+  color: #555;
+  background: #e5e5e5;
+}
+
+.gallery {
+  width: 640px;
+  margin: 0 auto;
+  padding: 5px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,.3);
+}
+
+.gallery > div {
+  position: relative;
+  float: left;
+  padding: 5px;
+}
+
+.gallery > div > img {
+  display: block;
+  width: 200px;
+  transition: .1s transform;
+  transform: translateZ(0); /* hack */
+}
+
+.gallery > div:hover {
+  z-index: 999;
+}
+
+.gallery > div:hover > img {
+  transform: scale(2.5,2.5);
+  transition: .3s transform;
+}
+
+.cf:before, .cf:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+
+.cf:after {
+  clear: both;
+}
+
+h1 {
+  margin: 40px 0;
+  font-size: 30px;
+  font-weight: 300;
+  text-align: center;
+}
+
+</style>
+
+        @section Scripts
+    {
+
+
+        }
